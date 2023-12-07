@@ -17,8 +17,14 @@ namespace DiagnosisSystem.Controllers
         {
             return View();
         }
+        //[HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
 
-        public IActionResult Register(UserVM userVM)
+        [HttpPost]
+        public async Task<IActionResult> Register(UserVM userVM)
         {
             var user = new UsersClass
             {
