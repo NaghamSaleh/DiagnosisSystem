@@ -1,4 +1,4 @@
-﻿using DiagnosisSystem.entities;
+﻿using DiagnosisSystem.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DiagnosisSystem.Data

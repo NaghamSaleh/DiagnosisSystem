@@ -1,5 +1,5 @@
 ﻿using DiagnosisSystem.Data;
-using DiagnosisSystem.entities;
+using DiagnosisSystem.Entities;
 using DiagnosisSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 

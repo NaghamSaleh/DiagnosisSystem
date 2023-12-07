@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DiagnosisSystem.entities
+namespace DiagnosisSystem.Entities
 {
     public class PatientClass
     {
