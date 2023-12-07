@@ -1,14 +1,19 @@
-﻿namespace DiagnosisSystem.entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace DiagnosisSystem.entities
 {
     public class UsersClass
     {
-    public int Id { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string Email { get; set; }
-    public DateTime DateOfBirth { get; set; }
-    public string Telephone { get; set; }
-    public string Gender { get; set; }
-    public DateTime AddedOn { get; set; } = DateTime.UtcNow;
+        [Key]
+        public int UserID { get; set; }
+
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        [Required]
+        public string Email { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public string Telephone { get; set; }
+        public char Gender { get; set; }
+        public DateTime AddedOn { get; set; } 
     }
 }
