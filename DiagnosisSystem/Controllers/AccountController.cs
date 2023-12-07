@@ -17,7 +17,7 @@ namespace DiagnosisSystem.Controllers
         {
             return View();
         }
-        //[HttpGet]
+        [HttpGet]
         public IActionResult Register()
         {
             return View();
@@ -26,20 +26,25 @@ namespace DiagnosisSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(UserVM userVM)
         {
-            var user = new UsersClass
+            if (ModelState.IsValid)
             {
-                FirstName = userVM.FirstName,
-                LastName = userVM.LastName,
-                Email = userVM.Email,
-                Password = userVM.Password,
-                Telephone = userVM.Telephone,
-                DateOfBirth = userVM.DateOfBirth,
-                Gender = userVM.Gender,
-                AddedOn = DateTime.Now
-            };
-            _context.Users.Add(user);
-            _context.SaveChanges();
-            return View();
+                var user = new UsersClass
+                {
+                    FirstName = userVM.FirstName,
+                    LastName = userVM.LastName,
+                    Email = userVM.Email,
+                    Password = userVM.Password,
+                    Telephone = userVM.Telephone,
+                    DateOfBirth = userVM.DateOfBirth,
+                    Gender = userVM.Gender,
+                    AddedOn = DateTime.Now
+                };
+                 _context.Users.Add(user);
+                 _context.SaveChanges();
+                return View(userVM);
+            }
+            
+            return View(userVM);
         }
     }
 }
