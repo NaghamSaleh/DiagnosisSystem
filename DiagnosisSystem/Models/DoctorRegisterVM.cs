@@ -2,5 +2,6 @@
 {
     public class DoctorRegisterVM : RegisterVM
     {
+        public string DistirctId { get; set; }
     }
 }
