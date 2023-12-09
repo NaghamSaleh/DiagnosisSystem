@@ -2,7 +2,7 @@
 
 namespace DiagnosisSystem.Entities
 {
-    public class UsersClass
+    public class Users
     {
         [Key]
         public int UserID { get; set; }

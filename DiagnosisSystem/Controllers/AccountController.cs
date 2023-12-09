@@ -52,7 +52,7 @@ namespace DiagnosisSystem.Controllers
                 }
                     
                 
-               var user = new UsersClass
+               var user = new Users
                {
                    FirstName = userVM.FirstName,
                    LastName = userVM.LastName,
@@ -78,8 +78,87 @@ namespace DiagnosisSystem.Controllers
             return Ok("User created Successfully");
         }
 
+
+
+
+
+
+
+
+
+
         //for doctor: call it create
         //2 methods one HttpGet and HttpPost
+        //for doctor
+        [HttpGet]
+        public IActionResult CreateAccount()
+        {
+            return View();
+        }
+
+        //for doctor
+        [HttpPost]
+        public async Task<IActionResult>  CreateAccount(DoctorRegisterVM MedicalPractitionerVM)
+        {
+            if (ModelState.IsValid)
+            {
+                var checkEmail = _context.Users.Any(e => e.Email == MedicalPractitionerVM.Email);
+
+                if (checkEmail)
+                {
+                    return BadRequest("Email already exists");
+                }
+
+
+                if (MedicalPractitionerVM.Password != MedicalPractitionerVM.ConfirmPassword)
+                {
+                    return BadRequest("Password doesn't match");
+                }
+
+
+                var minDateOfBirth = DateTime.Today.AddYears(-100);
+                var maxDateOfBirth = DateTime.Today.AddYears(-18);
+                if (MedicalPractitionerVM.DateOfBirth < minDateOfBirth || MedicalPractitionerVM.DateOfBirth > maxDateOfBirth)
+                {
+                    return BadRequest("Invalid date of birth. Must be between 18 and 100 years old.");
+                }
+
+
+                var doctor = new MedicalPractitioner
+                {
+                    MedicalPractitionerID = MedicalPractitionerVM.MedicalPractitionerID,
+                    CurrentHospital = MedicalPractitionerVM.CurrentHospital,
+                    Languages = MedicalPractitionerVM.Languages,
+                    Specialty = MedicalPractitionerVM.Specialty,
+                    Experience = MedicalPractitionerVM.Experience,
+                    ShortBio = MedicalPractitionerVM.ShortBio
+
+
+                };
+                try
+                {
+                    _context.MedicalPractitioners.Add(doctor);
+                    _context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error saving to database");
+                }
+                return View(MedicalPractitionerVM);
+            }
+
+            return Ok("User created Successfully");
+        }
+
+
+
+
+
+
+
+
+
+
 
         [HttpGet]
         public IActionResult Login()

@@ -68,7 +68,7 @@ namespace DiagnosisSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MedicalPractitionerID"), 1L, 1);
 
-                    b.Property<string>("Speciality")
+                    b.Property<string>("Specialty")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -102,7 +102,7 @@ namespace DiagnosisSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Speciality")
+                    b.Property<string>("Specialty")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -128,30 +128,30 @@ namespace DiagnosisSystem.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("DiagnosisSystem.entities.SpecialityClass", b =>
+            modelBuilder.Entity("DiagnosisSystem.entities.SpecialtyClass", b =>
                 {
-                    b.Property<int>("SpecialityİD")
+                    b.Property<int>("SpecialtyID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SpecialityİD"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SpecialtyID"), 1L, 1);
 
-                    b.Property<string>("SpecialityName")
+                    b.Property<string>("SpecialtyName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("SpecialityİD");
+                    b.HasKey("SpecialtyID");
 
-                    b.ToTable("Specialities");
+                    b.ToTable("Specialties");
                 });
 
             modelBuilder.Entity("DiagnosisSystem.entities.UsersClass", b =>
                 {
-                    b.Property<int>("UserİD")
+                    b.Property<int>("UserID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserİD"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserID"), 1L, 1);
 
                     b.Property<DateTime>("AddedOn")
                         .HasColumnType("datetime2");
@@ -179,7 +179,7 @@ namespace DiagnosisSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserİD");
+                    b.HasKey("UserID");
 
                     b.ToTable("Users");
                 });

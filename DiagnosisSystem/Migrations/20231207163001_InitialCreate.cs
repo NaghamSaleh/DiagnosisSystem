@@ -42,7 +42,12 @@ namespace DiagnosisSystem.Migrations
                 {
                     MedicalPractitionerID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Speciality = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Specialty = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Languages = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Experience = table.Column<int>(type: "int", nullable: false),
+                    ShortBio = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CurrentHospital = table.Column<string>(type: "nvarchar(max)", nullable: false)
+
                 },
                 constraints: table =>
                 {
@@ -68,7 +73,7 @@ namespace DiagnosisSystem.Migrations
                     QueryID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Question = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Speciality = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Specialty = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -89,23 +94,23 @@ namespace DiagnosisSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Specialities",
+                name: "Specialties",
                 columns: table => new
                 {
-                    SpecialityİD = table.Column<int>(type: "int", nullable: false)
+                    SpecialtyID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SpecialityName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    SpecialtyName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Specialities", x => x.SpecialityİD);
+                    table.PrimaryKey("PK_Specialties", x => x.SpecialtyID);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
-                    UserİD = table.Column<int>(type: "int", nullable: false)
+                    UserID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -117,7 +122,7 @@ namespace DiagnosisSystem.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.UserİD);
+                    table.PrimaryKey("PK_Users", x => x.UserID);
                 });
         }
 
@@ -142,7 +147,7 @@ namespace DiagnosisSystem.Migrations
                 name: "Roles");
 
             migrationBuilder.DropTable(
-                name: "Specialities");
+                name: "Specialties");
 
             migrationBuilder.DropTable(
                 name: "Users");

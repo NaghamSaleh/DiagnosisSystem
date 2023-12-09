@@ -2,12 +2,12 @@
 
 namespace DiagnosisSystem.Entities
 {
-    public class QueryClass
+    public class Query
     {
         [Key]
         public int QueryID { get; set; }
         public string Question { get; set; }
-        public string Speciality { get; set; }
+        public string Specialty { get; set; }
 
 
     }

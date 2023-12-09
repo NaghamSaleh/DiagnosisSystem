@@ -2,10 +2,10 @@
 
 namespace DiagnosisSystem.Entities
 {
-    public class AdministratorClass
+    public class Patient
     {
         [Key]
-        public int AdminID { get; set; }
+        public int PatientID { get; set; }
 
     }
 }

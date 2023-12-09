@@ -2,10 +2,10 @@
 
 namespace DiagnosisSystem.Entities
 {
-    public class PatientClass
+    public class Role
     {
         [Key]
-        public int PatientID { get; set; }
-
+        public int RoleID { get; set; }
+        public string RoleName { get; set; }
     }
 }

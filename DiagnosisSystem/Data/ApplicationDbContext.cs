@@ -11,14 +11,14 @@ namespace DiagnosisSystem.Data
 
         }
         protected ApplicationDbContext(DbContextOptions options) : base(options) { }
-        public DbSet<UsersClass> Users { get; set; }
-        public DbSet<RoleClass> Roles { get; set; }
-        public DbSet<AdministratorClass> Administrators { get; set; }
-        public DbSet<DistrictClass> Districts { get; set; }
-        public DbSet<QueryClass> Queries { get; set; }
-        public DbSet<MedicalPractitionerClass> MedicalPractitioners { get; set; }
-        public DbSet<SpecialityClass> Specialities { get; set; }
-        public DbSet<PatientClass> Patients { get; set; }
+        public DbSet<Users> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Administrator> Administrators { get; set; }
+        public DbSet<District> Districts { get; set; }
+        public DbSet<Query> Queries { get; set; }
+        public DbSet<MedicalPractitioner> MedicalPractitioners { get; set; }
+        public DbSet<Specialty> Specialities { get; set; }
+        public DbSet<Patient> Patients { get; set; }
 
 
     }
