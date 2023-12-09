@@ -102,7 +102,7 @@ namespace DiagnosisSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                var checkEmail = _context.Users.Any(e => e.Email == MedicalPractitionerVM.Email);
+                var checkEmail = _context.MedicalPractitioners.Any(e => e.Email == MedicalPractitionerVM.Email);
 
                 if (checkEmail)
                 {

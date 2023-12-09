@@ -2,7 +2,7 @@
 
 namespace DiagnosisSystem.Entities
 {
-    public class MedicalPractitioner
+    public class MedicalPractitioner : Users
     {
         [Key]
         public int MedicalPractitionerID { get; set; }
