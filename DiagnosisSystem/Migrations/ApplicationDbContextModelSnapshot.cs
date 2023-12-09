@@ -22,7 +22,7 @@ namespace DiagnosisSystem.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("DiagnosisSystem.entities.AdministratorClass", b =>
+            modelBuilder.Entity("DiagnosisSystem.entities.Administrator", b =>
                 {
                     b.Property<int>("AdminID")
                         .ValueGeneratedOnAdd()
@@ -35,7 +35,7 @@ namespace DiagnosisSystem.Migrations
                     b.ToTable("Administrators");
                 });
 
-            modelBuilder.Entity("DiagnosisSystem.entities.DistrictClass", b =>
+            modelBuilder.Entity("DiagnosisSystem.entities.District", b =>
                 {
                     b.Property<int>("DistrictID")
                         .ValueGeneratedOnAdd()
@@ -60,7 +60,7 @@ namespace DiagnosisSystem.Migrations
                     b.ToTable("Districts");
                 });
 
-            modelBuilder.Entity("DiagnosisSystem.entities.MedicalPractitionerClass", b =>
+            modelBuilder.Entity("DiagnosisSystem.entities.MedicalPractitioner", b =>
                 {
                     b.Property<int>("MedicalPractitionerID")
                         .ValueGeneratedOnAdd()
@@ -72,12 +72,28 @@ namespace DiagnosisSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Experience")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Languages")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CurrentHospital")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShortBio")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("MedicalPractitionerID");
 
                     b.ToTable("MedicalPractitioners");
                 });
 
-            modelBuilder.Entity("DiagnosisSystem.entities.PatientClass", b =>
+            modelBuilder.Entity("DiagnosisSystem.entities.Patient", b =>
                 {
                     b.Property<int>("PatientID")
                         .ValueGeneratedOnAdd()
@@ -90,7 +106,7 @@ namespace DiagnosisSystem.Migrations
                     b.ToTable("Patients");
                 });
 
-            modelBuilder.Entity("DiagnosisSystem.entities.QueryClass", b =>
+            modelBuilder.Entity("DiagnosisSystem.entities.Query", b =>
                 {
                     b.Property<int>("QueryID")
                         .ValueGeneratedOnAdd()
@@ -111,7 +127,7 @@ namespace DiagnosisSystem.Migrations
                     b.ToTable("Queries");
                 });
 
-            modelBuilder.Entity("DiagnosisSystem.entities.RoleClass", b =>
+            modelBuilder.Entity("DiagnosisSystem.entities.Role", b =>
                 {
                     b.Property<int>("RoleId")
                         .ValueGeneratedOnAdd()
@@ -128,7 +144,7 @@ namespace DiagnosisSystem.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("DiagnosisSystem.entities.SpecialtyClass", b =>
+            modelBuilder.Entity("DiagnosisSystem.entities.Specialty", b =>
                 {
                     b.Property<int>("SpecialtyID")
                         .ValueGeneratedOnAdd()
@@ -145,7 +161,7 @@ namespace DiagnosisSystem.Migrations
                     b.ToTable("Specialties");
                 });
 
-            modelBuilder.Entity("DiagnosisSystem.entities.UsersClass", b =>
+            modelBuilder.Entity("DiagnosisSystem.entities.Users", b =>
                 {
                     b.Property<int>("UserID")
                         .ValueGeneratedOnAdd()
