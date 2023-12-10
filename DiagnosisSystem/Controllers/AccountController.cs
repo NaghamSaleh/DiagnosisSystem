@@ -91,14 +91,14 @@ namespace DiagnosisSystem.Controllers
         //2 methods one HttpGet and HttpPost
         //for doctor
         [HttpGet]
-        public IActionResult CreateAccount()
+        public IActionResult doctorRegister()
         {
             return View();
         }
 
         //for doctor
         [HttpPost]
-        public async Task<IActionResult>  CreateAccount(DoctorRegisterVM MedicalPractitionerVM)
+        public async Task<IActionResult>  doctorRegister(DoctorRegisterVM MedicalPractitionerVM)
         {
             if (ModelState.IsValid)
             {

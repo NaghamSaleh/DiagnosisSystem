@@ -6,7 +6,7 @@
         margin: 0;
         font-family: Arial, sans-serif;
         background: linear-gradient(to bottom right, #84A5E3, #6C81C0); /* Gradient background */
-        color: #8B83C6; /* Text color */
+        color: #3E5282; /* Text color */
     }
 
     .registration-container {
@@ -83,6 +83,50 @@
             <input type="password" asp-for="Password" class="form-control" />
             <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
         </div>
+
+
+
+
+
+
+
+
+
+        <div class="form-group">
+            <label asp-for="Experience">Experience</label>
+            <input asp-for="Experience" class="form-control" />
+            <span asp-validation-for="Experience" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ShortBio">Short Biography</label>
+            <input asp-for="ShortBio" class="form-control" />
+            <span asp-validation-for="ShortBio" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Specialty">Specialty</label>
+            <input asp-for="Specialty" class="form-control" />
+            <span asp-validation-for="Specialty" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Languages">Languages</label>
+            <input asp-for="Languages" class="form-control" />
+            <span asp-validation-for="Languages" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CurrentHospital">Current Hospital</label>
+            <input asp-for="CurrentHospital" class="form-control" />
+            <span asp-validation-for="CurrentHospital" class="text-danger"></span>
+        </div>
+
+
+
+
+
+
+
+
+
+
 
         <button type="submit" class="btn btn-primary">Register</button>
     </form>
