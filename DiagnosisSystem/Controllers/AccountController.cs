@@ -1,30 +1,36 @@
 ﻿using DiagnosisSystem.Data;
 using DiagnosisSystem.Entities;
 using DiagnosisSystem.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace DiagnosisSystem.Controllers
 {
     public class AccountController : Controller
     {
+        #region Variables
         private readonly ApplicationDbContext _context;
-        public AccountController(ApplicationDbContext context)
+        private readonly IPasswordHasher<User> _passwordHasher;
+        #endregion
+
+        #region Constructor
+        public AccountController(ApplicationDbContext context, IPasswordHasher<User> passwordHasher)
         {
             _context = context;
+            _passwordHasher = passwordHasher;
         }
+        #endregion
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-        //for patient
+        #region Patient Register
+
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
-        //for patient
+
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM userVM)
         {
@@ -50,19 +56,21 @@ namespace DiagnosisSystem.Controllers
                 {
                     return BadRequest("Invalid date of birth. Must be between 18 and 100 years old.");
                 }
-                    
-                
-               var user = new Users
+
+               var hashedPassword = _passwordHasher.HashPassword(null, userVM.Password);
+               var user = new User
                {
                    FirstName = userVM.FirstName,
                    LastName = userVM.LastName,
                    Email = userVM.Email,
-                   Password = userVM.Password,
+                   Password = hashedPassword,
                    Telephone = userVM.Telephone,
                    DateOfBirth = userVM.DateOfBirth,
                    Gender = userVM.Gender,
-                   AddedOn = DateTime.Now
+                   AddedOn = DateTime.Now,
+                   Role = "Patient"
                };
+
                 try
                 {
                     _context.Users.Add(user);
@@ -77,26 +85,14 @@ namespace DiagnosisSystem.Controllers
 
             return Ok("User created Successfully");
         }
+        #endregion
 
-
-
-
-
-
-
-
-
-
-        //for doctor: call it create
-        //2 methods one HttpGet and HttpPost
-        //for doctor
+        #region Doctor Register 
         [HttpGet]
         public IActionResult doctorRegister()
         {
             return View();
         }
-
-        //for doctor
         [HttpPost]
         public async Task<IActionResult>  doctorRegister(DoctorRegisterVM MedicalPractitionerVM)
         {
@@ -123,7 +119,7 @@ namespace DiagnosisSystem.Controllers
                     return BadRequest("Invalid date of birth. Must be between 18 and 100 years old.");
                 }
 
-
+                var hashedPassword = _passwordHasher.HashPassword(null, MedicalPractitionerVM.Password);
                 var doctor = new MedicalPractitioner
                 {
                     MedicalPractitionerID = MedicalPractitionerVM.MedicalPractitionerID,
@@ -131,8 +127,18 @@ namespace DiagnosisSystem.Controllers
                     Languages = MedicalPractitionerVM.Languages,
                     Specialty = MedicalPractitionerVM.Specialty,
                     Experience = MedicalPractitionerVM.Experience,
-                    ShortBio = MedicalPractitionerVM.ShortBio
+                    ShortBio = MedicalPractitionerVM.ShortBio,
+                    Password = hashedPassword,
+                    AddedOn = DateTime.Now,
+                    FirstName = MedicalPractitionerVM.FirstName,
+                    LastName = MedicalPractitionerVM.LastName,
+                    Email = MedicalPractitionerVM.Email,
+                    Telephone = MedicalPractitionerVM.Telephone,
+                    DateOfBirth = MedicalPractitionerVM.DateOfBirth,
+                    Gender = MedicalPractitionerVM.Gender,
+                    Role = "Doctor"
 
+                    //email and other data?
 
                 };
                 try
@@ -149,17 +155,9 @@ namespace DiagnosisSystem.Controllers
 
             return Ok("User created Successfully");
         }
+        #endregion
 
-
-
-
-
-
-
-
-
-
-
+        #region Login
         [HttpGet]
         public IActionResult Login()
         {
@@ -169,16 +167,28 @@ namespace DiagnosisSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginVM loginVM)
         {
-            var users = await _context.Users.Where(e => e.Email == loginVM.Email).FirstAsync();
-            if (users == null || users.Password != loginVM.Password)
-            {
-                return BadRequest("Failed login");
-            }
-            else
+            var user = await _context.Users.Where(e => e.Email == loginVM.Email).FirstAsync();
+            var result = _passwordHasher.VerifyHashedPassword(null, user.Password, loginVM.Password);
+            if(result == PasswordVerificationResult.Success)
             {
                 return RedirectToAction("Index", "Home");
             }
+            else
+            {
+                return BadRequest("Failed login");
+            }
+            
         }
+        #endregion
 
+        #region Logout
+        [Authorize]
+        [HttpPost]
+        public IActionResult Logout()
+        {
+            HttpContext.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+        #endregion
     }
 }

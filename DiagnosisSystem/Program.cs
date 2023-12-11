@@ -1,5 +1,8 @@
 global using Microsoft.EntityFrameworkCore;
 using DiagnosisSystem.Data;
+using DiagnosisSystem.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 var ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -8,7 +11,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddScoped<IPasswordHasher<RegisterVM>>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

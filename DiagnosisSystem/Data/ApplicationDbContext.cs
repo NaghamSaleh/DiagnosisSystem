@@ -1,5 +1,4 @@
 ﻿using DiagnosisSystem.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace DiagnosisSystem.Data
 {
@@ -10,8 +9,7 @@ namespace DiagnosisSystem.Data
         {
 
         }
-        protected ApplicationDbContext(DbContextOptions options) : base(options) { }
-        public DbSet<Users> Users { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Administrator> Administrators { get; set; }
         public DbSet<District> Districts { get; set; }

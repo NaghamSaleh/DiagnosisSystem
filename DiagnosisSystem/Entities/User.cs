@@ -2,7 +2,7 @@
 
 namespace DiagnosisSystem.Entities
 {
-    public class Users
+    public class User
     {
         [Key]
         public int UserID { get; set; }
@@ -15,6 +15,7 @@ namespace DiagnosisSystem.Entities
         public DateTime DateOfBirth { get; set; }
         public string Telephone { get; set; }
         public char Gender { get; set; }
+        public string Role { get; set; }
         public DateTime AddedOn { get; set; } 
     }
 }
