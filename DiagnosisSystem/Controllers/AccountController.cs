@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Numerics;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace DiagnosisSystem.Controllers
 {
@@ -12,17 +15,20 @@ namespace DiagnosisSystem.Controllers
     {
         #region Variables
         private readonly ApplicationDbContext _context;
-        private readonly IPasswordHasher<User> _passwordHasher;
+        //private readonly SignInManager<User> _signInManager;
+        //private readonly UserManager<User> _userManager;
         #endregion
 
         #region Constructor
-        public AccountController(ApplicationDbContext context, IPasswordHasher<User> passwordHasher)
+        public AccountController(ApplicationDbContext context/*, SignInManager<User> signInManager, UserManager<User> userManager*/)
         {
             _context = context;
-            _passwordHasher = passwordHasher;
+            //_signInManager = signInManager;
+            //_userManager = userManager;
         }
         #endregion
 
+     
         #region Patient Register
 
         [HttpGet]
@@ -56,34 +62,41 @@ namespace DiagnosisSystem.Controllers
                 {
                     return BadRequest("Invalid date of birth. Must be between 18 and 100 years old.");
                 }
-
-               var hashedPassword = _passwordHasher.HashPassword(null, userVM.Password);
+               var hashedPassword = HashPassword(userVM.Password);
                var user = new User
                {
                    FirstName = userVM.FirstName,
                    LastName = userVM.LastName,
                    Email = userVM.Email,
-                   Password = hashedPassword,
                    Telephone = userVM.Telephone,
                    DateOfBirth = userVM.DateOfBirth,
                    Gender = userVM.Gender,
+                   Password= hashedPassword,
                    AddedOn = DateTime.Now,
                    Role = "Patient"
                };
 
                 try
                 {
+
                     _context.Users.Add(user);
                     _context.SaveChanges();
+                    
                 }
                 catch(Exception ex)
                 {
                     throw new Exception("Error saving to database");
                 }
-                return View(userVM);
+                //var result = await _userManager.CreateAsync(user, userVM.Password);
+                //if (result.Succeeded)
+                //{
+                //    _context.SaveChanges();
+                //    return View(null);
+                //}
+                return View();
             }
 
-            return Ok("User created Successfully");
+            return BadRequest("Rety Again please");
         }
         #endregion
 
@@ -94,11 +107,11 @@ namespace DiagnosisSystem.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult>  doctorRegister(DoctorRegisterVM MedicalPractitionerVM)
+        public async Task<IActionResult> doctorRegister(DoctorRegisterVM MedicalPractitionerVM)
         {
             if (ModelState.IsValid)
             {
-                var checkEmail = _context.MedicalPractitioners.Any(e => e.Email == MedicalPractitionerVM.Email);
+                var checkEmail = _context.Users.Any(e => e.Email == MedicalPractitionerVM.Email);
 
                 if (checkEmail)
                 {
@@ -119,31 +132,44 @@ namespace DiagnosisSystem.Controllers
                     return BadRequest("Invalid date of birth. Must be between 18 and 100 years old.");
                 }
 
-                var hashedPassword = _passwordHasher.HashPassword(null, MedicalPractitionerVM.Password);
+                var hashedPassword = HashPassword(MedicalPractitionerVM.Password);
                 var doctor = new MedicalPractitioner
                 {
-                    MedicalPractitionerID = MedicalPractitionerVM.MedicalPractitionerID,
+                    Email = MedicalPractitionerVM.Email,
+                    FirstName = MedicalPractitionerVM.FirstName,
+                    LastName = MedicalPractitionerVM.LastName,
+                    DateOfBirth = MedicalPractitionerVM.DateOfBirth,
+                    Gender= MedicalPractitionerVM.Gender,
+                    Telephone = MedicalPractitionerVM.Telephone,
                     CurrentHospital = MedicalPractitionerVM.CurrentHospital,
                     Languages = MedicalPractitionerVM.Languages,
                     Specialty = MedicalPractitionerVM.Specialty,
                     Experience = MedicalPractitionerVM.Experience,
                     ShortBio = MedicalPractitionerVM.ShortBio,
-                    Password = hashedPassword,
                     AddedOn = DateTime.Now,
-                    Role = "Doctor"
-                    //email and other data?
+                    Role = "Doctor",
+                    Password= hashedPassword,
               
                 };
+                
                 try
                 {
-                    _context.MedicalPractitioners.Add(doctor);
+                    _context.Users.Add(doctor);
                     _context.SaveChanges();
                 }
                 catch (Exception ex)
                 {
                     throw new Exception("Error saving to database");
                 }
+                //var result = await _userManager.CreateAsync(doctor, MedicalPractitionerVM.Password);
+                //if (result.Succeeded)
+                //{
+                //    _context.SaveChanges();
+                //    return View(MedicalPractitionerVM);
+                //}
+                //return BadRequest("Saing error");
                 return View(MedicalPractitionerVM);
+
             }
 
             return Ok("User created Successfully");
@@ -161,8 +187,10 @@ namespace DiagnosisSystem.Controllers
         public async Task<IActionResult> Login(LoginVM loginVM)
         {
             var user = await _context.Users.Where(e => e.Email == loginVM.Email).FirstAsync();
-            var result = _passwordHasher.VerifyHashedPassword(null, user.Password, loginVM.Password);
-            if(result == PasswordVerificationResult.Success)
+            var loginHashedPass = HashPassword(loginVM.Password);
+           // var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, lockoutOnFailure: false);
+           // if(result.Succeeded)
+           if(user.Password == loginHashedPass)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -183,5 +211,22 @@ namespace DiagnosisSystem.Controllers
             return RedirectToAction("Index", "Home");
         }
         #endregion
+
+        private string HashPassword(string password)
+        {
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                // ComputeHash - returns byte array
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+                // Convert byte array to a string
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
+        }
     }
 }
