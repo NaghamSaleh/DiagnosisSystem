@@ -14,9 +14,8 @@ namespace DiagnosisSystem.Data
         public DbSet<Administrator> Administrators { get; set; }
         public DbSet<District> Districts { get; set; }
         public DbSet<Query> Queries { get; set; }
-        public DbSet<MedicalPractitioner> MedicalPractitioners { get; set; }
-        public DbSet<Specialty> Specialities { get; set; }
-        public DbSet<Patient> Patients { get; set; }
+        public DbSet<MedicalPractitioner> MedicalPractitionersDetails { get; set; }
+        //public DbSet<Specialty> Specialities { get; set; }
 
 
     }

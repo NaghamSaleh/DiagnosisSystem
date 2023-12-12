@@ -22,7 +22,7 @@ namespace DiagnosisSystem.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("DiagnosisSystem.entities.Administrator", b =>
+            modelBuilder.Entity("DiagnosisSystem.Entities.Administrator", b =>
                 {
                     b.Property<int>("AdminID")
                         .ValueGeneratedOnAdd()
@@ -35,7 +35,7 @@ namespace DiagnosisSystem.Migrations
                     b.ToTable("Administrators");
                 });
 
-            modelBuilder.Entity("DiagnosisSystem.entities.District", b =>
+            modelBuilder.Entity("DiagnosisSystem.Entities.District", b =>
                 {
                     b.Property<int>("DistrictID")
                         .ValueGeneratedOnAdd()
@@ -60,53 +60,7 @@ namespace DiagnosisSystem.Migrations
                     b.ToTable("Districts");
                 });
 
-            modelBuilder.Entity("DiagnosisSystem.entities.MedicalPractitioner", b =>
-                {
-                    b.Property<int>("MedicalPractitionerID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MedicalPractitionerID"), 1L, 1);
-
-                    b.Property<string>("Specialty")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Experience")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Languages")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CurrentHospital")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ShortBio")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("MedicalPractitionerID");
-
-                    b.ToTable("MedicalPractitioners");
-                });
-
-            modelBuilder.Entity("DiagnosisSystem.entities.Patient", b =>
-                {
-                    b.Property<int>("PatientID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PatientID"), 1L, 1);
-
-                    b.HasKey("PatientID");
-
-                    b.ToTable("Patients");
-                });
-
-            modelBuilder.Entity("DiagnosisSystem.entities.Query", b =>
+            modelBuilder.Entity("DiagnosisSystem.Entities.Query", b =>
                 {
                     b.Property<int>("QueryID")
                         .ValueGeneratedOnAdd()
@@ -127,41 +81,24 @@ namespace DiagnosisSystem.Migrations
                     b.ToTable("Queries");
                 });
 
-            modelBuilder.Entity("DiagnosisSystem.entities.Role", b =>
+            modelBuilder.Entity("DiagnosisSystem.Entities.Role", b =>
                 {
-                    b.Property<int>("RoleId")
+                    b.Property<int>("RoleID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleID"), 1L, 1);
 
                     b.Property<string>("RoleName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("RoleId");
+                    b.HasKey("RoleID");
 
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("DiagnosisSystem.entities.Specialty", b =>
-                {
-                    b.Property<int>("SpecialtyID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SpecialtyID"), 1L, 1);
-
-                    b.Property<string>("SpecialtyName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("SpecialtyID");
-
-                    b.ToTable("Specialties");
-                });
-
-            modelBuilder.Entity("DiagnosisSystem.entities.Users", b =>
+            modelBuilder.Entity("DiagnosisSystem.Entities.User", b =>
                 {
                     b.Property<int>("UserID")
                         .ValueGeneratedOnAdd()
@@ -174,6 +111,10 @@ namespace DiagnosisSystem.Migrations
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -191,6 +132,14 @@ namespace DiagnosisSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Telephone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -198,6 +147,37 @@ namespace DiagnosisSystem.Migrations
                     b.HasKey("UserID");
 
                     b.ToTable("Users");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
+                });
+
+            modelBuilder.Entity("DiagnosisSystem.Entities.MedicalPractitioner", b =>
+                {
+                    b.HasBaseType("DiagnosisSystem.Entities.User");
+
+                    b.Property<string>("CurrentHospital")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Experience")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Languages")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MedicalPractitionerID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ShortBio")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Specialty")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("MedicalPractitioner");
                 });
 #pragma warning restore 612, 618
         }

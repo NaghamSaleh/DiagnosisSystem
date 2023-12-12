@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Numerics;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace DiagnosisSystem.Controllers
 {
@@ -12,14 +15,9 @@ namespace DiagnosisSystem.Controllers
     {
         #region Variables
         private readonly ApplicationDbContext _context;
-        private readonly IPasswordHasher<User> _passwordHasher;
-        #endregion
-
-        #region Constructor
-        public AccountController(ApplicationDbContext context, IPasswordHasher<User> passwordHasher)
+        public AccountController(ApplicationDbContext context)
         {
             _context = context;
-            _passwordHasher = passwordHasher;
         }
         #endregion
 
@@ -73,17 +71,25 @@ namespace DiagnosisSystem.Controllers
 
                 try
                 {
+
                     _context.Users.Add(user);
                     _context.SaveChanges();
+                    
                 }
                 catch(Exception ex)
                 {
                     throw new Exception("Error saving to database");
                 }
-                return View(userVM);
+                //var result = await _userManager.CreateAsync(user, userVM.Password);
+                //if (result.Succeeded)
+                //{
+                //    _context.SaveChanges();
+                //    return View(null);
+                //}
+                return View();
             }
 
-            return Ok("User created Successfully");
+            return BadRequest("Rety Again please");
         }
         #endregion
 
@@ -94,11 +100,11 @@ namespace DiagnosisSystem.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult>  doctorRegister(DoctorRegisterVM MedicalPractitionerVM)
+        public async Task<IActionResult> doctorRegister(DoctorRegisterVM MedicalPractitionerVM)
         {
             if (ModelState.IsValid)
             {
-                var checkEmail = _context.MedicalPractitioners.Any(e => e.Email == MedicalPractitionerVM.Email);
+                var checkEmail = _context.Users.Any(e => e.Email == MedicalPractitionerVM.Email);
 
                 if (checkEmail)
                 {
@@ -122,7 +128,12 @@ namespace DiagnosisSystem.Controllers
                 var hashedPassword = _passwordHasher.HashPassword(null, MedicalPractitionerVM.Password);
                 var doctor = new MedicalPractitioner
                 {
-                    MedicalPractitionerID = MedicalPractitionerVM.MedicalPractitionerID,
+                    Email = MedicalPractitionerVM.Email,
+                    FirstName = MedicalPractitionerVM.FirstName,
+                    LastName = MedicalPractitionerVM.LastName,
+                    DateOfBirth = MedicalPractitionerVM.DateOfBirth,
+                    Gender= MedicalPractitionerVM.Gender,
+                    Telephone = MedicalPractitionerVM.Telephone,
                     CurrentHospital = MedicalPractitionerVM.CurrentHospital,
                     Languages = MedicalPractitionerVM.Languages,
                     Specialty = MedicalPractitionerVM.Specialty,
@@ -139,16 +150,25 @@ namespace DiagnosisSystem.Controllers
                     Role = "Doctor"
 
                 };
+                
                 try
                 {
-                    _context.MedicalPractitioners.Add(doctor);
+                    _context.Users.Add(doctor);
                     _context.SaveChanges();
                 }
                 catch (Exception ex)
                 {
                     throw new Exception("Error saving to database");
                 }
+                //var result = await _userManager.CreateAsync(doctor, MedicalPractitionerVM.Password);
+                //if (result.Succeeded)
+                //{
+                //    _context.SaveChanges();
+                //    return View(MedicalPractitionerVM);
+                //}
+                //return BadRequest("Saing error");
                 return View(MedicalPractitionerVM);
+
             }
 
             return Ok("User created Successfully");
