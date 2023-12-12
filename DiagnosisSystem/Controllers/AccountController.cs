@@ -55,13 +55,13 @@ namespace DiagnosisSystem.Controllers
                     return BadRequest("Invalid date of birth. Must be between 18 and 100 years old.");
                 }
 
-               var hashedPassword = _passwordHasher.HashPassword(null, userVM.Password);
+           
                var user = new User
                {
                    FirstName = userVM.FirstName,
                    LastName = userVM.LastName,
                    Email = userVM.Email,
-                   Password = hashedPassword,
+                 
                    Telephone = userVM.Telephone,
                    DateOfBirth = userVM.DateOfBirth,
                    Gender = userVM.Gender,
@@ -125,7 +125,6 @@ namespace DiagnosisSystem.Controllers
                     return BadRequest("Invalid date of birth. Must be between 18 and 100 years old.");
                 }
 
-                var hashedPassword = _passwordHasher.HashPassword(null, MedicalPractitionerVM.Password);
                 var doctor = new MedicalPractitioner
                 {
                     Email = MedicalPractitionerVM.Email,
@@ -139,14 +138,9 @@ namespace DiagnosisSystem.Controllers
                     Specialty = MedicalPractitionerVM.Specialty,
                     Experience = MedicalPractitionerVM.Experience,
                     ShortBio = MedicalPractitionerVM.ShortBio,
-                    Password = hashedPassword,
+                   
                     AddedOn = DateTime.Now,
-                    FirstName = MedicalPractitionerVM.FirstName,
-                    LastName = MedicalPractitionerVM.LastName,
-                    Email = MedicalPractitionerVM.Email,
-                    Telephone = MedicalPractitionerVM.Telephone,
-                    DateOfBirth = MedicalPractitionerVM.DateOfBirth,
-                    Gender = MedicalPractitionerVM.Gender,
+                    
                     Role = "Doctor"
 
                 };
@@ -186,15 +180,16 @@ namespace DiagnosisSystem.Controllers
         public async Task<IActionResult> Login(LoginVM loginVM)
         {
             var user = await _context.Users.Where(e => e.Email == loginVM.Email).FirstAsync();
-            var result = _passwordHasher.VerifyHashedPassword(null, user.Password, loginVM.Password);
-            if(result == PasswordVerificationResult.Success)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                return BadRequest("Failed login");
-            }
+
+            //if(result == PasswordVerificationResult.Success)
+            //{
+            //    return RedirectToAction("Index", "Home");
+            //}
+            //else
+            //{
+            //    return BadRequest("Failed login");
+            //}
+            return Ok("");
             
         }
         #endregion
