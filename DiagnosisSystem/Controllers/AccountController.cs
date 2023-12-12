@@ -138,8 +138,6 @@ namespace DiagnosisSystem.Controllers
                     Gender = MedicalPractitionerVM.Gender,
                     Role = "Doctor"
 
-                    //email and other data?
-
                 };
                 try
                 {
