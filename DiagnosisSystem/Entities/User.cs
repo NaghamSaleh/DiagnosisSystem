@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace DiagnosisSystem.Entities
 {
-    public class User
+    public class User:IdentityUser
     {
         [Key]
         public int UserID { get; set; }
