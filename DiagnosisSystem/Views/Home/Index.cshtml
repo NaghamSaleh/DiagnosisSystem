@@ -2,7 +2,25 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to QURE</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<head>
+    <title>@ViewData["Title"] - QURE</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom right, #5BA9A9, #84A5E3); /* Gradient background */
+            color: #333; /* Adjust text color as needed */
+        }
+
+        .jumbotron {
+            background-color: transparent;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container mt-5">
+        <div class="jumbotron text-center">
+            <h1 class="display-4">Welcome to QURE</h1>
+            <p class="lead">Crafting Health Solutions One Click at a Time.</p>
+        </div>
+    </div>
+</body>
