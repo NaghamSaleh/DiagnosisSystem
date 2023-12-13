@@ -29,7 +29,7 @@
 <div class="registration-container">
     <div asp-validation-summary="All" class="text-danger"></div>
 
-    <form asp-action="CreateAccount">
+    <form asp-action="doctorRegister">
 
         <div class="form-group">
             <label asp-for="FirstName">First Name</label>
@@ -82,7 +82,7 @@
 
         <div class="form-group">
             <label asp-for="ConfirmPassword">Confirm Password</label>
-            <input type="password" asp-for="Password" class="form-control" />
+            <input type="password" asp-for="ConfirmPassword" class="form-control" />
             <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
         </div>
         <div class="form-group">

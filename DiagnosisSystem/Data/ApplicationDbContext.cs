@@ -16,6 +16,7 @@ namespace DiagnosisSystem.Data
         public DbSet<District> Districts { get; set; }
         public DbSet<Query> Queries { get; set; }
         public DbSet<Specialty> Specialities { get; set; }
+        //public DbSet<TransactDoctor> transactDoctors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

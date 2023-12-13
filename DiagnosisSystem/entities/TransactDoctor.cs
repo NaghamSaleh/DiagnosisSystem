@@ -1,11 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace DiagnosisSystem.Entities
 {
-
-    public class User : IdentityUser
+    public class TransactDoctor 
     {
+        [Key]
+        public Guid GuidId { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
         public DateTime CreatedOn { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -17,8 +20,5 @@ namespace DiagnosisSystem.Entities
         public string Languages { get; set; }
         public string CurrentHospital { get; set; }
         public string ShortBio { get; set; }
-        public DateTime UpdatedOn { get; set; }
-
-
     }
 }

@@ -17,6 +17,9 @@ namespace DiagnosisSystem.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        #endregion
+
+        #region Constructors
         public AccountController(ApplicationDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _context = context;
@@ -69,15 +72,24 @@ namespace DiagnosisSystem.Controllers
                    DateOfBirth = userVM.DateOfBirth,
                    Gender = userVM.Gender,
                    CreatedOn = DateTime.Now,
+                   UserName = userVM.Email
                };
 
                 try
                 {
 
                     _context.Users.Add(user);
-                    var result = await _userManager.CreateAsync(user, userVM.Password);
-                    //await _userManager.AddToRoleAsync(user, "Patient");
                     _context.SaveChanges();
+                    var result = await _userManager.CreateAsync(user, userVM.Password);
+                    if (result.Succeeded)
+                    {
+                        await _userManager.AddToRoleAsync(user, "Patient");
+                    }
+                    else
+                    {
+                        return BadRequest(result.Errors);
+                    }
+                    
                     
                 }
                 catch(Exception ex)
@@ -137,6 +149,7 @@ namespace DiagnosisSystem.Controllers
                     Experience = MedicalPractitionerVM.Experience,
                     ShortBio = MedicalPractitionerVM.ShortBio,
                     CreatedOn = DateTime.Now,
+                    UserName = MedicalPractitionerVM.Email
                     
 
                 };
@@ -145,20 +158,22 @@ namespace DiagnosisSystem.Controllers
                 {
                     _context.Users.Add(doctor);
                     var result = await _userManager.CreateAsync(doctor, MedicalPractitionerVM.Password);
-                    _context.SaveChanges();
+                    if (result.Succeeded)
+                    {
+                         await _userManager.AddToRoleAsync(doctor, "InitialDoctor");
+                        _context.SaveChanges();
+                    }
+                    else
+                    {
+                        return BadRequest(result.Errors);
+                    }
                 }
                 catch (Exception ex)
                 {
                     throw new Exception("Error saving to database");
                 }
-                //var result = await _userManager.CreateAsync(doctor, MedicalPractitionerVM.Password);
-                //if (result.Succeeded)
-                //{
-                //    _context.SaveChanges();
-                //    return View(MedicalPractitionerVM);
-                //}
-                //return BadRequest("Saing error");
-                return View(MedicalPractitionerVM);
+
+                return View(null);
 
             }
 
@@ -176,29 +191,29 @@ namespace DiagnosisSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginVM loginVM)
         {
-            //var user = await _context.Users.Where(e => e.Email == loginVM.Email).FirstAsync();
-            //if (user != null)
-            //{
-                var result = await _signInManager.PasswordSignInAsync(loginVM.Email, loginVM.Password, false, lockoutOnFailure: false);
-                if(result.Succeeded)
+            var result = await _signInManager.PasswordSignInAsync(loginVM.Email, loginVM.Password, false, lockoutOnFailure: false);
+           
+            if(result.Succeeded)
+            {
+                var userId = _context.Users.Where(e => e.Email == loginVM.Email).Select(e => e.Id);
+                var UserRole =  _context.UserRoles.Where(u => u.UserId.Equals(userId)).Select(r => r.RoleId);
+                var Role = _context.Roles.Where(r => r.Id.Equals(UserRole)).Select(n => n.Name).ToString();
+                if(Role == "Doctor")
                 {
                     return RedirectToAction("Index", "Home");
                 }
+                else
+                {
+                    return BadRequest("Account still waiting Acceptance");
+                }
+                
+            }
             else
             {
                 return BadRequest("Failed login");
             }
-            //}
 
-            //if(result == PasswordVerificationResult.Success)
-            //{
-            //    return RedirectToAction("Index", "Home");
-            //}
-            //else
-            //{
-            //    return BadRequest("Failed login");
-            //}
-        
+       
             
         }
         #endregion
@@ -211,6 +226,16 @@ namespace DiagnosisSystem.Controllers
             HttpContext.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+        #endregion
+
+
+        #region Review Doctor Account Request
+        [HttpGet]
+        public IActionResult DoctorRequest()
+        {
+            return View();
+        }
+
         #endregion
     }
 }
