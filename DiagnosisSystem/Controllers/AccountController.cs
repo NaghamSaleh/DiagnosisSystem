@@ -15,9 +15,13 @@ namespace DiagnosisSystem.Controllers
     {
         #region Variables
         private readonly ApplicationDbContext _context;
-        public AccountController(ApplicationDbContext context)
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        public AccountController(ApplicationDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _context = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
         #endregion
 
@@ -61,18 +65,18 @@ namespace DiagnosisSystem.Controllers
                    FirstName = userVM.FirstName,
                    LastName = userVM.LastName,
                    Email = userVM.Email,
-                 
                    Telephone = userVM.Telephone,
                    DateOfBirth = userVM.DateOfBirth,
                    Gender = userVM.Gender,
-                   AddedOn = DateTime.Now,
-                   Role = "Patient"
+                   CreatedOn = DateTime.Now,
                };
 
                 try
                 {
 
                     _context.Users.Add(user);
+                    var result = await _userManager.CreateAsync(user, userVM.Password);
+                    //await _userManager.AddToRoleAsync(user, "Patient");
                     _context.SaveChanges();
                     
                 }
@@ -80,16 +84,10 @@ namespace DiagnosisSystem.Controllers
                 {
                     throw new Exception("Error saving to database");
                 }
-                //var result = await _userManager.CreateAsync(user, userVM.Password);
-                //if (result.Succeeded)
-                //{
-                //    _context.SaveChanges();
-                //    return View(null);
-                //}
-                return View();
+                return View(null);
             }
 
-            return BadRequest("Rety Again please");
+            return BadRequest("Retry Again please");
         }
         #endregion
 
@@ -125,7 +123,7 @@ namespace DiagnosisSystem.Controllers
                     return BadRequest("Invalid date of birth. Must be between 18 and 100 years old.");
                 }
 
-                var doctor = new MedicalPractitioner
+                var doctor = new User
                 {
                     Email = MedicalPractitionerVM.Email,
                     FirstName = MedicalPractitionerVM.FirstName,
@@ -138,16 +136,15 @@ namespace DiagnosisSystem.Controllers
                     Specialty = MedicalPractitionerVM.Specialty,
                     Experience = MedicalPractitionerVM.Experience,
                     ShortBio = MedicalPractitionerVM.ShortBio,
-                   
-                    AddedOn = DateTime.Now,
+                    CreatedOn = DateTime.Now,
                     
-                    Role = "Doctor"
 
                 };
                 
                 try
                 {
                     _context.Users.Add(doctor);
+                    var result = await _userManager.CreateAsync(doctor, MedicalPractitionerVM.Password);
                     _context.SaveChanges();
                 }
                 catch (Exception ex)
@@ -179,7 +176,19 @@ namespace DiagnosisSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginVM loginVM)
         {
-            var user = await _context.Users.Where(e => e.Email == loginVM.Email).FirstAsync();
+            //var user = await _context.Users.Where(e => e.Email == loginVM.Email).FirstAsync();
+            //if (user != null)
+            //{
+                var result = await _signInManager.PasswordSignInAsync(loginVM.Email, loginVM.Password, false, lockoutOnFailure: false);
+                if(result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            else
+            {
+                return BadRequest("Failed login");
+            }
+            //}
 
             //if(result == PasswordVerificationResult.Success)
             //{
@@ -189,7 +198,7 @@ namespace DiagnosisSystem.Controllers
             //{
             //    return BadRequest("Failed login");
             //}
-            return Ok("");
+        
             
         }
         #endregion

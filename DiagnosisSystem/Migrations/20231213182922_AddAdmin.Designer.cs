@@ -4,6 +4,7 @@ using DiagnosisSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DiagnosisSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231213182922_AddAdmin")]
+    partial class AddAdmin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,36 +112,6 @@ namespace DiagnosisSystem.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "6609a15d-7ba4-4db7-a6e1-f413aca6d96d",
-                            ConcurrencyStamp = "8f10ad6c-81c6-4934-b132-6da8a70ef480",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "5e443af2-2b85-4d51-b34e-2f9cc6bcab0f",
-                            ConcurrencyStamp = "0995248f-0b90-4178-98c6-0a5e34a2b13b",
-                            Name = "Patient",
-                            NormalizedName = "PATIENT"
-                        },
-                        new
-                        {
-                            Id = "238dc023-afa6-4f1b-b298-6f13e31e91f2",
-                            ConcurrencyStamp = "e7ffd2a2-7a72-4a80-b409-b12c162474b4",
-                            Name = "Doctor",
-                            NormalizedName = "DOCTOR"
-                        },
-                        new
-                        {
-                            Id = "0f923a35-b8d6-4fa7-a69d-ce1aadbbe24f",
-                            ConcurrencyStamp = "5d108870-694a-47ac-a22c-c858d20b7444",
-                            Name = "InitialDoctor",
-                            NormalizedName = "INITIALDOCTOR"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -240,17 +212,17 @@ namespace DiagnosisSystem.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "0b04c1d1-a51d-4c5d-8768-d5c474433e5d",
+                            Id = "b8655327-f402-4b74-97de-470c0fbd7b2c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f0520457-b894-46e7-a15a-9c8cef52a1ca",
+                            ConcurrencyStamp = "1ec35066-c205-4c66-8c51-7f6eb58b2410",
                             Email = "naghamsaleh@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "NAGHAMSALEH@GMAIL.COM",
                             NormalizedUserName = "NAGHAMSALEH",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBxLWuJn5EUbsfx0OhRXwAuNrqQyDV8TWuqh3BhSqiyp5qyqZSaOZY9cg11eWsokJg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEADYGTALc1htdn3ON0NZ0Wpy7s3k2Bu0URNbJG603tp5ov5y2MqzceZAUKCz13lQqw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "01713829-7aa4-4a3f-bc6d-a97a6e037944",
+                            SecurityStamp = "01818502-19cb-4efe-91e3-0918d647b002",
                             TwoFactorEnabled = false,
                             UserName = "naghamsaleh"
                         });
@@ -316,13 +288,6 @@ namespace DiagnosisSystem.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "0b04c1d1-a51d-4c5d-8768-d5c474433e5d",
-                            RoleId = "6609a15d-7ba4-4db7-a6e1-f413aca6d96d"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

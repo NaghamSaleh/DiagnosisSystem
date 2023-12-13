@@ -4,6 +4,7 @@ using DiagnosisSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DiagnosisSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231212173216_IdentityRolesandUsers")]
+    partial class IdentityRolesandUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,23 +70,6 @@ namespace DiagnosisSystem.Migrations
                     b.ToTable("Queries");
                 });
 
-            modelBuilder.Entity("DiagnosisSystem.Entities.Specialty", b =>
-                {
-                    b.Property<int>("SpecialtyID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SpecialtyID"), 1L, 1);
-
-                    b.Property<string>("SpecialtyName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("SpecialtyID");
-
-                    b.ToTable("Specialities");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -92,6 +77,10 @@ namespace DiagnosisSystem.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -111,35 +100,7 @@ namespace DiagnosisSystem.Migrations
 
                     b.ToTable("AspNetRoles", (string)null);
 
-                    b.HasData(
-                        new
-                        {
-                            Id = "6609a15d-7ba4-4db7-a6e1-f413aca6d96d",
-                            ConcurrencyStamp = "8f10ad6c-81c6-4934-b132-6da8a70ef480",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "5e443af2-2b85-4d51-b34e-2f9cc6bcab0f",
-                            ConcurrencyStamp = "0995248f-0b90-4178-98c6-0a5e34a2b13b",
-                            Name = "Patient",
-                            NormalizedName = "PATIENT"
-                        },
-                        new
-                        {
-                            Id = "238dc023-afa6-4f1b-b298-6f13e31e91f2",
-                            ConcurrencyStamp = "e7ffd2a2-7a72-4a80-b409-b12c162474b4",
-                            Name = "Doctor",
-                            NormalizedName = "DOCTOR"
-                        },
-                        new
-                        {
-                            Id = "0f923a35-b8d6-4fa7-a69d-ce1aadbbe24f",
-                            ConcurrencyStamp = "5d108870-694a-47ac-a22c-c858d20b7444",
-                            Name = "InitialDoctor",
-                            NormalizedName = "INITIALDOCTOR"
-                        });
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityRole");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -236,24 +197,6 @@ namespace DiagnosisSystem.Migrations
                     b.ToTable("AspNetUsers", (string)null);
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "0b04c1d1-a51d-4c5d-8768-d5c474433e5d",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "f0520457-b894-46e7-a15a-9c8cef52a1ca",
-                            Email = "naghamsaleh@gmail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "NAGHAMSALEH@GMAIL.COM",
-                            NormalizedUserName = "NAGHAMSALEH",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBxLWuJn5EUbsfx0OhRXwAuNrqQyDV8TWuqh3BhSqiyp5qyqZSaOZY9cg11eWsokJg==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "01713829-7aa4-4a3f-bc6d-a97a6e037944",
-                            TwoFactorEnabled = false,
-                            UserName = "naghamsaleh"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -316,13 +259,6 @@ namespace DiagnosisSystem.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "0b04c1d1-a51d-4c5d-8768-d5c474433e5d",
-                            RoleId = "6609a15d-7ba4-4db7-a6e1-f413aca6d96d"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -342,6 +278,13 @@ namespace DiagnosisSystem.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("DiagnosisSystem.Entities.Roles", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole");
+
+                    b.HasDiscriminator().HasValue("Roles");
                 });
 
             modelBuilder.Entity("DiagnosisSystem.Entities.User", b =>
