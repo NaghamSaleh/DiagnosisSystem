@@ -24,12 +24,14 @@
     }
 </style>
 
+<form asp-action="doctorRegister">
+
+
 <h1 style="text-align: center;">Register as Medical Practitioner</h1>
 
 <div class="registration-container">
     <div asp-validation-summary="All" class="text-danger"></div>
 
-    <form asp-action="doctorRegister">
 
         <div class="form-group">
             <label asp-for="FirstName">First Name</label>
@@ -122,4 +124,6 @@
 
 
         <button type="submit" class="btn btn-primary">Register</button>
+    </div>
+
     </form>

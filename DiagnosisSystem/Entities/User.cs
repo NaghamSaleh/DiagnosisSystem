@@ -18,6 +18,8 @@ namespace DiagnosisSystem.Entities
         public string CurrentHospital { get; set; }
         public string ShortBio { get; set; }
         public DateTime UpdatedOn { get; set; }
+        public string Password { get; set; }
+        public string ConfirmPassword { get; set; }
 
 
     }

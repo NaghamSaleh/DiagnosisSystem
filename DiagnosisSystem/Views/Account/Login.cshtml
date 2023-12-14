@@ -23,10 +23,11 @@
     }
 </style>
 
+<form asp-controller="Account" asp-action="Login" method="post">
+
 <h1 style="text-align: center;">Login</h1>
 <div class="login-container">
 
-<form asp-controller="Account" asp-action="Login" method="post">
     <div asp-validation-summary="All" class="text-danger"></div>
 
     <div class="form-group">
@@ -42,5 +43,7 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Login</button>
+    </div>
+
 
 </form>
