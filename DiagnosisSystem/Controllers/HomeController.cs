@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DiagnosisSystem.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -17,8 +16,6 @@ namespace DiagnosisSystem.Controllers
 
         public IActionResult Index()
         {
-            bool isAuthenticated = true;
-            ViewBag.IsAuthenticated = isAuthenticated;
             return View();
         }
 
