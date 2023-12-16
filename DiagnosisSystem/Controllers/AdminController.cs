@@ -20,7 +20,12 @@ namespace DiagnosisSystem.Controllers
             _context = context;
         }
         #endregion
-        public async Task<IActionResult> Index()
+
+        #region Index, Full Management
+        #endregion
+
+        #region Manage Doctor Account
+        public async Task<IActionResult> Doctors()
         {
             string roleName = "InitialDoctor";
             List<DoctorRegisterVM> doctorRegisterVMs= new List<DoctorRegisterVM>();
@@ -50,7 +55,6 @@ namespace DiagnosisSystem.Controllers
             }
             return View(doctorRegisterVMs);
         }
-
 
         public IActionResult Approve(string userId)
         {
@@ -84,6 +88,12 @@ namespace DiagnosisSystem.Controllers
 
             return Ok("Successfully Deleted and Rejected");
         }
+        #endregion
 
+        #region Add Speciality
+        #endregion
+
+        #region Add Task
+        #endregion
     }
 }
