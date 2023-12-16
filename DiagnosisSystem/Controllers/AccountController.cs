@@ -227,15 +227,5 @@ namespace DiagnosisSystem.Controllers
             return RedirectToAction("Index", "Home");
         }
         #endregion
-
-
-        #region Review Doctor Account Request
-        [HttpGet]
-        public IActionResult DoctorRequest()
-        {
-            return View();
-        }
-
-        #endregion
     }
 }
