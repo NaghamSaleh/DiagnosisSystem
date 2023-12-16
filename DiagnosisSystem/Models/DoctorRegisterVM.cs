@@ -8,5 +8,9 @@
         public string Languages { get; set; }
         public string CurrentHospital { get; set; }
         public string ShortBio { get; set; }
+        public string Password { get; set; }
+        public string ConfirmPassword { get; set; }
+
+
     }
 }
