@@ -4,7 +4,7 @@ namespace DiagnosisSystem.Models
 {
     public class RegisterVM
     {
-        public string UserID { get; set; }
+        public string UserID { get; set; } = string.Empty;
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
         public string FirstName { get; set; }

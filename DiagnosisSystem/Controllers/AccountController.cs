@@ -5,9 +5,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Numerics;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace DiagnosisSystem.Controllers
 {
@@ -72,8 +69,7 @@ namespace DiagnosisSystem.Controllers
                     Gender = userVM.Gender,
                     CreatedOn = DateTime.Now,
                     UserName = userVM.Email,
-                    Password = userVM.Password,
-                    ConfirmPassword = userVM.ConfirmPassword,
+                   
                 };
 
                 try
@@ -155,8 +151,7 @@ namespace DiagnosisSystem.Controllers
                     ShortBio = MedicalPractitionerVM.ShortBio,
                     CreatedOn = DateTime.Now,
                     UserName = MedicalPractitionerVM.Email,
-                    Password = MedicalPractitionerVM.Password,
-                    ConfirmPassword = MedicalPractitionerVM.ConfirmPassword
+                    
 
                 };
 
@@ -203,18 +198,18 @@ namespace DiagnosisSystem.Controllers
            
             if(result.Succeeded)
             {
-                var userId = _context.Users.Where(e => e.Email == loginVM.Email).Select(e => e.Id);
-                var UserRole =  _context.UserRoles.Where(u => u.UserId.Equals(userId)).Select(r => r.RoleId);
-                var Role = _context.Roles.Where(r => r.Id.Equals(UserRole)).Select(n => n.Name).ToString();
-                if(Role == "Doctor")
+                var userId = await _context.Users.Where(e => e.Email == loginVM.Email).Select(e => e.Id).FirstOrDefaultAsync();
+                var UserRole = await  _context.UserRoles.Where(u => u.UserId == userId).Select(r => r.RoleId).FirstOrDefaultAsync();
+                var Role = await _context.Roles.Where(r => r.Id == UserRole).Select(n => n.Name).FirstOrDefaultAsync();
+                if(Role.Equals("Doctor"))
                 {
                     return RedirectToAction("Login", "Account");
                 }
-                else if(Role == "InitialDoctor")
+                else if(Role.Equals("InitialDoctor"))
                 {
                     return BadRequest("Account still waiting Acceptance");
                 }
-                else if(Role == "Patient")
+                else if(Role.Equals("Patient"))
                 {
                     return RedirectToAction("Index", "Patient");
                 }
