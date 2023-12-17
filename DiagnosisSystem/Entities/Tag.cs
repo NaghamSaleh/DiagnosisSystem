@@ -2,13 +2,12 @@
 
 namespace DiagnosisSystem.Entities
 {
-    public class Specialty
+    public class Tag
     {
         [Key]
-        public int SpecialtyID { get; set; }
-        public string SpecialtyName { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
-
-
+        public Specialty SpecialityName { get; set; }
     }
 }

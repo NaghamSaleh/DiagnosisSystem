@@ -1,4 +1,5 @@
 ﻿using DiagnosisSystem.Data;
+using DiagnosisSystem.Entities;
 using DiagnosisSystem.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,28 @@ namespace DiagnosisSystem.Controllers
         #endregion
 
         #region Index, Full Management
+        public async IActionResult Index()
+        {
+            var allUsers = _context.Users.AsQueryable();
+
+            #region Get Pending Doctor Requests
+
+            #endregion
+
+            #region Get Registered Doctors
+            #endregion
+
+            #region Get Rejected Doctors
+            #endregion
+
+            #region Get Registered Patients
+            #endregion
+
+            #region Get Registered Admins
+            #endregion
+
+            return View();
+        }
         #endregion
 
         #region Manage Doctor Account
@@ -91,9 +114,102 @@ namespace DiagnosisSystem.Controllers
         #endregion
 
         #region Add Speciality
+        [HttpGet]
+        public IActionResult Speciality()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Speciality(SpecialityVM specialityVM)
+        {
+            if (ModelState.IsValid)
+            {
+                var speciality = new Specialty()
+                {
+                    SpecialtyName = specialityVM.Name,
+                    Description = specialityVM.Description
+                };
+
+                _context.Specialities.Add(speciality);
+                _context.SaveChanges();
+                return Ok("Successfully added");
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditSpeciality(int id)
+        {
+            if(id == null || _context.Specialities == null)
+            {
+                return NotFound();
+            }
+            var specialityInfo = await _context.Specialities.Where(s => s.SpecialtyID == id).SingleOrDefaultAsync();
+            var specialityVM = new Specialty()
+            {
+                SpecialtyID = specialityInfo.SpecialtyID,
+                SpecialtyName = specialityInfo.SpecialtyName,
+                Description = specialityInfo.Description
+            };
+
+            return View(specialityVM);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, SpecialityVM specialityVM)
+        {
+            if(id != specialityVM.Id)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var SpecialityEntity = await _context.Specialities.Where(s => s.SpecialtyID == id).FirstAsync();
+                    if(SpecialityEntity == null)
+                    {
+                        throw new ArgumentException(nameof(SpecialityEntity));
+                    }
+                    else
+                    {
+                        SpecialityEntity.Description = specialityVM.Description;
+                        _context.Update(specialityVM);
+                        await _context.SaveChangesAsync();
+                    }
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+                return RedirectToAction(nameof(Index));
+               
+            }
+            return View(specialityVM);
+        }
         #endregion
 
-        #region Add Task
+        #region Add Tag
+        public IActionResult Tag()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> Tag(TagVM tagVM)
+        {
+            if (ModelState.IsValid)
+            {
+                var tag = new Tag()
+                {
+                    Name = tagVM.Name,
+                    Description = tagVM.Description,
+                    SpecialityName = tagVM.SpecialityName
+                };
+                _context.Tags.Add(tag);
+                _context.SaveChanges();
+            }
+            return View();
+        }
         #endregion
     }
 }
