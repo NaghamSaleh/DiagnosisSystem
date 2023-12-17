@@ -72,6 +72,7 @@ namespace DiagnosisSystem.Data
                     Id = user_id
 
                 });
+            
 
             builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
             {
