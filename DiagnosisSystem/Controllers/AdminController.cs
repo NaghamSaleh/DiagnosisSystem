@@ -23,9 +23,9 @@ namespace DiagnosisSystem.Controllers
         #endregion
 
         #region Index, Full Management
-        public async IActionResult Index()
+        public IActionResult Index()
         {
-            var allUsers = _context.Users.AsQueryable();
+            var allUsers =  _context.Users.AsQueryable();
 
             #region Get Pending Doctor Requests
 
