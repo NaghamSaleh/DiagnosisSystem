@@ -100,6 +100,8 @@
             <div class="user-box" onclick="handleUserBoxClick(this)">Patient</div>
             <div class="user-box" onclick="handleUserBoxClick(this)">Medical Practitioner</div>
             <div class="user-box" onclick="handleUserBoxClick(this)">Administrator</div>
+            <div class="user-box" onclick="handleUserBoxClick(this)">Login</div>
+
 
             <div class="separator-line"></div>
 
@@ -134,7 +136,19 @@
                         // Redirect to the patient registration route
                         window.location.href = "/Account/Register";
                         break;
-                    // Add cases for other user options if needed
+                    case 'Medical Practitioner':
+                        // Redirect to the patient registration route
+                        window.location.href = "/Account/doctorRegister";
+                        break;
+                    case 'administrative':
+                        // Redirect to the patient registration route
+                        window.location.href = "";
+                        break;
+                    case 'Login':
+                        // Redirect to the patient registration route
+                        window.location.href = "/Account/Login";
+                        break;
+
                 }
             }
         }
