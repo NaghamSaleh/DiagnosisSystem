@@ -156,7 +156,7 @@ namespace DiagnosisSystem.Controllers
             return View(specialityVM);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, SpecialityVM specialityVM)
+        public async Task<IActionResult> EditSpeciality(int id, SpecialityVM specialityVM)
         {
             if(id != specialityVM.Id)
             {
@@ -190,11 +190,22 @@ namespace DiagnosisSystem.Controllers
         #endregion
 
         #region Add Tag
+        [HttpGet]
         public IActionResult Tag()
         {
-            return View();
+            var tagVM = new TagVM();
+            tagVM.SpecialityName = _context.Specialities.Select(s => new SpecialityVM
+            {
+                Description = s.Description,
+                Name = s.SpecialtyName,
+                Id = s.SpecialtyID,
+            }).ToList();
+           
+           
+            return View(tagVM);
         }
 
+        [HttpPost]
         public async Task<IActionResult> Tag(TagVM tagVM)
         {
             if (ModelState.IsValid)
@@ -203,12 +214,12 @@ namespace DiagnosisSystem.Controllers
                 {
                     Name = tagVM.Name,
                     Description = tagVM.Description,
-                    SpecialityName = tagVM.SpecialityName
+                    SpecialityName = tagVM.SelectedSpeciality
                 };
                 _context.Tags.Add(tag);
                 _context.SaveChanges();
             }
-            return View();
+            return Ok("Successfully Saved");
         }
         #endregion
     }

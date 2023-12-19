@@ -7,6 +7,7 @@ namespace DiagnosisSystem.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public Specialty SpecialityName { get; set; }
+        public List<SpecialityVM> SpecialityName { get; set; } = new List<SpecialityVM>();
+        public string SelectedSpeciality { get; set; } = string.Empty;
     }
 }

@@ -31,7 +31,6 @@ namespace DiagnosisSystem.Controllers
                 {
                     QuestionTitle = patientQuestionVM.QuestionTitle,
                     QuestionBody = patientQuestionVM.QuestionBody,
-                    //QuestionTag = patientQuestionVM.QuestionTag
                 };
                 _context.PatientQuestions.Add(pQuestion);
                 await _context.SaveChangesAsync();
