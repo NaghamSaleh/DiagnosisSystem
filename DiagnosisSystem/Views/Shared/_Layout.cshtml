@@ -26,27 +26,8 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                       @* @if (isAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <form class="form-inline" asp-controller="Account" asp-action="Logout" method="post">
-                                    <button type="submit" class="btn btn-link">Logout</button>
-                                </form>
-                            </li>
-                        }
-                        else
-                        { *@
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Register/Login
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a asp-controller="Account" asp-action="doctorRegister" class="dropdown-item">Register as a Doctor</a></li>
-                                    <li><a asp-controller="Account" asp-action="Register" class="dropdown-item">Register as a Patient</a></li>
-                                    <li><a asp-controller="Account" asp-action="Login" class="dropdown-item">Login</a></li>
-                                </ul>
-                            </li>
-                       @*}*@ 
+                  
+                       
                     </ul>
                 </div>
             </div>

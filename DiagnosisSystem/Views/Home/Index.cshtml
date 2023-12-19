@@ -97,10 +97,15 @@
         <div class="login-container">
             <div class="login-text">Login/Register as</div>
 
-            <div class="user-box" onclick="handleUserBoxClick(this)">Patient</div>
-            <div class="user-box" onclick="handleUserBoxClick(this)">Medical Practitioner</div>
-            <div class="user-box" onclick="handleUserBoxClick(this)">Administrator</div>
-            <div class="user-box" onclick="handleUserBoxClick(this)">Login</div>
+            <div>
+                <a type="button" class="user-box" asp-controller="Account" asp-action="Register">
+                    Patient
+                </a>
+                
+            </div>
+            <div class="user-box" asp-controller="Acccount" asp-action="doctorRegister">Medical Practitioner</div>
+            <div class="user-box" asp-controller="Account" asp-action="Login">Administrator</div>
+            <div class="user-box" asp-controller="Account" asp-action="Login">Login</div>
 
 
             <div class="separator-line"></div>
