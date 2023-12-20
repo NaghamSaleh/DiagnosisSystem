@@ -1,6 +1,7 @@
 ﻿using DiagnosisSystem.Data;
 using DiagnosisSystem.Entities;
 using DiagnosisSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,8 +9,10 @@ using System.Data;
 
 namespace DiagnosisSystem.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class AdminController : Controller
     {
+
         #region Variables
         private readonly ApplicationDbContext _context;
 
