@@ -3,87 +3,9 @@
 }
 
 <head>
-    <title>@ViewData["Title"] - QURE</title>
-    <style>
-        body {
-            background: linear-gradient(to bottom right, #5BA9A9, #84A5E3);
-            color: #333;
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            height: 100vh;
-        }
-
-        .login-container-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .login-container {
-            width: 450px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-        }
-
-        .separator-line {
-            width: 100%;
-            height: 2px;
-            background: rgba(0, 0, 0, 0.1);
-            margin: 20px 0;
-        }
-
-        .login-text {
-            color: black;
-            font-size: 24px;
-            font-weight: 500;
-            margin-bottom: 20px;
-        }
-
-        .user-box {
-            width: 100%;
-            height: 55px;
-            background: #D9D9D9;
-            border-radius: 15px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-            .user-box.clicked {
-                background: #72A8AA;
-            }
-
-        .next-button {
-            width: 100%;
-            height: 29px;
-            background: #D9D9D9;
-            border-radius: 5px;
-            margin-top: 20px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .next-button-text {
-            color: white;
-            font-size: 15px;
-            text-align: center;
-            margin-top: 5px;
-        }
-
-        .next-button.active {
-            background: #FFB067;
-        }
-
-        .user-box:hover,
-        .next-button:hover {
-            background: #72A8AA;
-        }
-    </style>
+    <title>@ViewData["Title"] QURE</title>
+    <link rel="stylesheet" href="/css/Home/Index.css">
+    <script src="~/js/Home/Index.js"></script>
 </head>
 
 <body>
@@ -115,48 +37,5 @@
             </div>
         </div>
     </div>
-
-    <script>
-        function handleUserBoxClick(element) {
-            var userBoxes = document.querySelectorAll('.user-box');
-            userBoxes.forEach(function (box) {
-                box.classList.remove("clicked");
-            });
-
-            element.classList.add("clicked");
-
-            // Check if any user box is clicked to toggle the "active" class on the Next button
-            var nextButton = document.getElementById('nextButton');
-            nextButton.classList.toggle("active", Array.from(userBoxes).some(box => box.classList.contains('clicked')));
-        }
-        function handleNextButtonClick() {
-            var activeUserBox = document.querySelector('.user-box.clicked');
-
-            // Check if the "Next" button is active and a user box is selected
-            if (activeUserBox) {
-                // Navigate to the corresponding route based on the selected option
-                var userOption = activeUserBox.innerText.toLowerCase();
-                switch (userOption) {
-                    case 'patient':
-                        // Redirect to the patient registration route
-                        window.location.href = "/Account/Register";
-                        break;
-                    case 'Medical Practitioner':
-                        // Redirect to the patient registration route
-                        window.location.href = "/Account/doctorRegister";
-                        break;
-                    case 'administrative':
-                        // Redirect to the patient registration route
-                        window.location.href = "";
-                        break;
-                    case 'Login':
-                        // Redirect to the patient registration route
-                        window.location.href = "/Account/Login";
-                        break;
-
-                }
-            }
-        }
-    </script>
 </body>
 
