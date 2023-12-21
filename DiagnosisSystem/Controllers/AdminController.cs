@@ -190,6 +190,20 @@ namespace DiagnosisSystem.Controllers
             }
             return View(specialityVM);
         }
+
+        public IActionResult ViewSpecialities()
+        {
+            var allSpecialities = _context.Specialities
+                .Select(t => new SpecialityVM
+                {
+                    Name = t.SpecialtyName,
+                    Description = t.Description,
+                    
+                }).ToList();
+
+            return View(allSpecialities);
+        }
+
         #endregion
 
         #region Add Tag
@@ -223,6 +237,18 @@ namespace DiagnosisSystem.Controllers
                 _context.SaveChanges();
             }
             return Ok("Successfully Saved");
+        }
+
+        public IActionResult ViewTags()
+        {
+            var allTags = _context.Tags
+                .Select(t => new TagVM
+                {
+                    Name = t.Name,
+                    Description = t.Description,
+                    SelectedSpeciality = t.SpecialityName
+                }).ToList();
+            return View(allTags);
         }
         #endregion
     }

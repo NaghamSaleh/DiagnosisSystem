@@ -1,0 +1,24 @@
+﻿@model List<TagVM>
+
+<h1>Tag List</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Tag</th>
+            <th>Speciality</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tag in Model)
+        {
+            <tr>
+                <td>@tag.Name</td>
+                <td>@tag.SelectedSpeciality</td>
+                <td>@tag.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a asp-action="Tag" asp-controller="Admin" class="btn btn-outline-dark btn-sm me-1">Add Tag</a>

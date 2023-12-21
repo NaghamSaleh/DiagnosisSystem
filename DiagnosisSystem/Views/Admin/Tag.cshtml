@@ -1,4 +1,7 @@
 ﻿@model TagVM
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <form asp-controller="Admin" asp-action="Tag" method="post">
 
     <h1 style="text-align: center;">Add Tag</h1>
@@ -12,24 +15,16 @@
             <span asp-validation-for="Name" class="text-danger"></span>
         </div>
         <div class="dropdown">
-           
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Select an option
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                
-                @Html.LabelFor(model => model.SpecialityName, "Select an option", new { @class = "control-label" })
-               
-                    @foreach(var s in Model.SpecialityName)
+          
+            <div >
+                <label>Select an option</label>
+                <select asp-for="SelectedSpeciality">
+                    @foreach (var item in Model.SpecialityName) 
                     {
-                        
-                        @Html.DropDownListFor(model => model.SelectedSpeciality,
-                        new SelectList(new List<string> { s.Name }),
-                        new { @class = "form-control" })
+                        <option value="@item.Name">@item.Name</option>
                     }
-                
-
-            </div>
+                </select>
+                </div>
 
         </div>
         <div class="form-group">
