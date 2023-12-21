@@ -8,6 +8,6 @@ namespace DiagnosisSystem.Entities
         public int Id { get; set; }
         public string QuestionTitle { get; set; }
         public string QuestionBody { get; set; }
-        public Tag QuestionTag { get; set; }
+        public string QuestionTag { get; set; }
     }
 }

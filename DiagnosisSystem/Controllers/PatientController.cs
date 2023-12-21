@@ -20,7 +20,10 @@ namespace DiagnosisSystem.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            var questionVM = new PatientQuestionVM();
+            questionVM.QuestionTag = _context.Tags.Select(s => s.Name).ToList();
+
+            return View(questionVM);
         }
 
         public async Task<IActionResult> Create(PatientQuestionVM patientQuestionVM)
@@ -31,6 +34,7 @@ namespace DiagnosisSystem.Controllers
                 {
                     QuestionTitle = patientQuestionVM.QuestionTitle,
                     QuestionBody = patientQuestionVM.QuestionBody,
+                    QuestionTag = string.Join(',', patientQuestionVM.QuestionTag)
                 };
                 _context.PatientQuestions.Add(pQuestion);
                 await _context.SaveChangesAsync();

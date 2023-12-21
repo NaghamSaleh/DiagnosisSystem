@@ -6,6 +6,6 @@ namespace DiagnosisSystem.Models
     {
         public string QuestionTitle { get; set; }
         public string QuestionBody { get; set; }
-        public TagVM QuestionTag { get; set; }
+        public List<string> QuestionTag { get; set; }
     }
 }
