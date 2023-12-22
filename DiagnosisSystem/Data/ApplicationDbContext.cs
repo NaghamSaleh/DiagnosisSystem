@@ -83,7 +83,5 @@ namespace DiagnosisSystem.Data
             });
 
         }
-
-        public DbSet<DiagnosisSystem.Models.SpecialityVM>? SpecialityVM { get; set; }
     }
 }

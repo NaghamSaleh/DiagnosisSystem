@@ -18,6 +18,7 @@ namespace DiagnosisSystem.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
             var questionVM = new PatientQuestionVM();
@@ -26,6 +27,7 @@ namespace DiagnosisSystem.Controllers
             return View(questionVM);
         }
 
+        [HttpPost]
         public async Task<IActionResult> Create(PatientQuestionVM patientQuestionVM)
         {
             if(ModelState.IsValid)
