@@ -1,6 +1,9 @@
 ﻿@model List<DoctorRegisterVM>
 
-<table border="1">
+<link rel="stylesheet" type="text/css" href="/css/Home/doctorsList.css">
+
+
+<table>
     <thead>
         <tr>
             <th>User Id</th>
@@ -9,7 +12,7 @@
             <th>Current Hospital</th>
             <th>Email</th>
             <th>Gender</th>
-            <!--Add other data-->
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -17,17 +20,15 @@
         {
             <tr>
                 <td>@user.UserID</td>
-                <td>@user.FirstName  @user.LastName</td>
+                <td>@user.FirstName @user.LastName</td>
                 <td>@user.Specialty</td>
                 <td>@user.CurrentHospital</td>
                 <td>@user.Email</td>
                 <td>@user.Gender</td>
-                <!-- Add other table cells for additional properties -->
                 <td>
                     <!-- Action buttons -->
-                    <a asp-action="Approve" asp-route-userId="@user.UserID" >Approve</a>
+                    <a asp-action="Approve" asp-route-userId="@user.UserID">Approve</a>
                     <a asp-action="Reject" asp-route-userId="@user.UserID">Reject</a>
-                    
                 </td>
             </tr>
         }

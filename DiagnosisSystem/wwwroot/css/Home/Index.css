@@ -76,3 +76,12 @@
 .next-button:hover {
     background: #72A8AA;
 }
+
+
+
+.login-container p {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    background: white;
+}

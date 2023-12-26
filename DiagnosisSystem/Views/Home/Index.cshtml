@@ -17,25 +17,21 @@
     </div>
     <div class="login-container-wrapper">
         <div class="login-container">
-            <div class="login-text">Login/Register as</div>
+            <div class="login-text">Register as</div>
 
             <div>
-                <a type="button" class="user-box" asp-controller="Account" asp-action="Register">
-                    Patient
-                </a>
-                
+                <a type="button" class="user-box" asp-controller="Account" asp-action="Register"> Patient </a>
             </div>
-            <div class="user-box" asp-controller="Acccount" asp-action="doctorRegister">Medical Practitioner</div>
-            <div class="user-box" asp-controller="Account" asp-action="Login">Administrator</div>
-            <div class="user-box" asp-controller="Account" asp-action="Login">Login</div>
 
+            <div>
+                <a type="button" class="user-box" asp-controller="Account" asp-action="doctorRegister"> Medical Practitioner </a>
+            </div>
 
             <div class="separator-line"></div>
 
-            <div class="next-button" id="nextButton">
-                <div class="next-button-text">Next</div>
+            <div>
+                <p class="user-box">Already have an account? <a asp-controller="Account" asp-action="Login">Login</a></p>
             </div>
         </div>
     </div>
 </body>
-
