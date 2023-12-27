@@ -18,11 +18,16 @@ namespace DiagnosisSystem.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            var questionVM = new PatientQuestionVM();
+            questionVM.QuestionTag = _context.Tags.Select(s => s.Name).ToList();
+
+            return View(questionVM);
         }
 
+        [HttpPost]
         public async Task<IActionResult> Create(PatientQuestionVM patientQuestionVM)
         {
             if(ModelState.IsValid)
@@ -31,6 +36,7 @@ namespace DiagnosisSystem.Controllers
                 {
                     QuestionTitle = patientQuestionVM.QuestionTitle,
                     QuestionBody = patientQuestionVM.QuestionBody,
+                    QuestionTag = string.Join(',', patientQuestionVM.QuestionTag)
                 };
                 _context.PatientQuestions.Add(pQuestion);
                 await _context.SaveChangesAsync();

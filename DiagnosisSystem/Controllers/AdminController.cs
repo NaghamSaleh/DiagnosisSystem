@@ -1,15 +1,19 @@
 ﻿using DiagnosisSystem.Data;
 using DiagnosisSystem.Entities;
 using DiagnosisSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
 using System.Data;
 
 namespace DiagnosisSystem.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class AdminController : Controller
     {
+
         #region Variables
         private readonly ApplicationDbContext _context;
 
@@ -23,24 +27,45 @@ namespace DiagnosisSystem.Controllers
         #endregion
 
         #region Index, Full Management
+        [HttpGet]
         public IActionResult Index()
         {
-            var allUsers =  _context.Users.AsQueryable();
+
 
             #region Get Pending Doctor Requests
+            string roleNameI = "InitialDoctor";
+            var role =  _context.Roles.Where(r => r.Name == roleNameI).Select(r => r.Id).FirstOrDefault();
+            var userId =  _context.UserRoles.Where(i => i.RoleId.Equals(role)).Select(i => i.UserId).ToList();
+            
+            int numOfIRequests = userId.Count();
 
             #endregion
 
             #region Get Registered Doctors
+            string roleDoctor = "Doctor";
+            var doctorRoleId = _context.Roles.Where(r => r.Name == roleDoctor).Select(r => r.Id).FirstOrDefault();
+            var doctorId = _context.UserRoles.Where(i => i.RoleId.Equals(doctorRoleId)).Select(i => i.UserId).ToList();
+
+            int numOfDRequests = doctorId.Count();
             #endregion
 
             #region Get Rejected Doctors
             #endregion
 
             #region Get Registered Patients
+            string rolePatient = "Patient";
+            var patientRoleid = _context.Roles.Where(r => r.Name == rolePatient).Select(r => r.Id).FirstOrDefault();
+            var patientId = _context.UserRoles.Where(i => i.RoleId.Equals(patientRoleid)).Select(i => i.UserId).ToList();
+
+            int numOfPatients = patientId.Count();
             #endregion
 
             #region Get Registered Admins
+            string roleAdmin = "Admin";
+            var adminRoleid = _context.Roles.Where(r => r.Name == roleAdmin).Select(r => r.Id).FirstOrDefault();
+            var adminId = _context.UserRoles.Where(i => i.RoleId.Equals(adminRoleid)).Select(i => i.UserId).ToList();
+
+            int numOfAdmins = adminId.Count();
             #endregion
 
             return View();
@@ -99,7 +124,7 @@ namespace DiagnosisSystem.Controllers
 
             return Ok("Successfully Updated");
         }
-
+        //add role = rejected
         public IActionResult Reject(string userId)
         {
             var entityToDelete = _context.UserRoles.FirstOrDefault(item => item.UserId == userId); 
@@ -187,6 +212,20 @@ namespace DiagnosisSystem.Controllers
             }
             return View(specialityVM);
         }
+
+        public IActionResult ViewSpecialities()
+        {
+            var allSpecialities = _context.Specialities
+                .Select(t => new SpecialityVM
+                {
+                    Name = t.SpecialtyName,
+                    Description = t.Description,
+                    
+                }).ToList();
+
+            return View(allSpecialities);
+        }
+
         #endregion
 
         #region Add Tag
@@ -220,6 +259,18 @@ namespace DiagnosisSystem.Controllers
                 _context.SaveChanges();
             }
             return Ok("Successfully Saved");
+        }
+
+        public IActionResult ViewTags()
+        {
+            var allTags = _context.Tags
+                .Select(t => new TagVM
+                {
+                    Name = t.Name,
+                    Description = t.Description,
+                    SelectedSpeciality = t.SpecialityName
+                }).ToList();
+            return View(allTags);
         }
         #endregion
     }

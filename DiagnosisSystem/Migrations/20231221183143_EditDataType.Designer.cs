@@ -4,6 +4,7 @@ using DiagnosisSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DiagnosisSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231221183143_EditDataType")]
+    partial class EditDataType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,6 +141,27 @@ namespace DiagnosisSystem.Migrations
                     b.ToTable("Tags");
                 });
 
+            modelBuilder.Entity("DiagnosisSystem.Models.SpecialityVM", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SpecialityVM");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -168,29 +191,29 @@ namespace DiagnosisSystem.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1407683f-37a4-487f-ae8b-6d6d799f98d5",
-                            ConcurrencyStamp = "89a752ad-9cd7-4d3a-ac04-88b6ed6e9049",
+                            Id = "b16c91ab-fe53-4aee-bdc0-145fae4c2419",
+                            ConcurrencyStamp = "4f4a4d45-3862-4e39-aaef-8cda6069b8e6",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "12e30e74-c327-43f0-81ec-521f44053373",
-                            ConcurrencyStamp = "2dafe310-b53b-4872-a110-fc8ddbb0017b",
+                            Id = "ef5a3135-21b9-4b22-85d8-db9dde144860",
+                            ConcurrencyStamp = "c0980ce6-74b9-4c04-9c73-a07aaba1d979",
                             Name = "Patient",
                             NormalizedName = "PATIENT"
                         },
                         new
                         {
-                            Id = "79266339-576a-4372-8d9f-2d3b7c0bf2f8",
-                            ConcurrencyStamp = "05eadd7b-c822-4333-b955-d90e98b401ba",
+                            Id = "0d1f4fa0-9ed6-4c9c-be7b-8c102c4532b9",
+                            ConcurrencyStamp = "2b7aee9b-08e7-45a7-bb4b-0e1d779889c1",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         },
                         new
                         {
-                            Id = "61649609-eb79-4f74-9faf-70d25af80444",
-                            ConcurrencyStamp = "523d8373-b528-4ad1-80bd-1b65c788ccc6",
+                            Id = "2c6ca586-c656-44bc-be57-223ffbcffa54",
+                            ConcurrencyStamp = "bd76e30a-90f5-4f6a-9115-79e2e7caeede",
                             Name = "InitialDoctor",
                             NormalizedName = "INITIALDOCTOR"
                         });
@@ -294,17 +317,17 @@ namespace DiagnosisSystem.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "542cadcb-d0de-4827-8ccd-a3289650363a",
+                            Id = "453b435e-3d73-449c-a292-987567ac5516",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5bce0b5d-e841-42dd-8fb3-0a69e7935443",
+                            ConcurrencyStamp = "4adda30c-53f7-4d0f-8df6-85e399ad3726",
                             Email = "naghamsaleh@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "NAGHAMSALEH@GMAIL.COM",
                             NormalizedUserName = "NAGHAMSALEH",
-                            PasswordHash = "AQAAAAEAACcQAAAAEM1sVJoOJYwMOH8ny/kcv+IEyryBl1/KRoSxEXlmWKim9xjXPO3cnUkEG0f/fGbHUg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIIO+wgKFTHCCPe8NQwZ2QhHJzj2HZQd1ovBYzOiA6HGu8zhTGjXQapxUYwCLD9AlQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9e727725-9e41-4ca8-8276-63004a8f7b5b",
+                            SecurityStamp = "89976c42-e285-4c8a-8a14-e35cb907629b",
                             TwoFactorEnabled = false,
                             UserName = "naghamsaleh"
                         });
@@ -374,8 +397,8 @@ namespace DiagnosisSystem.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "542cadcb-d0de-4827-8ccd-a3289650363a",
-                            RoleId = "1407683f-37a4-487f-ae8b-6d6d799f98d5"
+                            UserId = "453b435e-3d73-449c-a292-987567ac5516",
+                            RoleId = "b16c91ab-fe53-4aee-bdc0-145fae4c2419"
                         });
                 });
 

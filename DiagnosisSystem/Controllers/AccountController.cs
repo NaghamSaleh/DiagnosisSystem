@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Numerics;
 
 namespace DiagnosisSystem.Controllers
 {
@@ -184,6 +185,65 @@ namespace DiagnosisSystem.Controllers
         }
         #endregion
 
+        #region Register Admin
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+        public async Task<IActionResult> Create(RegisterVM registerVM)
+        {
+            if (ModelState.IsValid)
+            {
+                var checkEmail = _context.Users.Any(e => e.Email == registerVM.Email);
+
+                if (checkEmail)
+                {
+                    ModelState.AddModelError("Email", "Email already exists");
+                    return View();
+                }
+
+                if (registerVM.Password != registerVM.ConfirmPassword)
+                {
+                    ModelState.AddModelError("ConfirmPassword", "Password and Confirm Password do not match");
+                    return View();
+                }
+                var admin = new User
+                {
+                    FirstName = registerVM.FirstName,
+                    LastName = registerVM.LastName,
+                    //Email = registerVM.Email,
+                    UserName = registerVM.Email
+
+                };
+                try
+                {
+                    _context.Users.Add(admin);
+                    var result = await _userManager.CreateAsync(admin, registerVM.Password);
+                    if (result.Succeeded)
+                    {
+                        await _userManager.AddToRoleAsync(admin, "Admin");
+                        _context.SaveChanges();
+                        return RedirectToAction("Login", "Account"); // Redirect to login after successful registration
+                    }
+                    else
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Error saving to database");
+                }
+                
+            }
+            return View();
+        }
+        #endregion
+
         #region Login
         [HttpGet]
         public IActionResult Login()
@@ -198,7 +258,7 @@ namespace DiagnosisSystem.Controllers
            
             if(result.Succeeded)
             {
-                var userId = await _context.Users.Where(e => e.Email == loginVM.Email).Select(e => e.Id).FirstOrDefaultAsync();
+                var userId = await _context.Users.Where(e => e.UserName == loginVM.Email).Select(e => e.Id).FirstOrDefaultAsync();
                 var UserRole = await  _context.UserRoles.Where(u => u.UserId == userId).Select(r => r.RoleId).FirstOrDefaultAsync();
                 var Role = await _context.Roles.Where(r => r.Id == UserRole).Select(n => n.Name).FirstOrDefaultAsync();
                 //if(_userManager.IsInRoleAsync(userId, "Doctor")) { }
