@@ -176,7 +176,7 @@ namespace DiagnosisSystem.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError(string.Empty, "Error saving to database");
+                    ModelState.AddModelError(ex.Message, "Error saving to database");
                 }
             }
 
@@ -236,7 +236,7 @@ namespace DiagnosisSystem.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError(string.Empty, "Error saving to database");
+                    ModelState.AddModelError(ex.Message, "Error saving to database");
                 }
                 
             }
@@ -255,49 +255,41 @@ namespace DiagnosisSystem.Controllers
         public async Task<IActionResult> Login(LoginVM loginVM)
         {
             var result = await _signInManager.PasswordSignInAsync(loginVM.Email, loginVM.Password, false, lockoutOnFailure: false);
-           
-            if(result.Succeeded)
+
+            if (result.Succeeded)
             {
                 var userId = await _context.Users.Where(e => e.UserName == loginVM.Email).Select(e => e.Id).FirstOrDefaultAsync();
-                var UserRole = await  _context.UserRoles.Where(u => u.UserId == userId).Select(r => r.RoleId).FirstOrDefaultAsync();
+                var UserRole = await _context.UserRoles.Where(u => u.UserId == userId).Select(r => r.RoleId).FirstOrDefaultAsync();
                 var Role = await _context.Roles.Where(r => r.Id == UserRole).Select(n => n.Name).FirstOrDefaultAsync();
-                //if(_userManager.IsInRoleAsync(userId, "Doctor")) { }
-                //var userId = _context.Users.Where(e => e.Email == loginVM.Email)
-                //    .Select(e => new IdentityUser
-                //    {
-                //        Email = e.Email,
-                //        PasswordHash = e.PasswordHash,
-                //    });
-                if (Role.Equals("Doctor"))
+
+                if (!string.IsNullOrEmpty(Role))
                 {
-                    return RedirectToAction("Login", "Account");
-                }
-                else if(Role.Equals("InitialDoctor"))
-                {
-                    return BadRequest("Account still waiting Acceptance");
-                }
-                else if(Role.Equals("Patient"))
-                {
-                    return RedirectToAction("Index", "Patient");
-                }
-                else if(Role == "Admin")
-                {
-                    return RedirectToAction("Index", "Admin");
+                    switch (Role)
+                    {
+                        case "Doctor":
+                            return RedirectToAction("Login", "Account");
+                        case "InitialDoctor":
+                            return BadRequest("Account still waiting Acceptance");
+                        case "Patient":
+                            return RedirectToAction("Index", "Patient");
+                        case "Admin":
+                            return RedirectToAction("Index", "Admin");
+                        default:
+                            return BadRequest("Invalid Login");
+                    }
                 }
                 else
                 {
-                    return BadRequest("Invalid Login");
+                    return BadRequest("Invalid Role");
                 }
-                
             }
             else
             {
                 return BadRequest("Failed");
             }
-
-       
-            
         }
+
+
         #endregion
 
         #region Logout

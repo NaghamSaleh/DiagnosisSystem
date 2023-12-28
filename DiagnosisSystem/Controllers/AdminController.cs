@@ -30,15 +30,14 @@ namespace DiagnosisSystem.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-
+            Stats stats = new();
 
             #region Get Pending Doctor Requests
             string roleNameI = "InitialDoctor";
             var role =  _context.Roles.Where(r => r.Name == roleNameI).Select(r => r.Id).FirstOrDefault();
             var userId =  _context.UserRoles.Where(i => i.RoleId.Equals(role)).Select(i => i.UserId).ToList();
             
-            int numOfIRequests = userId.Count();
-
+            stats.numOfIRequests = userId.Count;
             #endregion
 
             #region Get Registered Doctors
@@ -46,7 +45,7 @@ namespace DiagnosisSystem.Controllers
             var doctorRoleId = _context.Roles.Where(r => r.Name == roleDoctor).Select(r => r.Id).FirstOrDefault();
             var doctorId = _context.UserRoles.Where(i => i.RoleId.Equals(doctorRoleId)).Select(i => i.UserId).ToList();
 
-            int numOfDRequests = doctorId.Count();
+            stats.numOfDoctors = doctorId.Count;
             #endregion
 
             #region Get Rejected Doctors
@@ -57,7 +56,7 @@ namespace DiagnosisSystem.Controllers
             var patientRoleid = _context.Roles.Where(r => r.Name == rolePatient).Select(r => r.Id).FirstOrDefault();
             var patientId = _context.UserRoles.Where(i => i.RoleId.Equals(patientRoleid)).Select(i => i.UserId).ToList();
 
-            int numOfPatients = patientId.Count();
+            stats.numOfPatients = patientId.Count;
             #endregion
 
             #region Get Registered Admins
@@ -65,10 +64,10 @@ namespace DiagnosisSystem.Controllers
             var adminRoleid = _context.Roles.Where(r => r.Name == roleAdmin).Select(r => r.Id).FirstOrDefault();
             var adminId = _context.UserRoles.Where(i => i.RoleId.Equals(adminRoleid)).Select(i => i.UserId).ToList();
 
-            int numOfAdmins = adminId.Count();
+            stats.numOfAdmins = adminId.Count;
             #endregion
 
-            return View();
+            return View(stats);
         }
         #endregion
 
