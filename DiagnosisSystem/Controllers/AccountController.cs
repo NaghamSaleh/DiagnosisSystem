@@ -269,8 +269,8 @@ namespace DiagnosisSystem.Controllers
                 //        PasswordHash = e.PasswordHash,
                 //    });
                 if (Role.Equals("Doctor"))
-                {
-                    return RedirectToAction("Login", "Account");
+                {//should redirect to doctor coontroller
+                    return RedirectToAction("Index", "Doctor");
                 }
                 else if(Role.Equals("InitialDoctor"))
                 {

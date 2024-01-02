@@ -168,29 +168,29 @@ namespace DiagnosisSystem.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1407683f-37a4-487f-ae8b-6d6d799f98d5",
-                            ConcurrencyStamp = "89a752ad-9cd7-4d3a-ac04-88b6ed6e9049",
+                            Id = "c900d93e-5079-4da7-8f0d-e2577cd990e9",
+                            ConcurrencyStamp = "2b7ba451-c3e8-4a03-b355-af8a14d35195",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "12e30e74-c327-43f0-81ec-521f44053373",
-                            ConcurrencyStamp = "2dafe310-b53b-4872-a110-fc8ddbb0017b",
+                            Id = "9a26460b-ae02-4896-8a19-dd86dc10d6e9",
+                            ConcurrencyStamp = "8f1a2f5b-9eb7-4bca-8fc0-299fed009061",
                             Name = "Patient",
                             NormalizedName = "PATIENT"
                         },
                         new
                         {
-                            Id = "79266339-576a-4372-8d9f-2d3b7c0bf2f8",
-                            ConcurrencyStamp = "05eadd7b-c822-4333-b955-d90e98b401ba",
+                            Id = "8b0ed167-a9d7-486c-a673-f2bae7cc3c74",
+                            ConcurrencyStamp = "00a64324-4383-4e6d-a7be-4f032d77ba9a",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         },
                         new
                         {
-                            Id = "61649609-eb79-4f74-9faf-70d25af80444",
-                            ConcurrencyStamp = "523d8373-b528-4ad1-80bd-1b65c788ccc6",
+                            Id = "d196fc62-fe80-4818-88e6-b428a815f604",
+                            ConcurrencyStamp = "b23c854e-dcd7-41b4-9c6a-98154ce2e9e5",
                             Name = "InitialDoctor",
                             NormalizedName = "INITIALDOCTOR"
                         });
@@ -294,17 +294,17 @@ namespace DiagnosisSystem.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "542cadcb-d0de-4827-8ccd-a3289650363a",
+                            Id = "2bfb1707-5f70-4e60-9e82-64d4cb675316",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5bce0b5d-e841-42dd-8fb3-0a69e7935443",
+                            ConcurrencyStamp = "9b631c7d-c77f-432d-8e35-7234d1d99574",
                             Email = "naghamsaleh@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "NAGHAMSALEH@GMAIL.COM",
                             NormalizedUserName = "NAGHAMSALEH",
-                            PasswordHash = "AQAAAAEAACcQAAAAEM1sVJoOJYwMOH8ny/kcv+IEyryBl1/KRoSxEXlmWKim9xjXPO3cnUkEG0f/fGbHUg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMyzDabTrkTnB2MKFjfiMni336wCTmROwMP4DKw+gxCZuhmXx7Qe38As9JFAcq11Vw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9e727725-9e41-4ca8-8276-63004a8f7b5b",
+                            SecurityStamp = "76deb5ab-504b-44f0-ad91-f2fceb362b06",
                             TwoFactorEnabled = false,
                             UserName = "naghamsaleh"
                         });
@@ -374,8 +374,8 @@ namespace DiagnosisSystem.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "542cadcb-d0de-4827-8ccd-a3289650363a",
-                            RoleId = "1407683f-37a4-487f-ae8b-6d6d799f98d5"
+                            UserId = "2bfb1707-5f70-4e60-9e82-64d4cb675316",
+                            RoleId = "c900d93e-5079-4da7-8f0d-e2577cd990e9"
                         });
                 });
 
