@@ -10,7 +10,7 @@ using System.Data;
 
 namespace DiagnosisSystem.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    //[Authorize(Roles ="Admin")]
     public class AdminController : Controller
     {
 

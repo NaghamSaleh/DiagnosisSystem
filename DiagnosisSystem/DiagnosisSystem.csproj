@@ -28,8 +28,4 @@
     <Folder Include="Repositories\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="wwwroot\css\Home\.editorconfig" />
-  </ItemGroup>
-
 </Project>
