@@ -40,7 +40,7 @@ namespace DiagnosisSystem.Controllers
                 };
                 _context.PatientQuestions.Add(pQuestion);
                 await _context.SaveChangesAsync();
-                return View();
+                return RedirectToAction("Index");
             }
             return BadRequest("Error Saving Question");
         }

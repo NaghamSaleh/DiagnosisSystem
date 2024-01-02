@@ -1,6 +1,4 @@
-﻿using DiagnosisSystem.Entities;
-
-namespace DiagnosisSystem.Models
+﻿namespace DiagnosisSystem.Models
 {
     public class PatientQuestionVM
     {

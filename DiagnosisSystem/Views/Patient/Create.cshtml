@@ -1,29 +1,36 @@
 ﻿@model PatientQuestionVM
 
-<form>
+<form asp-controller="Patient" asp-action="Create" method="post">
 
-    <input class="form-control form-control-lg" type="text" placeholder="Inquiry Title">
+    <input asp-for="QuestionTitle" class="form-control form-control-lg" type="text" placeholder="Inquiry Title">
 
 
     <div class="form-group">
         <label for="exampleFormControlTextarea1">Example textarea</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <textarea asp-for="QuestionBody" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
     </div>
 
-    <div class="dropdown">
 
         <div>
-             @foreach (var item in Model.QuestionTag)
+        @if(Model.QuestionTag != null)
+        {
+          @foreach (var item in Model.QuestionTag)
              {
                 <div>
-                    <label asp-for="@item"> @item </label>
-                    <input type="checkbox" id="@item" name="checkboxName" value="@item">
-                    <!-- You can adjust the id, name, and value attributes as needed -->
+                    <label asp-for="QuestionTag"> @item </label>
+                    <input type="checkbox" id="@item" name="QuestionTag" value="@item">
+
                 </div>
-            }
+            }   
+        }
+            
         </div>
 
+    <div>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </div>
-
-    <button type="submit" class="btn btn-primary">Submit</button>
+    
+    <div>
+        <a type="button" class="btn btn-primary" asp-controller="Patient" asp-action="Index"> Back </a>
+    </div>
 </form>
