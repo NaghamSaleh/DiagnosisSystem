@@ -12,17 +12,14 @@
 
 
         <div>
-        @if(Model.QuestionTag != null)
-        {
-          @foreach (var item in Model.QuestionTag)
-             {
+            @foreach (var item in Model.QuestionTag)
+            {
                 <div>
                     <label asp-for="QuestionTag"> @item </label>
                     <input type="checkbox" id="@item" name="QuestionTag" value="@item">
-
                 </div>
             }   
-        }
+        
             
         </div>
 

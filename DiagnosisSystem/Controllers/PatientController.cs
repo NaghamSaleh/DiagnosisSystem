@@ -15,9 +15,9 @@ namespace DiagnosisSystem.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+           return View();
         }
-
+        #region Create Patient Question
         [HttpGet]
         public IActionResult Create()
         {
@@ -43,6 +43,23 @@ namespace DiagnosisSystem.Controllers
                 return RedirectToAction("Index");
             }
             return BadRequest("Error Saving Question");
+        }
+        #endregion
+
+        #region User Question
+        public IActionResult Queries()
+        {
+            var questions = _context.PatientQuestions.Select(q => new PatientQuestionVM
+            {
+                Id= q.Id,
+                QuestionTitle = q.QuestionTitle
+            }).ToList();
+            return View(questions);
+        }
+        #endregion
+        public IActionResult ViewQueries(int id)
+        {
+            return View();
         }
     }
 }

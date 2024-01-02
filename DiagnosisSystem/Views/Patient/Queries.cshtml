@@ -1,0 +1,7 @@
+﻿@model List<PatientQuestionVM>
+
+@foreach(var q in Model)
+{
+    <a asp-action="ViewQueries" asp-route-id="@q.Id" class="btn btn-secondary btn-sm me-1">@q.QuestionTitle</a>
+}
+
