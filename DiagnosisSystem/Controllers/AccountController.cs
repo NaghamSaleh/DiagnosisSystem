@@ -301,9 +301,10 @@ namespace DiagnosisSystem.Controllers
         #region Logout
         [Authorize]
         [HttpPost]
-        public IActionResult Logout()
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
         {
-            HttpContext.SignOutAsync();
+            await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
         #endregion

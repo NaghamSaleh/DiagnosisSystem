@@ -6,5 +6,6 @@
         public string QuestionTitle { get; set; }
         public string QuestionBody { get; set; }
         public List<string> QuestionTag { get; set; }
+        public string PatientId { get; set; } = string.Empty;
     }
 }
