@@ -60,7 +60,9 @@ namespace DiagnosisSystem.Controllers
         public IActionResult Queries()
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var questions = _context.PatientQuestions.Where(i => i.PatientId == userId).Select(q => new PatientQuestionVM
+            var questions = _context.PatientQuestions
+                .Where(i => i.PatientId == userId)
+                .Select(q => new PatientQuestionVM
             {
                 Id= q.Id,
                 QuestionTitle = q.QuestionTitle,
@@ -90,7 +92,8 @@ namespace DiagnosisSystem.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditProfile(EditProfileVM model)
+        //[Route("/Edit")]
+        public async Task<IActionResult> MyAccount(EditProfileVM model)
         {
             if (ModelState.IsValid)
             {
@@ -109,13 +112,13 @@ namespace DiagnosisSystem.Controllers
                     _context.Users.Update(user);
                     await _context.SaveChangesAsync();
 
-                    return RedirectToAction("Index", "Home"); // Redirect to home or profile page after successful update
+                    return RedirectToAction("Index", "Home"); 
                 }
 
-                return NotFound(); // Handle the case where the user isn't found
+                return NotFound();
             }
 
-            return View(model); // Return to the form with validation errors
+            return View(model); 
         }
 
     }
