@@ -9,5 +9,6 @@ namespace DiagnosisSystem.Entities
         public string QuestionTitle { get; set; }
         public string QuestionBody { get; set; }
         public string QuestionTag { get; set; }
+        public string PatientId { get; set; }
     }
 }

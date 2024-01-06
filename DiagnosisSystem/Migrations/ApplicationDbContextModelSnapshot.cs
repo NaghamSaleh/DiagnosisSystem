@@ -55,6 +55,10 @@ namespace DiagnosisSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("PatientId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("QuestionBody")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -168,29 +172,29 @@ namespace DiagnosisSystem.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c900d93e-5079-4da7-8f0d-e2577cd990e9",
-                            ConcurrencyStamp = "2b7ba451-c3e8-4a03-b355-af8a14d35195",
+                            Id = "eb851402-724d-40bb-9a63-a07aef1ef71c",
+                            ConcurrencyStamp = "6cd77208-ca11-413a-9bed-0c05c3efd843",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "9a26460b-ae02-4896-8a19-dd86dc10d6e9",
-                            ConcurrencyStamp = "8f1a2f5b-9eb7-4bca-8fc0-299fed009061",
+                            Id = "2201e788-f975-424a-9986-79e8ee5570e5",
+                            ConcurrencyStamp = "5e83ca0d-7ea9-4db4-afe1-583cc72184a8",
                             Name = "Patient",
                             NormalizedName = "PATIENT"
                         },
                         new
                         {
-                            Id = "8b0ed167-a9d7-486c-a673-f2bae7cc3c74",
-                            ConcurrencyStamp = "00a64324-4383-4e6d-a7be-4f032d77ba9a",
+                            Id = "cb37ab1f-1f72-4274-820b-a40ab753be74",
+                            ConcurrencyStamp = "86664e96-9ee3-4aee-9588-e2c3ae23be12",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         },
                         new
                         {
-                            Id = "d196fc62-fe80-4818-88e6-b428a815f604",
-                            ConcurrencyStamp = "b23c854e-dcd7-41b4-9c6a-98154ce2e9e5",
+                            Id = "3c6e9ea4-b675-4410-b81c-a8414902b97d",
+                            ConcurrencyStamp = "0f0ee5c3-0b40-4959-bc03-a58f4bb31249",
                             Name = "InitialDoctor",
                             NormalizedName = "INITIALDOCTOR"
                         });
@@ -294,17 +298,17 @@ namespace DiagnosisSystem.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2bfb1707-5f70-4e60-9e82-64d4cb675316",
+                            Id = "c11444a8-7c26-407e-84fa-616c360741da",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9b631c7d-c77f-432d-8e35-7234d1d99574",
+                            ConcurrencyStamp = "d8b71af3-bc98-424e-9242-8ce8d4357e05",
                             Email = "naghamsaleh@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "NAGHAMSALEH@GMAIL.COM",
                             NormalizedUserName = "NAGHAMSALEH",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMyzDabTrkTnB2MKFjfiMni336wCTmROwMP4DKw+gxCZuhmXx7Qe38As9JFAcq11Vw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEN7pEoNZEol3/Y4kjlUaDKAfQZf9eY8adPZ3likzG09VfT9tYJU2WHIv3sso7rkvoA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "76deb5ab-504b-44f0-ad91-f2fceb362b06",
+                            SecurityStamp = "8149739d-d6d2-4e4d-9797-e349162ffd8c",
                             TwoFactorEnabled = false,
                             UserName = "naghamsaleh"
                         });
@@ -374,8 +378,8 @@ namespace DiagnosisSystem.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "2bfb1707-5f70-4e60-9e82-64d4cb675316",
-                            RoleId = "c900d93e-5079-4da7-8f0d-e2577cd990e9"
+                            UserId = "c11444a8-7c26-407e-84fa-616c360741da",
+                            RoleId = "eb851402-724d-40bb-9a63-a07aef1ef71c"
                         });
                 });
 
