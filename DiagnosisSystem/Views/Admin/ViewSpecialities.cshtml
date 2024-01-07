@@ -2,26 +2,24 @@
 
 <link rel="stylesheet" type="text/css" href="/css/Admin/ViewSpecialities.css">
 
-<div class="container">
-<h1>Speciality List</h1>
+    <h1>Speciality List</h1>
 
-<table>
-    <thead>
-        <tr>
-            <th>Speciality</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var tag in Model)
-        {
+    <table>
+        <thead>
             <tr>
-                <td>@tag.Name</td>
-                <td>@tag.Description</td>
+                <th>Speciality</th>
+                <th>Description</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var tag in Model)
+            {
+                <tr>
+                    <td>@tag.Name</td>
+                    <td>@tag.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-<a asp-action="Speciality" asp-controller="Admin" class="btn btn-outline-dark btn-sm me-1">Add Speciality</a>
-</div>
+    <a asp-action="Speciality" asp-controller="Admin" class="btn btn-outline-dark btn-sm me-1">Add Speciality</a>

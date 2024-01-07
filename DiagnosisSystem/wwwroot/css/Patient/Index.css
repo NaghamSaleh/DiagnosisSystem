@@ -1,0 +1,20 @@
+﻿.patient-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.link {
+    text-decoration: none;
+    padding: 10px;
+    color: #155484;
+    border: 1px solid #155484;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+    .link:hover {
+        background-color: #155484;
+        color: white;
+    }

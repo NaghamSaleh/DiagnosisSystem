@@ -1,7 +1,10 @@
 ﻿@model List<PatientQuestionVM>
 
-@foreach(var q in Model)
-{
-    <a asp-action="ViewQueries" asp-route-id="@q.Id" class="btn btn-secondary btn-sm me-1">@q.QuestionTitle</a>
-}
+<div class="queries-container">
+    <h1>Recent Queries</h1>
 
+    @foreach (var q in Model)
+    {
+        <a asp-action="ViewQueries" asp-route-id="@q.Id" class="query-btn">@q.QuestionTitle</a>
+    }
+</div>

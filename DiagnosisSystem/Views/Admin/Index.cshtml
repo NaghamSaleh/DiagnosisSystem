@@ -1,24 +1,87 @@
 ﻿@model Stats
 
-<h1></h1>
+<link rel="stylesheet" type="text/css" href="/css/Admin/Index.css">
 
-<table>
-    <thead>
-        <tr>
-            <th>numOfIRequests</th>
-            <th>numOfDoctors</th>
-            <th>numOfPatients</th>
-            <th>numOfAdmins</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><a asp-action="Doctors" asp-controller="Admin">@Model.numOfIRequests</a></td>
-            <td>@Model.numOfDoctors</td>
-            <td>@Model.numOfPatients</td>
-            <td>@Model.numOfAdmins</td>
+<div class="container">
+    <div class="sidebar">
+        <a href="#section1" class="section">STAFF MANAGEMENT</a>
+        <ul class="sub-sections">
+            <li>
+                <a href="#doctorsInformation">Doctors Information</a>
+                <ul class="sub-sub-sections">
+                    <li><a href="#viewPendingRegistrations">View Pending Registrations</a></li>
+                </ul>
+            </li>
+        </ul>
 
-        </tr>
+        <a href="#section2" class="section">SPECIALTIES MANAGEMENT</a>
+        <ul class="sub-sections">
+            <li>
+                <a href="#Specielties">Specialties</a>
+                <ul class="sub-sub-sections">
+                    <li><a href="#newspecialty">Register new specialty</a></li>
+                    <li><a href="#allspecialties">List of all specialties</a></li>
+                    <li><a href="#addtag">Add Tag</a></li>
+                </ul>
+            </li>
+        </ul>
 
-    </tbody>
-</table>
+        <a href="#section3" class="section">MANAGE ADMINISTRATORS</a>
+        <ul class="sub-sections">
+            <li>
+                <a href="#Administrators">Administrators</a>
+                <ul class="sub-sub-sections">
+                    <li><a href="#AddAdministrator">Add Administrator</a></li>
+                    <li><a href="#RegisteredAdministrators">Registered Administrators</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+
+
+    <div class="content">
+        <div class="stats-container">
+            <div class="stat-box">
+                <h1>Pending Requests</h1>
+                <p><a asp-action="Doctors" asp-controller="Admin">@Model.numOfIRequests</a></p>
+            </div>
+
+            <div class="stat-box">
+                <h1>Number of Doctors</h1>
+                <p><a asp-action="Doctors" asp-controller="Admin">@Model.numOfDoctors</a></p>
+            </div>
+
+            <div class="stat-box">
+                <h1>Number of Patients</h1>
+                <p><a asp-action="Doctors" asp-controller="Admin">@Model.numOfPatients</a></p>
+            </div>
+
+            <div class="stat-box">
+                <h1>Number of Admins</h1>
+                <p><a asp-action="Doctors" asp-controller="Admin">@Model.numOfAdmins</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var sections = document.querySelectorAll('.section');
+        var subSections = document.querySelectorAll('.sub-sections');
+
+        sections.forEach(function (section) {
+            section.addEventListener('click', function () {
+                var subSectionsList = this.nextElementSibling;
+                subSectionsList.style.display = subSectionsList.style.display === 'none' ? 'block' : 'none';
+            });
+        });
+
+        subSections.forEach(function (subSections) {
+            subSections.addEventListener('click', function () {
+                var subSubSectionsList = this.querySelector('.sub-sub-sections');
+                subSubSectionsList.style.display = subSubSectionsList.style.display === 'none' ? 'block' : 'none';
+            });
+        });
+    });
+</script>
+

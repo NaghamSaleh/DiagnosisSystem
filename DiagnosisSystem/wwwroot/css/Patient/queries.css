@@ -1,0 +1,25 @@
+﻿.queries-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f2f2f2;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.query-btn {
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 5px;
+    background-color: #155484;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    .query-btn:hover {
+        background-color: #12366e;
+    }

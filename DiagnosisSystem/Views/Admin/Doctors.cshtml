@@ -2,7 +2,6 @@
 
 <link rel="stylesheet" type="text/css" href="/css/Admin/doctors.css">
 
-
 <table>
     <thead>
         <tr>
@@ -23,7 +22,7 @@
                 <td>@user.CurrentHospital</td>
                 <td>@user.Email</td>
                 <td>@user.Gender</td>
-                <td>
+                <td class="action-column">
                     <!-- Action buttons -->
                     <a asp-action="Approve" asp-route-userId="@user.UserID">Approve</a>
                     <a asp-action="Reject" asp-route-userId="@user.UserID">Reject</a>

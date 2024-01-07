@@ -2,11 +2,9 @@
 
 <link rel="stylesheet" type="text/css" href="/css/Admin/Specialty.css">
 
-
 <form asp-controller="Admin" asp-action="Speciality" method="post">
-
-    <h1 style="text-align: center;">Add Speciality</h1>
     <div class="login-container">
+        <h1>Add Speciality</h1>
 
         <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -22,8 +20,6 @@
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
 
-        <button type="submit" class="btn btn-primary">Add</button>
+        <button type="submit" class="btn-primary">Add</button>
     </div>
-
-
 </form>
