@@ -1,11 +1,11 @@
 ﻿body {
-    background-color: #f8f9fa;
+    background: linear-gradient(to bottom right, #84A5E3, white);
     font-family: 'Arial', sans-serif;
 }
 
 .container {
     background-color: #e5e5e5;
-    width: 400px;
+    width: 1000px; 
     margin: 0 auto;
     padding: 20px;
     border-radius: 10px;
