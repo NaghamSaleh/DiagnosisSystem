@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace DiagnosisSystem.Models
 {
@@ -10,9 +11,12 @@ namespace DiagnosisSystem.Models
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
-        public DateTime DateOfBirth { get; set; }
+
+        [DataType(DataType.Date)] // Ensure the Date type is used in the view
+        public DateTime DateOfBirth { get; set; } = DateTime.Now.Date;
+
         public string Telephone { get; set; } = string.Empty;
         public char Gender { get; set; } = 'N';
-        public DateTime AddedOn { get; set; } = DateTime.Parse(DateTime.Now.ToString(""));
+        public DateTime AddedOn { get; set; } = DateTime.Now.Date;
     }
 }

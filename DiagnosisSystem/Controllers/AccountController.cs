@@ -54,7 +54,8 @@ namespace DiagnosisSystem.Controllers
 
                 var minDateOfBirth = DateTime.Today.AddYears(-100);
                 var maxDateOfBirth = DateTime.Today.AddYears(-18);
-                if (userVM.DateOfBirth < minDateOfBirth || userVM.DateOfBirth > maxDateOfBirth)
+                var userDateOfBirth = userVM.DateOfBirth.Date;  // Ensure only the date part is considered
+                if (userDateOfBirth < minDateOfBirth || userDateOfBirth > maxDateOfBirth)
                 {
                     ModelState.AddModelError("DateOfBirth", "Invalid date of birth. Must be between 18 and 100 years old.");
                     return View();
@@ -66,12 +67,12 @@ namespace DiagnosisSystem.Controllers
                     LastName = userVM.LastName,
                     Email = userVM.Email,
                     Telephone = userVM.Telephone,
-                    DateOfBirth = userVM.DateOfBirth,
                     Gender = userVM.Gender,
-                    CreatedOn = DateTime.Now,
+                    CreatedOn = DateTime.Today,
                     UserName = userVM.Email,
-                   
+                    DateOfBirth = userDateOfBirth,
                 };
+
 
                 try
                 {
