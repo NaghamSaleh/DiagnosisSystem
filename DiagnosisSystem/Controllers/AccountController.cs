@@ -254,13 +254,7 @@ namespace DiagnosisSystem.Controllers
                 var userId = await _context.Users.Where(e => e.UserName == loginVM.Email).Select(e => e.Id).FirstOrDefaultAsync();
                 var UserRole = await _context.UserRoles.Where(u => u.UserId == userId).Select(r => r.RoleId).FirstOrDefaultAsync();
                 var Role = await _context.Roles.Where(r => r.Id == UserRole).Select(n => n.Name).FirstOrDefaultAsync();
-                //if(_userManager.IsInRoleAsync(userId, "Doctor")) { }
-                //var userId = _context.Users.Where(e => e.Email == loginVM.Email)
-                //    .Select(e => new IdentityUser
-                //    {
-                //        Email = e.Email,
-                //        PasswordHash = e.PasswordHash,
-                //    });
+                
                 if (Role.Equals("Doctor"))
                 {
                     return RedirectToAction("Login", "Account");

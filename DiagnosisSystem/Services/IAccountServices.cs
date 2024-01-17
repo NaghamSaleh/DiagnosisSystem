@@ -3,5 +3,7 @@
     public interface IAccountServices
     {
         bool ValidBirthDate(DateTime birthDate);
+
+        string GetRoleByUserEmail(string email);
     }
 }

@@ -2,6 +2,7 @@ global using Microsoft.EntityFrameworkCore;
 using DiagnosisSystem.Data;
 using DiagnosisSystem.Entities;
 using DiagnosisSystem.Models;
+using DiagnosisSystem.Repositories;
 using Microsoft.AspNetCore.Identity;
 
 
@@ -27,6 +28,9 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddAuthentication();
 builder.Services.AddScoped<User>();
+builder.Services.AddScoped<IAdminRepo, AdminRepo>();
+builder.Services.AddScoped<IDoctorRepo, DoctorRepo>();
+builder.Services.AddScoped<IPatientRepo, PatientRepo>();
 
 var app = builder.Build();
 
