@@ -1,6 +1,7 @@
 ﻿using DiagnosisSystem.Data;
 using DiagnosisSystem.Entities;
 using DiagnosisSystem.Models;
+using DiagnosisSystem.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,13 +17,19 @@ namespace DiagnosisSystem.Controllers
 
         #region Variables
         private readonly ApplicationDbContext _context;
-
+        private readonly IDoctorRepo _doctorRepo;
+        private readonly IPatientRepo _patientRepo;
+        private readonly IAdminRepo _adminRepo;
         #endregion
 
         #region Constructors
-        public AdminController(ApplicationDbContext context)
+        public AdminController(ApplicationDbContext context, IDoctorRepo doctorRepo, 
+            IPatientRepo patientRepo, IAdminRepo accountRepo)
         {
             _context = context;
+            _doctorRepo = doctorRepo;
+            _patientRepo = patientRepo;
+            _adminRepo = accountRepo;
         }
         #endregion
 
@@ -31,40 +38,20 @@ namespace DiagnosisSystem.Controllers
         public IActionResult Index()
         {
             Stats stats = new();
+           
+            stats.numOfIRequests = _doctorRepo.GetDrPendingRequestsCount();
+            stats.numOfDoctors = _doctorRepo.GetRegisteredDrCount();
 
-            #region Get Pending Doctor Requests
-            string roleNameI = "InitialDoctor";
-            var role =  _context.Roles.Where(r => r.Name == roleNameI).Select(r => r.Id).FirstOrDefault();
-            var userId =  _context.UserRoles.Where(i => i.RoleId.Equals(role)).Select(i => i.UserId).ToList();
+
+            //TODO: Get Rejected Doctors
+          
             
-            stats.numOfIRequests = userId.Count;
-            #endregion
+            stats.numOfPatients = _patientRepo.GetPatientCount();
 
-            #region Get Registered Doctors
-            string roleDoctor = "Doctor";
-            var doctorRoleId = _context.Roles.Where(r => r.Name == roleDoctor).Select(r => r.Id).FirstOrDefault();
-            var doctorId = _context.UserRoles.Where(i => i.RoleId.Equals(doctorRoleId)).Select(i => i.UserId).ToList();
-
-            stats.numOfDoctors = doctorId.Count;
-            #endregion
-
-            #region Get Rejected Doctors
-            #endregion
-
-            #region Get Registered Patients
-            string rolePatient = "Patient";
-            var patientRoleid = _context.Roles.Where(r => r.Name == rolePatient).Select(r => r.Id).FirstOrDefault();
-            var patientId = _context.UserRoles.Where(i => i.RoleId.Equals(patientRoleid)).Select(i => i.UserId).ToList();
-
-            stats.numOfPatients = patientId.Count;
-            #endregion
 
             #region Get Registered Admins
-            string roleAdmin = "Admin";
-            var adminRoleid = _context.Roles.Where(r => r.Name == roleAdmin).Select(r => r.Id).FirstOrDefault();
-            var adminId = _context.UserRoles.Where(i => i.RoleId.Equals(adminRoleid)).Select(i => i.UserId).ToList();
-
-            stats.numOfAdmins = adminId.Count;
+            
+            stats.numOfAdmins = _adminRepo.GetAdminCount();
             #endregion
 
             return View(stats);

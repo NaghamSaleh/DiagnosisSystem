@@ -1,6 +1,7 @@
 ﻿using DiagnosisSystem.Data;
 using DiagnosisSystem.Entities;
 using DiagnosisSystem.Models;
+using DiagnosisSystem.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -15,14 +16,20 @@ namespace DiagnosisSystem.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IAccountServices _accountServices;
+        private readonly IUserServices _userServices;
         #endregion
 
         #region Constructors
-        public AccountController(ApplicationDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AccountController(ApplicationDbContext context, UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager, IAccountServices accountServices,
+            IUserServices userServices)
         {
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
+            _accountServices = accountServices;
+            _userServices = userServices;
         }
         #endregion
 
@@ -52,28 +59,13 @@ namespace DiagnosisSystem.Controllers
                     return View();
                 }
 
-                var minDateOfBirth = DateTime.Today.AddYears(-100);
-                var maxDateOfBirth = DateTime.Today.AddYears(-18);
-                var userDateOfBirth = userVM.DateOfBirth.Date;  // Ensure only the date part is considered
-                if (userDateOfBirth < minDateOfBirth || userDateOfBirth > maxDateOfBirth)
+                if (!_accountServices.ValidBirthDate(userVM.DateOfBirth))
                 {
                     ModelState.AddModelError("DateOfBirth", "Invalid date of birth. Must be between 18 and 100 years old.");
                     return View();
                 }
 
-                var user = new User
-                {
-                    FirstName = userVM.FirstName,
-                    LastName = userVM.LastName,
-                    Email = userVM.Email,
-                    Telephone = userVM.Telephone,
-                    Gender = userVM.Gender,
-                    CreatedOn = DateTime.Today,
-                    UserName = userVM.Email,
-                    DateOfBirth = userDateOfBirth,
-                };
-
-
+                var user = _userServices.CreateUserEntity(userVM);
                 try
                 {
                     _context.Users.Add(user);
@@ -262,13 +254,7 @@ namespace DiagnosisSystem.Controllers
                 var userId = await _context.Users.Where(e => e.UserName == loginVM.Email).Select(e => e.Id).FirstOrDefaultAsync();
                 var UserRole = await _context.UserRoles.Where(u => u.UserId == userId).Select(r => r.RoleId).FirstOrDefaultAsync();
                 var Role = await _context.Roles.Where(r => r.Id == UserRole).Select(n => n.Name).FirstOrDefaultAsync();
-                //if(_userManager.IsInRoleAsync(userId, "Doctor")) { }
-                //var userId = _context.Users.Where(e => e.Email == loginVM.Email)
-                //    .Select(e => new IdentityUser
-                //    {
-                //        Email = e.Email,
-                //        PasswordHash = e.PasswordHash,
-                //    });
+                
                 if (Role.Equals("Doctor"))
                 {
                     return RedirectToAction("Index", "Doctor");
