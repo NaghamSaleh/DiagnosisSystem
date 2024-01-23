@@ -37,6 +37,7 @@ namespace DiagnosisSystem.Controllers
         }
 
         [HttpPost]
+        //SELECT QUERY
         public IActionResult Queries(int id)
         {
             var questions = _context.PatientQuestions
@@ -50,6 +51,13 @@ namespace DiagnosisSystem.Controllers
                 .ToList();
             return View(questions);
         }
+        #endregion
+
+        #region View selected query
+        //GET AND POST
+        #endregion
+
+        #region Forum
         #endregion
     }
 }
