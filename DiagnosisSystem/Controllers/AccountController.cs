@@ -271,7 +271,7 @@ namespace DiagnosisSystem.Controllers
                 //    });
                 if (Role.Equals("Doctor"))
                 {
-                    return RedirectToAction("Login", "Account");
+                    return RedirectToAction("Index", "Doctor");
                 }
                 else if(Role.Equals("InitialDoctor"))
                 {
