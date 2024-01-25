@@ -27,28 +27,28 @@ namespace DiagnosisSystem.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var questionVM = new PatientQuestionVM();
+            var questionVM = new QueryVM();
             questionVM.QuestionTag = _context.Tags.Select(s => s.Name).ToList();
 
             return View(questionVM);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(PatientQuestionVM patientQuestionVM)
+        public async Task<IActionResult> Create(QueryVM patientQuestionVM)
         {
             if(ModelState.IsValid)
             {
                 string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-                var pQuestion = new PatientQuestion()
+                var pQuestion = new Query()
                 {
-                    QuestionTitle = patientQuestionVM.QuestionTitle,
-                    QuestionBody = patientQuestionVM.QuestionBody,
-                    QuestionTag = string.Join(',', patientQuestionVM.QuestionTag),
+                    QueryTitle = patientQuestionVM.QueryTitle,
+                    Description = patientQuestionVM.Description,
+                    Tag = string.Join(',', patientQuestionVM.QuestionTag),
                     PatientId = userId
                 };
 
-                _context.PatientQuestions.Add(pQuestion);
+                _context.Queries.Add(pQuestion);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -60,12 +60,12 @@ namespace DiagnosisSystem.Controllers
         public IActionResult Queries()
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var questions = _context.PatientQuestions
+            var questions = _context.Queries
                 .Where(i => i.PatientId == userId)
-                .Select(q => new PatientQuestionVM
+                .Select(q => new QueryVM
             {
                 Id= q.Id,
-                QuestionTitle = q.QuestionTitle,
+                QueryTitle = q.QueryTitle,
                 
             }).ToList();
             return View(questions);

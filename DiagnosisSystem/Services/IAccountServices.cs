@@ -4,6 +4,6 @@
     {
         bool ValidBirthDate(DateTime birthDate);
 
-        string GetRoleByUserEmail(string email);
+        //string GetRoleByUserEmail(string email);
     }
 }

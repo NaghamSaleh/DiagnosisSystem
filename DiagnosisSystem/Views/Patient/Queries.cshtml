@@ -1,10 +1,10 @@
-﻿@model List<PatientQuestionVM>
+﻿@model List<QueryVM>
 
 <div class="queries-container">
     <h1>Recent Queries</h1>
 
     @foreach (var q in Model)
     {
-        <a asp-action="ViewQueries" asp-route-id="@q.Id" class="query-btn">@q.QuestionTitle</a>
+        <a asp-action="ViewQueries" asp-route-id="@q.Id" class="query-btn">@q.QueryTitle</a>
     }
 </div>

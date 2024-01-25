@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using DiagnosisSystem.Models;
+using System.Reflection.Emit;
 
 namespace DiagnosisSystem.Data
 {
@@ -16,10 +17,11 @@ namespace DiagnosisSystem.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<District> Districts { get; set; }
-        public DbSet<Query> Queries { get; set; }
+        public DbSet<Answer> Answers { get; set; }
         public DbSet<Specialty> Specialities { get; set; }
         public DbSet<Tag> Tags { get; set; }
-        public DbSet<PatientQuestion> PatientQuestions { get; set; }
+        public DbSet<Query> Queries { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -74,13 +76,18 @@ namespace DiagnosisSystem.Data
                     Id = user_id
 
                 });
-            
+
 
             builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
             {
                 RoleId = admin_roleId,
                 UserId = user_id
             });
+
+            builder.Entity<Query>()
+               .HasMany(q => q.Answers)
+               .WithOne(a => a.Query)
+               .HasForeignKey(a => a.QueryId);
 
         }
     }

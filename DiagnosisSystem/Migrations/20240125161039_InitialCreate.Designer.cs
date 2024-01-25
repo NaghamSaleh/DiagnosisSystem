@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DiagnosisSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240106165745_AddPatientIdToQuery")]
-    partial class AddPatientIdToQuery
+    [Migration("20240125161039_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,32 @@ namespace DiagnosisSystem.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("DiagnosisSystem.Entities.Answer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AnswerBody")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DoctorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("QueryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QueryId");
+
+                    b.ToTable("Answers");
+                });
 
             modelBuilder.Entity("DiagnosisSystem.Entities.District", b =>
                 {
@@ -49,7 +75,7 @@ namespace DiagnosisSystem.Migrations
                     b.ToTable("Districts");
                 });
 
-            modelBuilder.Entity("DiagnosisSystem.Entities.PatientQuestion", b =>
+            modelBuilder.Entity("DiagnosisSystem.Entities.Query", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -57,44 +83,26 @@ namespace DiagnosisSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PatientId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("QuestionBody")
+                    b.Property<string>("QueryTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("QuestionTag")
+                    b.Property<string>("Tag")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("QuestionTitle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PatientQuestions");
-                });
-
-            modelBuilder.Entity("DiagnosisSystem.Entities.Query", b =>
-                {
-                    b.Property<int>("QueryID")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("Votes")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QueryID"), 1L, 1);
-
-                    b.Property<string>("Question")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Specialty")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("QueryID");
+                    b.HasKey("Id");
 
                     b.ToTable("Queries");
                 });
@@ -174,29 +182,29 @@ namespace DiagnosisSystem.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "eb851402-724d-40bb-9a63-a07aef1ef71c",
-                            ConcurrencyStamp = "6cd77208-ca11-413a-9bed-0c05c3efd843",
+                            Id = "bb7856dd-546d-4e55-b709-83b5d5587b0e",
+                            ConcurrencyStamp = "664b13ac-f0ff-4e9a-a314-43889170425a",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "2201e788-f975-424a-9986-79e8ee5570e5",
-                            ConcurrencyStamp = "5e83ca0d-7ea9-4db4-afe1-583cc72184a8",
+                            Id = "5f6db1e8-0014-4fc1-989b-a96f07df5e5b",
+                            ConcurrencyStamp = "446d10a8-353d-435e-8763-90a3f07008c8",
                             Name = "Patient",
                             NormalizedName = "PATIENT"
                         },
                         new
                         {
-                            Id = "cb37ab1f-1f72-4274-820b-a40ab753be74",
-                            ConcurrencyStamp = "86664e96-9ee3-4aee-9588-e2c3ae23be12",
+                            Id = "0607659e-a585-489b-adfc-e4c85123e4b3",
+                            ConcurrencyStamp = "bdd32556-412c-4e54-a69c-3ada04e68e56",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         },
                         new
                         {
-                            Id = "3c6e9ea4-b675-4410-b81c-a8414902b97d",
-                            ConcurrencyStamp = "0f0ee5c3-0b40-4959-bc03-a58f4bb31249",
+                            Id = "6700d593-d05c-4a42-a23f-d2ae44e6b4b8",
+                            ConcurrencyStamp = "da32b1b2-b8f6-40fc-aff2-c0f487917d92",
                             Name = "InitialDoctor",
                             NormalizedName = "INITIALDOCTOR"
                         });
@@ -300,17 +308,17 @@ namespace DiagnosisSystem.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c11444a8-7c26-407e-84fa-616c360741da",
+                            Id = "65f8d6f1-88ae-4102-9978-85f19539bfae",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d8b71af3-bc98-424e-9242-8ce8d4357e05",
+                            ConcurrencyStamp = "8b5a83d6-fe50-4a89-b08c-464b8c62c6bb",
                             Email = "naghamsaleh@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "NAGHAMSALEH@GMAIL.COM",
                             NormalizedUserName = "NAGHAMSALEH",
-                            PasswordHash = "AQAAAAEAACcQAAAAEN7pEoNZEol3/Y4kjlUaDKAfQZf9eY8adPZ3likzG09VfT9tYJU2WHIv3sso7rkvoA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBkomls5ol5UV0K+cvHiuVTAnuDPkg9awZ3fV6+2q6n3wc06IU+C7p52h/q4me1Raw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8149739d-d6d2-4e4d-9797-e349162ffd8c",
+                            SecurityStamp = "abc0d3d9-f478-44bf-a6ee-e643a6d61984",
                             TwoFactorEnabled = false,
                             UserName = "naghamsaleh"
                         });
@@ -380,8 +388,8 @@ namespace DiagnosisSystem.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "c11444a8-7c26-407e-84fa-616c360741da",
-                            RoleId = "eb851402-724d-40bb-9a63-a07aef1ef71c"
+                            UserId = "65f8d6f1-88ae-4102-9978-85f19539bfae",
+                            RoleId = "bb7856dd-546d-4e55-b709-83b5d5587b0e"
                         });
                 });
 
@@ -455,6 +463,17 @@ namespace DiagnosisSystem.Migrations
                     b.HasDiscriminator().HasValue("User");
                 });
 
+            modelBuilder.Entity("DiagnosisSystem.Entities.Answer", b =>
+                {
+                    b.HasOne("DiagnosisSystem.Entities.Query", "Query")
+                        .WithMany("Answers")
+                        .HasForeignKey("QueryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Query");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -504,6 +523,11 @@ namespace DiagnosisSystem.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DiagnosisSystem.Entities.Query", b =>
+                {
+                    b.Navigation("Answers");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,14 +1,14 @@
-﻿@model PatientQuestionVM
+﻿@model QueryVM
 <link rel="stylesheet" type="text/css" href="/css/Patient/create.css">
 
 
 <form asp-controller="Patient" asp-action="Create" method="post" class="patient-form">
 
-    <input asp-for="QuestionTitle" class="form-control form-control-lg" type="text" placeholder="Inquiry Title">
+    <input asp-for="QueryTitle" class="form-control form-control-lg" type="text" placeholder="Inquiry Title">
 
     <div class="form-group">
         <label for="exampleFormControlTextarea1">Inquiry Details</label>
-        <textarea asp-for="QuestionBody" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Type your inquiry here"></textarea>
+        <textarea asp-for="Description" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Type your inquiry here"></textarea>
     </div>
 
     <div class="tag-section">

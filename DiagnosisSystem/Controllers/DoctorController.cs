@@ -26,38 +26,45 @@ namespace DiagnosisSystem.Controllers
         [HttpGet]
         public IActionResult Queries()
         {
-            var questions = _context.PatientQuestions
-                .Select(q => new PatientQuestionVM
+            
+
+            var queries = _context.Queries
+                .Select(q => new QueryVM
                 {
                     Id = q.Id,
-                    QuestionTitle = q.QuestionTitle,
+                    QueryTitle = q.QueryTitle,
+                    Votes= q.Votes,
+                    AnswerCount= q.AnswerCount,
                 })
                 .ToList();
-            return View(questions);
+            return View(queries);
         }
 
-        [HttpPost]
-        //SELECT QUERY
-        public IActionResult Queries(int id)
-        {
-            var questions = _context.PatientQuestions
-                .Where(d => d.Id == id)
-                .Select(q => new PatientQuestionVM
-                {
-                    Id = q.Id,
-                    QuestionTitle = q.QuestionTitle,
 
-                })
-                .ToList();
-            return View(questions);
-        }
         #endregion
 
         #region View selected query
-        //GET AND POST
+        [HttpPost]
+        //NEEDS Editing
+        public IActionResult Answer(int id)
+        {
+            var queries = _context.Queries
+                .Where(d => d.Id == id)
+                .Select(q => new AnswerDTO
+                {
+                    Id = q.Id,
+                    AnswerBody = string.Empty,
+                    
+
+                })
+                .ToList();
+            return View(queries);
+        }
         #endregion
 
         #region Forum
+        //create discussion group
+        //view all registered doctors
         #endregion
     }
 }

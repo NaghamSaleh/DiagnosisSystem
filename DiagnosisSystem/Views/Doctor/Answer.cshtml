@@ -1,0 +1,21 @@
+﻿@model AnswerDTO
+
+@{
+    ViewData["Title"] = "Answer Query";
+}
+
+<h2>Answer Query</h2>
+
+<div>
+    <label asp-for="Query.QueryTitle" class="control-label">Query Title:</label>
+    <input asp-for="Query.QueryTitle" class="form-control" readonly />
+</div>
+
+<div>
+    <label asp-for="AnswerBody" class="control-label">Answer Body:</label>
+    <textarea asp-for="AnswerBody" class="form-control" rows="4"></textarea>
+</div>
+
+<div class="form-group">
+    <button type="submit" class="btn btn-primary">Submit Answer</button>
+</div>
