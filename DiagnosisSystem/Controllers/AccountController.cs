@@ -236,7 +236,6 @@ namespace DiagnosisSystem.Controllers
             return View();
         }
         #endregion
-
         #region Login
         [HttpGet]
         public IActionResult Login()
@@ -247,38 +246,51 @@ namespace DiagnosisSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginVM loginVM)
         {
+            if (!ModelState.IsValid)
+            {
+                // If model state is not valid, return the view with validation errors
+                return View(loginVM);
+            }
+
             var result = await _signInManager.PasswordSignInAsync(loginVM.Email, loginVM.Password, false, lockoutOnFailure: false);
 
             if (result.Succeeded)
             {
-                var userId = await _context.Users.Where(e => e.UserName == loginVM.Email).Select(e => e.Id).FirstOrDefaultAsync();
-                var UserRole = await _context.UserRoles.Where(u => u.UserId == userId).Select(r => r.RoleId).FirstOrDefaultAsync();
-                var Role = await _context.Roles.Where(r => r.Id == UserRole).Select(n => n.Name).FirstOrDefaultAsync();
-                
-                if (Role.Equals("Doctor"))
+                var user = await _userManager.FindByEmailAsync(loginVM.Email);
+                if (user != null)
                 {
-                    return RedirectToAction("Index", "Doctor");
-                }
-                else if(Role.Equals("InitialDoctor"))
-                {
-                    return BadRequest("Account still waiting Acceptance");
-                }
-                else if(Role.Equals("Patient"))
-                {
-                    return RedirectToAction("Index", "Patient");
-                }
-                else if(Role == "Admin")
-                {
-                    return RedirectToAction("Index", "Admin");
+                    var roles = await _userManager.GetRolesAsync(user);
+                    if (roles.Contains("Doctor"))
+                    {
+                        return RedirectToAction("Index", "Doctor");
+                    }
+                    else if (roles.Contains("InitialDoctor"))
+                    {
+                        return BadRequest("Account still waiting Acceptance");
+                    }
+                    else if (roles.Contains("Patient"))
+                    {
+                        return RedirectToAction("Index", "Patient");
+                    }
+                    else if (roles.Contains("Admin"))
+                    {
+                        return RedirectToAction("Index", "Admin");
+                    }
+                    else
+                    {
+                        return BadRequest("Invalid Role");
+                    }
                 }
                 else
                 {
-                    return BadRequest("Invalid Role");
+                    return BadRequest("User not found");
                 }
             }
             else
             {
-                return BadRequest("Failed");
+                // Authentication failed, return error message
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                return View(loginVM);
             }
         }
 

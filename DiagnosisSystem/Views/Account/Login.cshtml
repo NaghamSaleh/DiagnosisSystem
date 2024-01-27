@@ -1,28 +1,30 @@
 ﻿@model LoginVM
 
 <link rel="stylesheet" type="text/css" href="/css/Account/Login.css">
+<script src="~/js/Account/login.js"></script>
 
-<form asp-controller="Account" asp-action="Login" method="post">
 
-<h1 style="text-align: center;">Login</h1>
-<div class="login-container">
+<form id="loginForm" asp-controller="Account" asp-action="Login" method="post">
 
-    <div class="text-danger"></div>
+    <h1 style="text-align: center;">Login</h1>
+    <div class="login-container">
 
-    <div class="form-group">
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
+        <div class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" id="email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+            <span id="emailError" class="text-danger d-none">Please enter your email address.</span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" id="password" type="password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+            <span id="passwordError" class="text-danger d-none">Please enter your password.</span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Login</button>
     </div>
-
-    <div class="form-group">
-        <label asp-for="Password"></label>
-        <input asp-for="Password" type="password" class="form-control" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Login</button>
-    </div>
-
-
 </form>
