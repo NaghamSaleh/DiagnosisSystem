@@ -3,14 +3,14 @@
     font-family: 'Arial', sans-serif;
 }
 
-.login-container {
-    background-color: rgba(242, 242, 242, 0.5);
-    width: 400px;
-    margin: 0 auto;
+.speciality-container {
+    width: 70%; /* Adjust width as needed */
+    margin: 50px 0 50px 280px; /* Adjust the left margin to match the width of the sidebar */
+    background-color: rgba(255, 255, 255, 0.3); /* Transparent white */
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 50px;
+    margin-left: 300px;
 }
 
 h1 {

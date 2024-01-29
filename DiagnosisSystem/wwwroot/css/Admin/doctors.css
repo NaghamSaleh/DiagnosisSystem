@@ -4,9 +4,11 @@
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+    margin: 0 auto; /* This centers the table horizontally */
+    width: 1000px;
+    margin-left: 250px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
 }
 
 th, td {
