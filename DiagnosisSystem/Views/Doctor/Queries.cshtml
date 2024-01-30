@@ -1,33 +1,40 @@
-﻿@model List<QueryVM>
+﻿@model DiagnosisSystem.Models.QueryTableVM
+@using DiagnosisSystem.Models;
 
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Questions</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
+<title>Queries</title>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
     </style>
-</head>
+
 <body>
 
     <h1>Question List</h1>
+<form>
+    <div class="row mt-4">
+        <div class="col-md-3">
+            <label class="mt-2">Sort By:</label>
+            <select asp-for="filters.Answered" name ="filters.Answered" class="form-control mb-3">
+                <option value="false">Unanswered</option>
+                <option value="true">Answered</option>
+            </select>
+        </div>
+        <div class="col-md-2 align-self-center pt-3">
+            <button type="submit" asp-controller="Doctor" asp-action="Queries" class="btn btn-primary px-3">Search</button>
 
+        </div>
+    </div>
+</form>
     <table>
         <thead>
             <tr>
@@ -38,7 +45,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var question in Model)
+            @foreach (var question in Model.Queries)
             {
                 <tr>
                     <td>@question.Votes</td>
@@ -52,4 +59,4 @@
     </table>
 
 </body>
-</html>
+

@@ -69,8 +69,8 @@ namespace DiagnosisSystem.Data
                 {
                     NormalizedEmail = "naghamsaleh@gmail.com".ToUpper(),
                     Email = "naghamsaleh@gmail.com",
-                    NormalizedUserName = "naghamsaleh".ToUpper(),
-                    UserName = "naghamsaleh",
+                    NormalizedUserName = "naghamsaleh@gmail.com".ToUpper(),
+                    UserName = "naghamsaleh@gmail.com",
                     PasswordHash = hasher.HashPassword(null, "+fUY<Z0B|2b2F.Yv2l^z-"),
                     EmailConfirmed = true,
                     Id = user_id
