@@ -1,4 +1,4 @@
-﻿@model AnswerDTO
+﻿@model QueryVM
 
 @{
     ViewData["Title"] = "Answer Query";
@@ -6,16 +6,22 @@
 
 <h2>Answer Query</h2>
 
-<div>
-    <label asp-for="Query.QueryTitle" class="control-label">Query Title:</label>
-    <input asp-for="Query.QueryTitle" class="form-control" readonly />
+<div readonly>
+    <label asp-for="QueryTitle" class="control-label">Query:</label>
+    <input asp-for="QueryTitle" class="form-control">
+    @Model.Description
+    Votes: @Model.Votes
+
 </div>
 
+
+<form method="post">
 <div>
-    <label asp-for="AnswerBody" class="control-label">Answer Body:</label>
-    <textarea asp-for="AnswerBody" class="form-control" rows="4"></textarea>
+    <label class="control-label">Answer Body:</label>
+    <textarea  class="form-control" rows="4"></textarea>
 </div>
 
 <div class="form-group">
-    <button type="submit" class="btn btn-primary">Submit Answer</button>
+    <button type="submit" asp-controller="Doctor" asp-action="Answer"  class="btn btn-primary">Submit Answer</button>
 </div>
+</form>
