@@ -4,12 +4,17 @@
 
 <div class="container">
     <div class="sidebar">
+        <div class="profile-picture">
+            <img src="https://i.imgur.com/siyPD5C.png" alt="Profile Picture">
+        </div>
+        <p class="profile-name">Nagham Saleh</p>
+
         <a href="#section1" class="section">STAFF MANAGEMENT</a>
         <ul class="sub-sections">
             <li>
                 <a href="#doctorsInformation">Doctors Information</a>
                 <ul class="sub-sub-sections">
-                    <li><a href="#viewPendingRegistrations">View Pending Registrations</a></li>
+                    <li><a asp-action="Doctors" asp-controller="Admin">View Pending Registrations</a></li>
                 </ul>
             </li>
         </ul>
@@ -19,9 +24,9 @@
             <li>
                 <a href="#Specielties">Specialties</a>
                 <ul class="sub-sub-sections">
-                    <li><a href="#newspecialty">Register new specialty</a></li>
-                    <li><a asp-action="Speciality" asp-controller="Admin">List of all specialties</a></li>
-                    <li><a href="#addtag">Add Tag</a></li>
+                    <li><a asp-action="Speciality" asp-controller="Admin">Register new specialty</a></li>
+                    <li><a asp-action="ViewSpecialities" asp-controller="Admin">List of all specialties</a></li>
+                    <li><a asp-action="Tag" asp-controller="Admin">Add Tag</a></li>
                 </ul>
             </li>
         </ul>
@@ -44,6 +49,7 @@
         <div class="stats-container">
             <div class="stat-box">
                 <h1>Pending Requests</h1>
+                <i class="fa-solid fa-bell"></i>
                 <p><a asp-action="Doctors" asp-controller="Admin">@Model.numOfIRequests</a></p>
             </div>
 

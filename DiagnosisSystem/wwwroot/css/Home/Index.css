@@ -2,11 +2,21 @@
     background: linear-gradient(to bottom right, #5BA9A9, #84A5E3);
     color: #333;
     margin: 0;
-    font-family: 'Inter', sans-serif;
+    font-family: 'DejaVu Sans Mono', monospace;
     height: 100vh;
+}
+.container {
+    margin-top: 100px !important; 
+
+}
+
+.jumbotron p {
+    margin-top: 20px !important; 
+
 }
 
 .login-container-wrapper {
+    margin-top: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -36,8 +46,9 @@
 
 .user-box {
     width: 100%;
+    color: black;
     height: 55px;
-    background: #D9D9D9;
+    background-color: rgba(255, 255, 255, 0.4); /* Transparent white */
     border-radius: 15px;
     margin-bottom: 10px;
     display: flex;
@@ -48,40 +59,51 @@
 }
 
     .user-box.clicked {
-        background: #72A8AA;
+        background: #5BA9A9;
     }
 
-.next-button {
-    width: 100%;
-    height: 29px;
-    background: #D9D9D9;
-    border-radius: 5px;
-    margin-top: 20px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.next-button-text {
-    color: white;
-    font-size: 15px;
-    text-align: center;
-    margin-top: 5px;
-}
-
-.next-button.active {
-    background: #FFB067;
-}
 
 .user-box:hover,
 .next-button:hover {
-    background: #72A8AA;
+    background: linear-gradient(to bottom right, #5BA9A9, #84A5E3);
 }
-
-
 
 .login-container p {
-    display: inline;
+    display: flex;
     margin: 0;
     padding: 0;
-    background: white;
+    background-color: rgba(255, 255, 255, 0); /* Transparent white */
 }
+
+.header {
+    background-color: rgba(255, 255, 255, 0.5); /* Transparent white */
+    color: #000; /* Black text */
+    height: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.brand {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.choices {
+    display: flex;
+    align-items: center;
+}
+
+    .choices a {
+        color: #000; /* Black text */
+        text-decoration: none;
+        margin-left: 20px;
+    }
+

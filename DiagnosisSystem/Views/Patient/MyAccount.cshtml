@@ -1,7 +1,9 @@
 ﻿@model EditProfileVM
 <link rel="stylesheet" type="text/css" href="/css/Patient/MyAccount.css">
 
-<div class="account-info-container">
+
+
+<div class="myaccountcontainer">
     <h1>My Account Information</h1>
 
     <div class="info-item">
@@ -24,3 +26,16 @@
         <span class="info-value">@Model.Telephone</span>
     </div>
 </div>
+
+<header class="header">
+    <div class="brand">Qure</div>
+
+    <nav class="choices">
+        <a asp-action="Queries" asp-controller="Patient">User Queries</a>
+        <a asp-action="" asp-controller="Patient">Paid consultancy</a>
+        <a asp-action="" asp-controller="Patient">Contact us</a>
+        <a asp-action="" asp-controller="Patient">Analytics</a>
+        <a asp-action="MyAccount" asp-controller="Patient">My account</a>
+
+    </nav>
+</header>

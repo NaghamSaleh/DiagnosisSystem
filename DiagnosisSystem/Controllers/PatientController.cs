@@ -1,12 +1,14 @@
 ﻿using DiagnosisSystem.Data;
 using DiagnosisSystem.Entities;
 using DiagnosisSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace DiagnosisSystem.Controllers
 {
+    [Authorize(Roles = "Patient")]
     public class PatientController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -1,11 +1,13 @@
 ﻿using DiagnosisSystem.Data;
 using DiagnosisSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace DiagnosisSystem.Controllers
 {
+    [Authorize(Roles = "Doctor")]
     public class DoctorController: Controller
     {
         private readonly ApplicationDbContext _context;
@@ -29,12 +31,12 @@ namespace DiagnosisSystem.Controllers
             
 
             var queries = _context.Queries
-                .Select(q => new QueryVM
+                .Select(query => new QueryVM
                 {
-                    Id = q.Id,
-                    QueryTitle = q.QueryTitle,
-                    Votes= q.Votes,
-                    AnswerCount= q.AnswerCount,
+                    Id = query.Id,
+                    QueryTitle = query.QueryTitle,
+                    Votes= query.Votes,
+                    AnswerCount= query.AnswerCount,
                 })
                 .ToList();
             return View(queries);

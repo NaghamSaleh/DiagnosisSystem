@@ -26,14 +26,6 @@ function handleNextButtonClick() {
                 // Redirect to the patient registration route
                 window.location.href = "/Account/doctorRegister";
                 break;
-            case 'administrative':
-                // Redirect to the patient registration route
-                window.location.href = "";
-                break;
-            case 'Login':
-                // Redirect to the patient registration route
-                window.location.href = "/Account/Login";
-                break;
 
         }
     }
