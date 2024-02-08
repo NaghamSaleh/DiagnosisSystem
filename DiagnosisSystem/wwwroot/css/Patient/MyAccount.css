@@ -25,6 +25,28 @@
     font-weight: bold;
 }
 
+
+.account-link {
+    display: flex;
+    align-items: center;
+}
+
+    .account-link:hover {
+    }
+
+.account-icon {
+    width: 50px; /* Adjust the width as needed */
+    height: auto;
+    margin-left: 1px; /* Adjust the spacing between the icon and text */
+}
+
+.account-link:hover .account-icon {
+    transform: scale(1.2); /* Enlarge the image on hover */
+}
+
+    .account-link:hover .account-icon:hover {
+        background-color: transparent !important;
+    }
 .choices {
     display: flex;
     align-items: center;
@@ -51,12 +73,67 @@
             z-index: -1;
         }
 
+
+
 .myaccountcontainer {
-    margin-top: 100px; /* Adjust as needed */
-    margin-left: 50px;
-    width: 1000px;
+    margin: 25px auto;
+    width: 600px;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     background-color: rgba(255, 255, 255, 0.3);
+}
+
+.section-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.info-item {
+    margin-bottom: 15px;
+}
+
+.info-label {
+    font-weight: bold;
+    color: #666;
+    margin-right: 10px;
+}
+
+.info-value {
+    color: #444;
+}
+
+
+
+.navbar {
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 100px; /* Adjust as needed */
+    align-items: center;
+    width: 455px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+
+.nav-option {
+    padding: 10px 20px;
+    margin: 0 10px;
+    color: #000;
+    cursor: pointer;
+}
+
+.selector {
+    position: absolute;
+    background-color: #538B8D;
+    border-radius: 30px;
+    width: 120px;
+    height: 40px;
+    transition: 0.3s ease-in-out;
+    z-index: -1;
 }

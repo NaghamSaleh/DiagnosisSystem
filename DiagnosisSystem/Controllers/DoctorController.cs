@@ -25,11 +25,9 @@ namespace DiagnosisSystem.Controllers
         }
 
         #region All Question
-        [HttpGet]
-        public IActionResult Queries()
+        
+        public IActionResult Queries(QuerySearchFilter filters)
         {
-            
-
             var queries = _context.Queries
                 .Select(query => new QueryVM
                 {
@@ -39,7 +37,24 @@ namespace DiagnosisSystem.Controllers
                     AnswerCount= query.AnswerCount,
                 })
                 .ToList();
-            return View(queries);
+           
+            if(filters is not null && filters.Answered is false)
+            {
+                queries = queries
+                    .OrderByDescending(q => q.AnswerCount == 0 ? int.MaxValue : q.AnswerCount)
+                    .ToList();
+            }
+            if (filters is not null && filters.Answered is false)
+            {
+                queries = queries
+                    .OrderByDescending(q => q.AnswerCount >= 0 ? int.MaxValue : q.AnswerCount)
+                    .ToList();
+            }
+            var filteredqueries = new QueryTableVM()
+            {
+                Queries = queries
+            };
+            return View(filteredqueries);
         }
 
 
@@ -56,8 +71,6 @@ namespace DiagnosisSystem.Controllers
                 {
                     Id = q.Id,
                     AnswerBody = string.Empty,
-                    
-
                 })
                 .ToList();
             return View(queries);

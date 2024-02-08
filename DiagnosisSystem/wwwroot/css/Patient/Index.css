@@ -24,6 +24,24 @@
     font-weight: bold;
 }
 
+.account-link {
+    display: flex;
+    align-items: center;
+}
+    .account-link:hover {
+    }
+
+.account-icon {
+    width: 50px; /* Adjust the width as needed */
+    height: auto;
+    margin-left: 1px; /* Adjust the spacing between the icon and text */
+}
+.account-link:hover .account-icon {
+    transform: scale(1.2); /* Enlarge the image on hover */
+}
+    .account-link:hover .account-icon:hover {
+        background-color: transparent !important;
+    }
 .choices {
     display: flex;
     align-items: center;

@@ -25,16 +25,6 @@
     font-weight: bold;
 }
 
-.account-link {
-    display: flex;
-    align-items: center;
-}
-
-.account-icon {
-    width: 50px; /* Adjust the width as needed */
-    height: auto;
-    margin-right: 5px; /* Adjust the spacing between the icon and text */
-}
 .choices {
     display: flex;
     align-items: center;
@@ -84,3 +74,21 @@
         background-color: #6C81C0;
         color: white;
     }
+
+    h1{
+        padding: 20px;
+    }
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
