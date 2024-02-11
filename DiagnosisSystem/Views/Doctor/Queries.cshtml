@@ -1,23 +1,23 @@
 ﻿@model DiagnosisSystem.Models.QueryTableVM
 @using DiagnosisSystem.Models;
+<link rel="stylesheet" type="text/css" href="/css/Doctor/queries.css">
 
 <title>Queries</title>
-<style>
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
-    th, td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
-    }
-    th {
-        background-color: #f2f2f2;
-    }
-    </style>
 
 <body>
+
+    <header class="header">
+        <div class="brand">Qure</div>
+
+
+        <nav class="choices">
+            <a asp-action="Queries" asp-controller="Doctor">User Queries</a>
+            <a asp-action="" asp-controller="Doctor">Doctors Forum</a>
+            <a asp-action="" asp-controller="Doctor">Analytics</a>
+            <a asp-action="MyAccount" asp-controller="Patient">My account</a>
+
+        </nav>
+    </header>
 
     <h1>Question List</h1>
 <form>

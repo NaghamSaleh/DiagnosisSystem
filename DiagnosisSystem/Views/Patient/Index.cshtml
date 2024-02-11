@@ -1,9 +1,18 @@
 ﻿<link rel="stylesheet" type="text/css" href="/css/Patient/Index.css">
 
-<div class="patient-links">
-    <a asp-action="Queries" asp-controller="Patient" class="link">User Queries</a>
-    <a class="link">Paid Consultancy</a>
-    <a asp-action="Create" asp-controller="Patient" class="link">Have a query in mind?</a>
-    <a class="link">Need Help?</a>
-    <a asp-action="MyAccount" asp-controller="Patient" class="link">View your personal account</a>
-</div>
+
+<header class="header">
+    <div class="brand">Qure</div>
+ 
+
+    <nav class="choices">
+        <a asp-action="Queries" asp-controller="Patient">User Queries</a>
+        <a asp-action="" asp-controller="Patient">Paid consultancy</a>
+        <a asp-action="" asp-controller="Patient">Analytics</a>
+        <a asp-action="MyAccount" asp-controller="Patient" class="account-link">
+            <img src="https://i.imgur.com/mFIq1e0.png" alt="My Account" class="account-icon">
+        </a>
+
+    </nav>
+</header>
+

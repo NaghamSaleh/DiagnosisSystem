@@ -1,28 +1,17 @@
 ﻿<link rel="stylesheet" type="text/css" href="/css/Doctor/Index.css">
 
+<header class="header">
+    <div class="brand">Qure</div>
 
-<div class="buttons-container">
-    <div class="button">
+
+    <nav class="choices">
         <a asp-action="Queries" asp-controller="Doctor">User Queries</a>
-    </div>
+        <a asp-action="Forum" asp-controller="Doctor">Doctors Forum</a>
+        <a asp-action="" asp-controller="Doctor">Analytics</a>
+        <a asp-action="MyAccount" asp-controller="Patient" class="account-link">
+            <img src="https://i.imgur.com/mFIq1e0.png" alt="My Account" class="account-icon">
+        </a>
 
-    <div class="button">
-        <a>Doctors Forum</a>
-    </div>
-    <div class="button">
-        <a>Analytics</a>
-    </div>
-</div>
-<div class="buttons-container">
-    <div class="button">
-        <a asp-action="Queries" asp-controller="Doctor">Start Helping Patients</a>
-    </div>
 
-    <div class="button">
-        <a>Need Help?</a>
-    </div>
-
-    <div class="button">
-        <a asp-action="MyAccount" asp-controller="Doctor">View your personal account</a>
-    </div>
-</div>
+    </nav>
+</header>

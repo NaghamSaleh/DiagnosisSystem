@@ -1,8 +1,11 @@
-﻿namespace DiagnosisSystem.Repositories
+﻿using DiagnosisSystem.Models;
+
+namespace DiagnosisSystem.Repositories
 {
     public interface IDoctorRepo
     {
         int GetDrPendingRequestsCount();
         int GetRegisteredDrCount();
+        List<DoctorRegisterVM> GetAllDoctors();
     }
 }

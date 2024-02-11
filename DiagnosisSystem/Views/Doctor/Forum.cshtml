@@ -1,0 +1,33 @@
+﻿@model List<DoctorRegisterVM>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <h5>Questions</h5>
+    <h5>Profile</h5>
+    <h5>Consult</h5>
+    <h5>Discussion Groups</h5>
+    <title>Doctor Information</title>
+    <style>
+        .doctor-square {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #ccc;
+            margin: 10px;
+            padding: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h4>Create Discussion Group</h4>
+
+    @foreach (var doctor in Model)
+    {
+        <div class="doctor-square">
+            <h2>Dr. @doctor.FirstName @doctor.LastName</h2>
+            <p> @doctor.Specialty</p>
+        </div>
+    }
+</body>
+</html>

@@ -1,10 +1,51 @@
 ﻿@model List<QueryVM>
+<link rel="stylesheet" type="text/css" href="/css/Patient/queries.css">
 
-<div class="queries-container">
-    <h1>Recent Queries</h1>
+<header class="header">
+    <div class="brand">Qure</div>
 
-    @foreach (var q in Model)
-    {
-        <a asp-action="ViewQueries" asp-route-id="@q.Id" class="query-btn">@q.QueryTitle</a>
-    }
-</div>
+    <nav class="choices">
+        <a asp-action="Queries" asp-controller="Patient">User Queries</a>
+        <a asp-action="" asp-controller="Patient">Paid consultancy</a>
+        <a asp-action="" asp-controller="Patient">Analytics</a>
+        <a asp-action="MyAccount" asp-controller="Patient" class="account-link">
+            <img src="https://i.imgur.com/mFIq1e0.png" alt="My Account" class="account-icon">
+        </a>
+    </nav>
+</header>
+
+<h2>Queries</h2>
+
+
+@if (Model != null && Model.Any())
+
+{
+    <table class="queries-table">
+        <thead>
+            <tr>
+                <th>Number of Answers</th>
+                <th>Question</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var query in Model)
+            {
+                <tr>
+                    <td>@query.AnswerCount</td>
+                    <td>
+                        <div>
+                            <span class="query-title" onclick="window.location.href = '@Url.Action("Details", "Queries", new { id = query.Id })'">@query.QueryTitle</span>
+                        </div>
+                        <div class="query-tags">Tags: @string.Join(", ", query.QuestionTag)</div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No queries found.</p>
+}
+
+

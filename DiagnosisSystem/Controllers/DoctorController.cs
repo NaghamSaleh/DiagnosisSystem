@@ -1,6 +1,7 @@
 ﻿using DiagnosisSystem.Data;
 using DiagnosisSystem.Entities;
 using DiagnosisSystem.Models;
+using DiagnosisSystem.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -10,10 +11,12 @@ namespace DiagnosisSystem.Controllers
     public class DoctorController: Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IDoctorRepo _doctorRepo;
 
-        public DoctorController(ApplicationDbContext context)
+        public DoctorController(ApplicationDbContext context, IDoctorRepo doctorRepo)
         {
             _context = context;
+            _doctorRepo = doctorRepo;
         }
 
         public IActionResult Index()
@@ -92,8 +95,11 @@ namespace DiagnosisSystem.Controllers
         #endregion
 
         #region Forum
-        //create discussion group
-        //view all registered doctors
+        public IActionResult Forum()
+        {
+            var doctors = _doctorRepo.GetAllDoctors();
+            return View(doctors);
+        }
         #endregion
     }
 }

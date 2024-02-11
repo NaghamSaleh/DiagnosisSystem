@@ -1,16 +1,21 @@
 ﻿body {
     background: linear-gradient(to bottom right, #94BCD7, white);
-    font-family: 'Arial', sans-serif;
+    font-family: 'DejaVu Sans Mono', monospace;
 }
 
 .speciality-container {
-    width: 70%; /* Adjust width as needed */
-    margin: 50px 0 50px 280px; /* Adjust the left margin to match the width of the sidebar */
+    width: 90%; /* Adjust width as needed */
+    margin: 50px 0 50px 380px; /* Adjust the left margin to match the width of the sidebar */
     background-color: rgba(255, 255, 255, 0.3); /* Transparent white */
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-left: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Adjust styles for the speciality container content as needed */
+.speciality-content {
+    text-align: center;
+    color: #155484;
 }
 
 h1 {
@@ -52,3 +57,95 @@ input {
 .text-danger {
     color: #dc3545;
 }
+
+
+/* Adjust the top position as needed */
+.container {
+    display: flex;
+}
+.sidebar {
+    height: 100%;
+    width: 280px;
+    position: fixed;
+    top: 0px; /* Adjust the top position as needed */
+    left: 0; /* Adjust the left position as needed */
+    background-color: #8FB9D4;
+    padding-top: 0;
+    color: white;
+}
+
+.profile-picture {
+    width: 100px; /* Adjust the width of the profile picture */
+    height: 100px; /* Adjust the height of the profile picture */
+    border-radius: 50%; /* Create a circle by setting border-radius to 50% */
+    overflow: hidden; /* Ensure the image stays within the circular boundary */
+    margin: 20px auto; /* Adjust margin as needed */
+}
+
+    .profile-picture img {
+        width: 100%; /* Make the image fill the entire space of the circular container */
+        height: auto; /* Maintain aspect ratio */
+        display: block;
+    }
+
+.profile-name {
+    text-align: center; /* Center the name */
+    margin-top: 10px; /* Adjust the top margin as needed */
+    font-size: 16px; /* Adjust the font size as needed */
+    color: white; /* Set the color of the name */
+}
+
+.section {
+    display: block;
+    padding: 15px;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+    .section:hover {
+        background-color: #6D9DBE;
+    }
+
+.sub-sections {
+    list-style: none;
+    padding-left: 15px;
+    display: none;
+}
+
+.sub-section {
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+    .sub-section:hover {
+        background-color: #6D9DBE;
+    }
+
+.sub-sub-sections {
+    list-style: none;
+    padding-left: 15px;
+    display: none;
+}
+
+.sub-sub-section {
+    padding: 8px;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+    .sub-sub-section:hover {
+        background-color: #6D9DBE;
+    }
+
+a {
+    text-decoration: none;
+    color: #155484;
+}
+
+    a:hover {
+        text-decoration: underline;
+    }

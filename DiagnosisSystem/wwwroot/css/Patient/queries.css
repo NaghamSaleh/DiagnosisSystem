@@ -1,25 +1,102 @@
-﻿.queries-container {
-    max-width: 600px;
-    margin: auto;
+﻿body {
+    background: linear-gradient(to bottom right, #82C3C5, white);
+    font-family: 'DejaVu Sans Mono', monospace;
+    margin: 0;
+}
+h2{
     padding: 20px;
-    background-color: #f2f2f2;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.query-btn {
-    text-decoration: none;
-    display: inline-block;
-    padding: 10px 15px;
-    margin: 5px;
-    background-color: #155484;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+.queries-table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-    .query-btn:hover {
-        background-color: #12366e;
+    .queries-table th, .queries-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
     }
+
+    .queries-table th {
+        background-color: #f2f2f2;
+    }
+
+.query-title {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.query-tags {
+    color: #666;
+}
+
+.header {
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #000;
+    height: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.brand {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.account-link {
+    display: flex;
+    align-items: center;
+}
+
+    .account-link:hover {
+    }
+
+.account-icon {
+    width: 50px; /* Adjust the width as needed */
+    height: auto;
+    margin-left: 1px; /* Adjust the spacing between the icon and text */
+}
+
+.account-link:hover .account-icon {
+    transform: scale(1.2); /* Enlarge the image on hover */
+}
+
+    .account-link:hover .account-icon:hover {
+        background-color: transparent !important;
+    }
+
+.choices {
+    display: flex;
+    align-items: center;
+}
+
+    .choices a {
+        color: #000;
+        text-decoration: none;
+        margin-left: 20px;
+        position: relative;
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+
+        .choices a:hover::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #82C3C5;
+            padding: 31px;
+            z-index: -1;
+        }
+

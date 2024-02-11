@@ -2,9 +2,53 @@
 
 <link rel="stylesheet" type="text/css" href="/css/Admin/ViewSpecialities.css">
 
-    <h1>Speciality List</h1>
+<form>
+<div class="container">
+    <div class="sidebar">
+        <div class="profile-picture">
+            <img src="https://i.imgur.com/siyPD5C.png" alt="Profile Picture">
+        </div>
+        <p class="profile-name">Nagham Saleh</p>
+
+        <a href="#section1" class="section">STAFF MANAGEMENT</a>
+        <ul class="sub-sections">
+            <li>
+                <a href="#doctorsInformation">Doctors Information</a>
+                <ul class="sub-sub-sections">
+                    <li><a asp-action="Doctors" asp-controller="Admin" class="a">View Pending Registrations</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <a href="#section2" class="section">SPECIALTIES MANAGEMENT</a>
+        <ul class="sub-sections">
+            <li>
+                <a href="#Specielties">Specialties</a>
+                <ul class="sub-sub-sections">
+                    <li><a asp-action="Speciality" asp-controller="Admin">Register new specialty</a></li>
+                    <li><a asp-action="ViewSpecialities" asp-controller="Admin">List of all specialties</a></li>
+                    <li><a asp-action="Tag" asp-controller="Admin">Add Tag</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <a href="#section3" class="section">MANAGE ADMINISTRATORS</a>
+        <ul class="sub-sections">
+            <li>
+                <a href="#Administrators">Administrators</a>
+                <ul class="sub-sub-sections">
+                    <li><a href="#AddAdministrator">Add Administrator</a></li>
+                    <li><a href="#RegisteredAdministrators">Registered Administrators</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+
 
     <table>
+        <h1>List of All Specialities</h1>
+
         <thead>
             <tr>
                 <th>Speciality</th>
@@ -23,3 +67,27 @@
     </table>
 
     <a asp-action="Speciality" asp-controller="Admin" class="btn btn-outline-dark btn-sm me-1">Add Speciality</a>
+
+</form>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var sections = document.querySelectorAll('.section');
+        var subSections = document.querySelectorAll('.sub-sections');
+
+        sections.forEach(function (section) {
+            section.addEventListener('click', function () {
+                var subSectionsList = this.nextElementSibling;
+                subSectionsList.style.display = subSectionsList.style.display === 'none' ? 'block' : 'none';
+            });
+        });
+
+        subSections.forEach(function (subSections) {
+            subSections.addEventListener('click', function () {
+                var subSubSectionsList = this.querySelector('.sub-sub-sections');
+                subSubSectionsList.style.display = subSubSectionsList.style.display === 'none' ? 'block' : 'none';
+            });
+        });
+    });
+</script>
