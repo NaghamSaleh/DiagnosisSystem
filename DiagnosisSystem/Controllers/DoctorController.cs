@@ -100,6 +100,41 @@ namespace DiagnosisSystem.Controllers
             var doctors = _doctorRepo.GetAllDoctors();
             return View(doctors);
         }
+
+        [HttpGet]
+        public IActionResult CreateForum()
+        {
+            var doctors = _doctorRepo.GetAllDoctors();
+            var forumVM = new DiscussionForumDTO
+            {
+                AllMembers = doctors
+            };
+            return View(forumVM);
+        }
+
+        [HttpPost]
+        public IActionResult Create(DiscussionForumDTO discussionForum)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(discussionForum);
+                _context.SaveChanges();
+                return RedirectToAction("Forum");
+            }
+            return View(discussionForum);
+        }
+
+        //[HttpPost]
+        //public IActionResult AddMember(string memberName)
+        //{
+        //    // Assuming you have a way to identify the discussion group currently being viewed
+        //    var discussionGroup = _context.DiscussionGroups
+        //        .Include(g => g.Members)
+        //        .FirstOrDefault(); // Change this query as needed based on how you identify the group
+        //    discussionGroup.AddMember(memberName);
+        //    _context.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
         #endregion
     }
 }

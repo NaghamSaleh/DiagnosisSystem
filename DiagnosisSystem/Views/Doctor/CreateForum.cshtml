@@ -1,0 +1,38 @@
+﻿@model DiscussionForumDTO
+
+<h1>Create Discussion Group</h1>
+
+<form asp-controller="DiscussionGroup" asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="GroupTitle">Group Title:</label>
+        <input asp-for="GroupTitle" class="form-control" />
+        <span asp-validation-for="GroupTitle" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="RelatedTags">Related Tags:</label>
+        <input asp-for="RelatedTags" class="form-control" />
+        <span asp-validation-for="RelatedTags" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="GroupAdmin">Group Admin:</label>
+        <input asp-for="GroupAdmin" class="form-control" />
+        <span asp-validation-for="GroupAdmin" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DiscussionTopic">Discussion Topic:</label>
+        <input asp-for="DiscussionTopic" class="form-control" />
+        <span asp-validation-for="DiscussionTopic" class="text-danger"></span>
+    </div>
+
+    <select asp-for="SelectedMembers" multiple class="form-control">
+    @foreach (var user in Model.AllMembers)
+    {
+        <option value="@user.UserID">@user.FirstName @user.LastName</option>
+    }
+    </select>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
