@@ -1,0 +1,20 @@
+﻿@model DoctorRegisterVM 
+
+@{
+    ViewData["Title"] = "Doctor Details";
+}
+
+<h1>Doctor Details</h1>
+
+<div>
+    <h3>Full Name: @($"{Model.FirstName} {Model.LastName}")</h3>
+    <p>Specialty: @Model.Specialty</p>
+    <p>Short Bio: @Model.ShortBio</p>
+    <p>Experience: @Model.Experience</p>
+    <p>Languages: @Model.Languages</p>
+</div>
+<form asp-controller="Payment" asp-action="Index" method="post">
+    <input type="hidden" name="doctorId" value="@Model.UserID" />
+    <button type="submit" class="btn btn-primary">Pay Consultation Fees</button>
+</form>
+

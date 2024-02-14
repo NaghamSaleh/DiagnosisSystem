@@ -44,8 +44,32 @@ namespace DiagnosisSystem.Repositories
                 Specialty=d.Specialty,
                 FirstName= d.FirstName,
                 LastName = d.LastName,
+                ShortBio=d.ShortBio,
+                Experience=d.Experience,
+                Languages=d.Languages,
             }).ToList();
             return doctorUsers;
+        }
+
+        public DoctorRegisterVM GetDoctorbyId(string id)
+        {
+            var doctor = _context.Users.Where(d=> d.Id == id)
+                .Select(d => new DoctorRegisterVM
+                {
+                    Specialty = d.Specialty,
+                    FirstName = d.FirstName,
+                    LastName = d.LastName,
+                    ShortBio = d.ShortBio,
+                    Experience = d.Experience,
+                    Languages = d.Languages,
+                })
+                .FirstOrDefault();
+
+            if (doctor == null)
+            {
+                return null;
+            }
+            return doctor;
         }
         
     }
