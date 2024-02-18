@@ -1,31 +1,38 @@
 ﻿@model List<DoctorRegisterVM>
+<link rel="stylesheet" type="text/css" href="/css/Patient/consultants.css">
 
 <!DOCTYPE html>
 <html>
 <head>
-    
-    <title>Choose Consultant</title>
-    <style>
-        .doctor-square {
-            width: 200px;
-            height: 200px;
-            border: 1px solid #ccc;
-            margin: 10px;
-            padding: 10px;
-            display: inline-block;
-        }
-    </style>
+    <title>Qure - Consultants</title>
 </head>
 <body>
+    <header class="header">
+        <div class="brand">Qure</div>
+        <nav class="choices">
+            <a asp-action="Queries" asp-controller="Patient">User Queries</a>
+            <a asp-action="Consultants" asp-controller="Patient">Paid consultancy</a>
+            <a asp-action="" asp-controller="Patient">Analytics</a>
+            <a asp-action="MyAccount" asp-controller="Patient" class="account-link">
+                <img src="https://i.imgur.com/mFIq1e0.png" alt="My Account" class="account-icon">
+            </a>
+        </nav>
+    </header>
 
-    @foreach (var doctor in Model)
-    {
-        <div class="doctor-square">
-            <h2><a asp-action="Details" asp-controller="Patient" asp-route-id="@doctor.UserID"> 
-                    Dr. @doctor.FirstName @doctor.LastName
-            </a></h2>
-           
-        </div>
-    }
+    <!-- Added sentence above doctor choices -->
+    <h2 class="instruction">Choose your consultant</h2>
+
+    <div class="container">
+        @foreach (var doctor in Model)
+        {
+            <div class="doctor-square">
+                <h2>
+                    <a asp-action="Details" asp-controller="Patient" asp-route-id="@doctor.UserID">
+                        Dr. @doctor.FirstName @doctor.LastName
+                    </a>
+                </h2>
+            </div>
+        }
+    </div>
 </body>
 </html>

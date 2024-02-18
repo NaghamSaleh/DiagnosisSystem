@@ -1,0 +1,105 @@
+﻿/* CSS for Doctor Details page */
+
+body {
+    background: linear-gradient(to bottom right, #82C3C5, white);
+    font-family: 'DejaVu Sans Mono', monospace;
+    margin: 0;
+}
+
+.header {
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #000;
+    height: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.brand {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.account-link {
+    display: flex;
+    align-items: center;
+}
+
+.account-icon {
+    width: 50px;
+    height: auto;
+    margin-left: 1px;
+}
+
+.choices {
+    display: flex;
+    align-items: center;
+}
+
+    .choices a {
+        color: #000;
+        text-decoration: none;
+        margin-left: 20px;
+        position: relative;
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+
+        .choices a:hover::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #82C3C5;
+            padding: 31px;
+            z-index: -1;
+        }
+
+h1 {
+    margin-top: 100px; /* Adjust as needed */
+    text-align: center;
+}
+
+h3 {
+    font-size: 20px;
+    margin-top: 40px;
+}
+
+p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+form {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    background-color: #155484;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+    .btn:hover {
+        background-color: #0c3c64;
+    }
+
+.transparent-container {
+    background-color: rgba(255, 255, 255, 0.5); /* Adjust the transparency level */
+    padding: 10px;
+    border-radius: 5px;
+}

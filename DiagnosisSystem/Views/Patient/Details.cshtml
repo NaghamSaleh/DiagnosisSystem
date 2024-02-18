@@ -1,20 +1,36 @@
-﻿@model DoctorRegisterVM 
+﻿@model DoctorRegisterVM
 
-@{
-    ViewData["Title"] = "Doctor Details";
-}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctor Details</title>
+    <link rel="stylesheet" type="text/css" href="/css/Patient/details.css">
+</head>
+<body>
+    <header class="header">
+        <div class="brand">Qure</div>
+        <nav class="choices">
+            <a asp-action="Queries" asp-controller="Patient">User Queries</a>
+            <a asp-action="Consultants" asp-controller="Patient">Paid consultancy</a>
+            <a asp-action="" asp-controller="Patient">Analytics</a>
+            <a asp-action="MyAccount" asp-controller="Patient" class="account-link">
+                <img src="https://i.imgur.com/mFIq1e0.png" alt="My Account" class="account-icon">
+            </a>
+        </nav>
+    </header>
 
-<h1>Doctor Details</h1>
+    <h1>Doctor Details</h1>
 
-<div>
-    <h3>Full Name: @($"{Model.FirstName} {Model.LastName}")</h3>
-    <p>Specialty: @Model.Specialty</p>
-    <p>Short Bio: @Model.ShortBio</p>
-    <p>Experience: @Model.Experience</p>
-    <p>Languages: @Model.Languages</p>
-</div>
-<form asp-controller="Payment" asp-action="Index" method="post">
-    <input type="hidden" name="doctorId" value="@Model.UserID" />
-    <button type="submit" class="btn btn-primary">Pay Consultation Fees</button>
-</form>
-
+    <div>
+        <h3>Full Name: @($"{Model.FirstName} {Model.LastName}")</h3>
+        <p class="transparent-container">Specialty: @Model.Specialty</p>
+        <p class ="transparent-container" >Short Bio: @Model.ShortBio</p>
+        <p class="transparent-container">Experience: @Model.Experience</p>
+        <p class="transparent-container">Languages: @Model.Languages</p>
+    </div>
+    <form asp-controller="Payment" asp-action="Index" method="post">
+        <input type="hidden" name="doctorId" value="@Model.UserID" />
+        <button type="submit" class="btn btn-primary">Pay Consultation Fees</button>
+    </form>
+</body>
+</html>
