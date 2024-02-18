@@ -25,6 +25,7 @@
     <table class="queries-table">
         <thead>
             <tr>
+                <th>Votes</th>
                 <th>Number of Answers</th>
                 <th>Question</th>
             </tr>
@@ -33,12 +34,19 @@
             @foreach (var query in Model)
             {
                 <tr>
+                    <td>@query.Votes</td>
                     <td>@query.AnswerCount</td>
                     <td>
                         <div>
                             <span class="query-title" onclick="window.location.href = '@Url.Action("Details", "Queries", new { id = query.Id })'">@query.QueryTitle</span>
                         </div>
-                        <div class="query-tags">Tags: @string.Join(", ", query.QuestionTag)</div>
+                       @* @if(query.QuestionTag.Count>1)
+                        {
+                            <div class="query-tags">Tags: @string.Join(", ", query.QuestionTag)</div>
+                        }else{
+                            <div class="query-tags">Tags: query.QuestionTag</div>
+                        }*@
+                       
                     </td>
                 </tr>
             }

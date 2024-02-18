@@ -1,6 +1,7 @@
 ﻿using DiagnosisSystem.Data;
 using DiagnosisSystem.Entities;
 using DiagnosisSystem.Models;
+using DiagnosisSystem.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,12 +14,15 @@ namespace DiagnosisSystem.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IDoctorRepo _doctorRepo;
 
        
-        public PatientController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public PatientController(ApplicationDbContext context, UserManager<IdentityUser> userManager,
+            IDoctorRepo doctorRepo)
         {
             _context = context;
             _userManager = userManager;
+            _doctorRepo = doctorRepo;
         }
         public IActionResult Index()
         {
@@ -68,8 +72,10 @@ namespace DiagnosisSystem.Controllers
             {
                 Id= q.Id,
                 QueryTitle = q.QueryTitle,
-                
-            }).ToList();
+                Votes= q.Votes,
+                   // QuestionTag = q.Tag != null ? q.Tag.Split(',').ToList() : new List<string>()
+
+                }).ToList();
             return View(questions);
         }
         #endregion
@@ -123,5 +129,17 @@ namespace DiagnosisSystem.Controllers
             return View(model); 
         }
 
+
+        public IActionResult Consultants()
+        {
+            var doctors = _doctorRepo.GetAllDoctors();
+            return View(doctors);
+        }
+
+        public IActionResult Details(string id)
+        {
+            var doctor = _doctorRepo.GetDoctorbyId(id);
+            return View(doctor);
+        }
     }
 }

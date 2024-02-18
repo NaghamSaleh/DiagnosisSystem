@@ -1,0 +1,31 @@
+﻿@model List<DoctorRegisterVM>
+
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <title>Choose Consultant</title>
+    <style>
+        .doctor-square {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #ccc;
+            margin: 10px;
+            padding: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    @foreach (var doctor in Model)
+    {
+        <div class="doctor-square">
+            <h2><a asp-action="Details" asp-controller="Patient" asp-route-id="@doctor.UserID"> 
+                    Dr. @doctor.FirstName @doctor.LastName
+            </a></h2>
+           
+        </div>
+    }
+</body>
+</html>
