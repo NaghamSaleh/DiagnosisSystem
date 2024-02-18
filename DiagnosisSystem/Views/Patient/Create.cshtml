@@ -1,29 +1,53 @@
-﻿@model QueryVM
+﻿@model DiagnosisSystem.Models.QueryVM
 <link rel="stylesheet" type="text/css" href="/css/Patient/create.css">
+@{
+    ViewData["Title"] = "Create New Query";
+}
 
+<div>
+    <header class="header">
+        <div class="brand">Qure</div>
 
-<form asp-controller="Patient" asp-action="Create" method="post" class="patient-form">
+        <nav class="choices">
+            <a asp-action="Queries" asp-controller="Patient">User Queries</a>
+            <a asp-action="" asp-controller="Patient">Paid consultancy</a>
+            <a asp-action="" asp-controller="Patient">Analytics</a>
+            <a asp-action="MyAccount" asp-controller="Patient" class="account-link">
+                <img src="https://i.imgur.com/mFIq1e0.png" alt="My Account" class="account-icon">
+            </a>
+        </nav>
+    </header>
+    <div class="transparent-container">
+        <h1>Create New Query</h1>
 
-    <input asp-for="QueryTitle" class="form-control form-control-lg" type="text" placeholder="Inquiry Title">
+        <form asp-controller="Patient" asp-action="Create" method="post" class="patient-form">
 
-    <div class="form-group">
-        <label for="exampleFormControlTextarea1">Inquiry Details</label>
-        <textarea asp-for="Description" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Type your inquiry here"></textarea>
-    </div>
-
-    <div class="tag-section">
-        @foreach (var item in Model.QuestionTag)
-        {
-            <div class="tag-item">
-                <label asp-for="QuestionTag"> @item </label>
-                <input type="checkbox" id="@item" name="QuestionTag" value="@item">
+            <div class="form-group">
+                <label asp-for="QueryTitle"></label>
+                <input asp-for="QueryTitle" class="form-control" />
+                <span asp-validation-for="QueryTitle" class="text-danger"></span>
             </div>
-        }
-    </div>
 
-    <div class="button-section">
-        <button type="submit" class="btn btn-primary">Submit</button>
-        <a type="button" class="btn btn-secondary" asp-controller="Patient" asp-action="Index"> Back </a>
-    </div>
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
 
-</form>
+            <div class="form-group">
+                <label asp-for="QuestionTag"></label>
+                <select asp-for="QuestionTag" class="form-control" multiple>
+                    @foreach (var tag in Model.QuestionTag)
+                    {
+                        <option>@tag</option>
+                    }
+                </select>
+                <span asp-validation-for="QuestionTag" class="text-danger"></span>
+            </div>
+
+            <!-- Add other fields as needed -->
+
+            <button type="submit" class="btn btn-primary" style="background-color: #FF9F47;">Submit</button>
+        </form>
+    </div>
+</div>

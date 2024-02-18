@@ -1,7 +1,6 @@
 ﻿@model EditProfileVM
 <link rel="stylesheet" type="text/css" href="/css/Patient/MyAccount.css">
 
-
 <div class="navbar">
     <div class="nav-option" id="myAccount">My Account</div>
     <div class="nav-option" id="myQueries">My Queries</div>
@@ -9,7 +8,7 @@
     <div class="selector"></div>
 </div>
 
-<div class="myaccountcontainer">
+<div class="myaccountcontainer" id="myAccount-container">
     <h1 class="section-title">My Account Information</h1>
 
     <div class="info-item">
@@ -33,6 +32,51 @@
     </div>
 </div>
 
+<div class="myqueriescontainer" id="myQueries-container">
+    <!-- My Queries Information -->
+    <ul id="queries-list">
+        <!-- Queries will be added here dynamically -->
+    </ul>
+    <p id="no-queries-msg" style="display: none;">You have no queries.</p>
+    <a asp-action="Create" asp-controller="Patient" class="btn btn-primary" style="background-color: #FF9F47;">Click here to start a query</a>
+</div>
+
+<script>
+    // Sample queries array
+    var queries = []; // Replace this with your actual queries array
+    
+    // Function to render queries or show "no queries" message
+    function renderQueries() {
+        var queriesList = document.getElementById('queries-list');
+        var noQueriesMsg = document.getElementById('no-queries-msg');
+        var startQueryLink = document.getElementById('start-query-link');
+        
+        queriesList.innerHTML = ''; // Clear previous queries
+        
+        if (queries.length > 0) {
+            queries.forEach(function(query) {
+                var li = document.createElement('li');
+                li.textContent = query;
+                queriesList.appendChild(li);
+            });
+            noQueriesMsg.style.display = 'none';
+            startQueryLink.style.display = 'none';
+        } else {
+            noQueriesMsg.style.display = 'block';
+            startQueryLink.style.display = 'block';
+        }
+    }
+
+    // Call renderQueries function when the page loads
+    window.onload = function() {
+        renderQueries();
+    };
+</script>
+
+
+<div class="contactuscontainer" id="contactUs-container">
+    <!-- Contact Us Information -->
+</div>
 
 <header class="header">
     <div class="brand">Qure</div>
@@ -44,37 +88,40 @@
         <a asp-action="MyAccount" asp-controller="Patient" class="account-link">
             <img src="https://i.imgur.com/mFIq1e0.png" alt="My Account" class="account-icon">
         </a>
-
     </nav>
 </header>
 
-
-
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-$(document).ready(function () {
-    $(".nav-option").click(function () {
-        var index = $(this).index();
-        var widthSum = 0;
+    $(document).ready(function () {
+        $(".nav-option").click(function () {
+            var sectionId = $(this).attr("id") + "-container";
+            var scrollToElement = $("#" + sectionId);
 
-        // Calculate the total width of all options before the clicked one
-        for (var i = 0; i < index; i++) {
-            widthSum += $(".nav-option").eq(i).outerWidth(true);
-        }
+            // Smooth scroll to the target element
+            $('html, body').animate({
+                scrollTop: scrollToElement.offset().top
+            }, 1000);
 
-        // Calculate the left position for the selector
-        var leftPosition = widthSum + ($(this).outerWidth(true) - $(".selector").outerWidth()) / 2;
+            // Update selected state and selector position
+            $(".nav-option").removeClass("selected");
+            $(this).addClass("selected");
 
-        $(".nav-option").removeClass("selected");
-        $(this).addClass("selected");
-        $(".selector").css("left", leftPosition + "px");
+            var index = $(this).index();
+            var widthSum = 0;
+
+            // Calculate the total width of all options before the clicked one
+            for (var i = 0; i < index; i++) {
+                widthSum += $(".nav-option").eq(i).outerWidth(true);
+            }
+
+            // Calculate the left position for the selector
+            var leftPosition = widthSum + ($(this).outerWidth(true) - $(".selector").outerWidth()) / 2;
+            $(".selector").css("left", leftPosition + "px");
+        });
+
+        // Initial positioning of selector
+        var initialPosition = $(".nav-option.selected").position().left;
+        $(".selector").css("left", initialPosition + "px");
     });
-
-    // Initial positioning of selector
-    var initialPosition = $(".nav-option.selected").position().left;
-    $(".selector").css("left", initialPosition + "px");
-});
-
-
 </script>

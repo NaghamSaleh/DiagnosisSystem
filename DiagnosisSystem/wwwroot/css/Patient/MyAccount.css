@@ -25,14 +25,10 @@
     font-weight: bold;
 }
 
-
 .account-link {
     display: flex;
     align-items: center;
 }
-
-    .account-link:hover {
-    }
 
 .account-icon {
     width: 50px; /* Adjust the width as needed */
@@ -44,9 +40,6 @@
     transform: scale(1.2); /* Enlarge the image on hover */
 }
 
-    .account-link:hover .account-icon:hover {
-        background-color: transparent !important;
-    }
 .choices {
     display: flex;
     align-items: center;
@@ -73,15 +66,14 @@
             z-index: -1;
         }
 
-
-
-.myaccountcontainer {
-    margin: 25px auto;
-    width: 600px;
+.myaccountcontainer,
+.myqueriescontainer,
+.contactuscontainer {
     padding: 20px;
+    margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0.3); /* Container background color */
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    background-color: rgba(255, 255, 255, 0.3);
 }
 
 .section-title {
@@ -104,8 +96,6 @@
     color: #444;
 }
 
-
-
 .navbar {
     margin-right: auto;
     margin-left: auto;
@@ -119,7 +109,6 @@
     border-radius: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
-
 
 .nav-option {
     padding: 10px 20px;

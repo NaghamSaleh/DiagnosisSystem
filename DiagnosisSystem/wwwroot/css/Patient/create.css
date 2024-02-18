@@ -1,4 +1,9 @@
-﻿.patient-form {
+﻿body {
+    background: linear-gradient(to bottom right, #82C3C5, white);
+    font-family: 'DejaVu Sans Mono', monospace;
+    margin: 0;
+}
+.patient-form {
     max-width: 500px;
     margin: auto;
 }
@@ -26,3 +31,113 @@
     justify-content: space-between;
     margin-top: 20px;
 }
+.header {
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #000;
+    height: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.brand {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.account-link {
+    display: flex;
+    align-items: center;
+}
+
+    .account-link:hover {
+    }
+
+.account-icon {
+    width: 50px; /* Adjust the width as needed */
+    height: auto;
+    margin-left: 1px; /* Adjust the spacing between the icon and text */
+}
+
+.account-link:hover .account-icon {
+    transform: scale(1.2); /* Enlarge the image on hover */
+}
+
+    .account-link:hover .account-icon:hover {
+        background-color: transparent !important;
+    }
+
+.choices {
+    display: flex;
+    align-items: center;
+}
+
+    .choices a {
+        color: #000;
+        text-decoration: none;
+        margin-left: 20px;
+        position: relative;
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+
+        .choices a:hover::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #82C3C5;
+            padding: 31px;
+            z-index: -1;
+        }
+.transparent-container {
+    background-color: rgba(255, 255, 255, 0.5); /* Adjust the last value (alpha) to change transparency */
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px; /* Adjust margin as needed */
+    position: absolute; /* Position the container absolutely */
+    top: 70px; /* Adjust top position */
+    left: 50%; /* Position horizontally in the middle */
+    transform: translateX(-50%); /* Center horizontally */
+    width: 600px; /* Set width for the container */
+}
+
+    .transparent-container header {
+        background-color: #f0f0f0; /* Header background color */
+        padding: 10px;
+        border-radius: 10px 10px 0 0;
+        margin-bottom: 20px;
+    }
+
+        .transparent-container header .brand {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .transparent-container header .choices {
+            display: flex;
+            justify-content: space-between;
+        }
+
+            .transparent-container header .choices a {
+                color: #333;
+                text-decoration: none;
+                padding: 10px;
+            }
+
+                .transparent-container header .choices a:hover {
+                    background-color: #ddd;
+                }
+
+    .transparent-container h1 {
+        margin-bottom: 20px;
+    }

@@ -1,4 +1,5 @@
-﻿@model List<QueryVM>
+﻿@model List<DiagnosisSystem.Models.QueryVM>
+
 <link rel="stylesheet" type="text/css" href="/css/Patient/queries.css">
 
 <header class="header">
@@ -16,9 +17,10 @@
 
 <h2>Queries</h2>
 
+<!-- Create Query Button -->
+<a asp-action="Create" asp-controller="Patient" class="btn btn-primary mb-3" style="background-color: #FF9F47;">Create Query</a>
 
 @if (Model != null && Model.Any())
-
 {
     <table class="queries-table">
         <thead>
@@ -47,5 +49,3 @@ else
 {
     <p>No queries found.</p>
 }
-
-
