@@ -139,7 +139,39 @@ namespace DiagnosisSystem.Controllers
         public IActionResult Details(string id)
         {
             var doctor = _doctorRepo.GetDoctorbyId(id);
-            return View(doctor);
+            doctor.UserID = id;
+            QueryVM questionVM = new();
+            questionVM.QuestionTag = _context.Tags.Select(s => s.Name).ToList();
+            DoctorDetailsViewModel doctorDetails = new()
+            {
+                DoctorDetails = doctor,
+                QueryVM = questionVM
+            };
+            return View(doctorDetails);
+        }
+
+
+        [HttpGet]
+        public IActionResult AskDoctor(string doctorId)
+        {
+            return View(doctorId);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AskDoctor(DoctorDetailsViewModel detailsViewModel)
+        {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            Query query = new Query();
+            query.DoctorId = detailsViewModel.DoctorDetails.UserID;
+            query.QueryTitle = detailsViewModel.QueryVM.QueryTitle;
+            query.Description = detailsViewModel.QueryVM.Description;
+            query.Tag = string.Join(',', detailsViewModel.QueryVM.QuestionTag);
+            query.PatientId = userId;
+            query.PaidConstultant = true;
+            _context.Queries.Add(query);
+            _context.SaveChanges();
+            
+            return RedirectToAction("Queries", "Patient");
         }
     }
 }

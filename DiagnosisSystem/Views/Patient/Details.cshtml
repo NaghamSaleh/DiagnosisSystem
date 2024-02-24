@@ -1,7 +1,17 @@
-﻿@model DoctorRegisterVM
+﻿@model DoctorDetailsViewModel
 
 <!DOCTYPE html>
 <html>
+<script>
+    // Assume this is the logic that handles the payment
+    function processPayment() {
+        // Your payment processing logic here...
+
+        // Show the modal on successful payment
+        $('#paymentSuccessModal').modal('show');
+    }
+</script>
+
 <head>
     <title>Doctor Details</title>
     <link rel="stylesheet" type="text/css" href="/css/Patient/details.css">
@@ -22,15 +32,49 @@
     <h1>Doctor Details</h1>
 
     <div>
-        <h3>Full Name: @($"{Model.FirstName} {Model.LastName}")</h3>
-        <p class="transparent-container">Specialty: @Model.Specialty</p>
-        <p class ="transparent-container" >Short Bio: @Model.ShortBio</p>
-        <p class="transparent-container">Experience: @Model.Experience</p>
-        <p class="transparent-container">Languages: @Model.Languages</p>
+        <h3>Full Name: @($"{Model.DoctorDetails.FirstName} {Model.DoctorDetails.LastName}")</h3>
+        <p class="transparent-container">Specialty: @Model.DoctorDetails.Specialty</p>
+        <p class="transparent-container">Short Bio: @Model.DoctorDetails.ShortBio</p>
+        <p class="transparent-container">Experience: @Model.DoctorDetails.Experience</p>
+        <p class="transparent-container">Languages: @Model.DoctorDetails.Languages</p>
     </div>
-    <form asp-controller="Payment" asp-action="Index" method="post">
-        <input type="hidden" name="doctorId" value="@Model.UserID" />
-        <button type="submit" class="btn btn-primary">Pay Consultation Fees</button>
-    </form>
+   
+        <button type="button" class="btn btn-primary" onclick="processPayment()">Pay Consultation Fees</button>
+
+
+
+    <div class="modal fade" id="paymentSuccessModal" tabindex="-1" aria-labelledby="paymentSuccessModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    Your payment was successful.
+                    <form asp-controller="Patient" asp-action="AskDoctor" method="post">
+                        <input type="hidden" asp-for="@Model.DoctorDetails.UserID"/>
+                        <div class="mb-3">
+                            <label asp-for="@Model.QueryVM.QueryTitle" class="form-label">Title</label>
+                            <input type="text" class="form-control" asp-for="@Model.QueryVM.QueryTitle">
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="@Model.QueryVM.Description" class="form-label">Body</label>
+                            <textarea class="form-control" asp-for="@Model.QueryVM.Description" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                        <label asp-for="@Model.QueryVM.QuestionTag"></label>
+                            <select asp-for="@Model.QueryVM.QuestionTag" class="form-control">
+                                @foreach (var tag in Model.QueryVM.QuestionTag)
+                                    {
+                                    <option>@tag</option>
+                                    }
+                            </select>
+                        <span asp-validation-for="@Model.QueryVM.QuestionTag" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Ask Question</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
