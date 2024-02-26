@@ -63,7 +63,10 @@
             height: 100%;
             background-color: #82C3C5;
             padding: 31px;
+            background-color: #82C3C5;
             z-index: -1;
+            opacity: 0.3; /* Adjusted opacity for subtle effect */
+            border-radius: 5px; /* Added border-radius for smoother edges */
         }
 
 .myaccountcontainer,
@@ -125,4 +128,11 @@
     height: 40px;
     transition: 0.3s ease-in-out;
     z-index: -1;
+}
+
+.btn.btn-primary {
+    background-color: #FF9F47;
+    border-color: #FF9F47; /* Set the border color to match the background color */
+    color: white; /* Set the text color for better contrast */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Add shadow effect */
 }

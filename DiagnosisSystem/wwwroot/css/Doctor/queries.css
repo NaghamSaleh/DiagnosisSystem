@@ -25,6 +25,17 @@
     font-weight: bold;
 }
 
+.account-link {
+    display: flex;
+    align-items: center;
+}
+
+.account-icon {
+    width: 50px; 
+    height: auto;
+    margin-right: 5px; 
+}
+
 .choices {
     display: flex;
     align-items: center;
@@ -48,7 +59,10 @@
             height: 100%;
             background-color: #6C81C0;
             padding: 31px;
-            z-index: -1; /* Ensure the background is below the text */
+            background-color: #6C81C0;
+            z-index: -1;
+            opacity: 0.3; /* Adjusted opacity for subtle effect */
+            border-radius: 5px; /* Added border-radius for smoother edges */
         }
 
 
