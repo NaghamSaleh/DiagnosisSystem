@@ -4,6 +4,7 @@ using DiagnosisSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DiagnosisSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240224174341_AddNewColumns")]
+    partial class AddNewColumns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,7 +47,7 @@ namespace DiagnosisSystem.Migrations
 
                     b.HasIndex("QueryId");
 
-                    b.ToTable("Answers", (string)null);
+                    b.ToTable("Answers");
                 });
 
             modelBuilder.Entity("DiagnosisSystem.Entities.District", b =>
@@ -70,7 +72,7 @@ namespace DiagnosisSystem.Migrations
 
                     b.HasKey("DistrictID");
 
-                    b.ToTable("Districts", (string)null);
+                    b.ToTable("Districts");
                 });
 
             modelBuilder.Entity("DiagnosisSystem.Entities.Query", b =>
@@ -110,7 +112,7 @@ namespace DiagnosisSystem.Migrations
 
                     b.HasIndex("DoctorId");
 
-                    b.ToTable("Queries", (string)null);
+                    b.ToTable("Queries");
                 });
 
             modelBuilder.Entity("DiagnosisSystem.Entities.Specialty", b =>
@@ -131,7 +133,7 @@ namespace DiagnosisSystem.Migrations
 
                     b.HasKey("SpecialtyID");
 
-                    b.ToTable("Specialities", (string)null);
+                    b.ToTable("Specialities");
                 });
 
             modelBuilder.Entity("DiagnosisSystem.Entities.Tag", b =>
@@ -156,7 +158,7 @@ namespace DiagnosisSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags", (string)null);
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

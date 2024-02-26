@@ -6,9 +6,9 @@ namespace DiagnosisSystem.Controllers
     [Authorize(Roles ="Patient")]
     public class PaymentController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(string doctorId)
         {
-            return View();
+            return View(doctorId);
         }
     }
 }

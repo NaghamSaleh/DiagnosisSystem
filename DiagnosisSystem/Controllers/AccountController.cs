@@ -270,7 +270,7 @@ namespace DiagnosisSystem.Controllers
                     }
                     else if (roles.Contains("Patient"))
                     {
-                        return RedirectToAction("Index", "Patient");
+                        return RedirectToAction("Queries", "Patient");
                     }
                     else if (roles.Contains("Admin"))
                     {

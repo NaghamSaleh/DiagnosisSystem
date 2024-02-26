@@ -13,5 +13,7 @@ namespace DiagnosisSystem.Entities
         public int Votes { get; set; }
         public List<Answer> Answers { get; set; }
         public int AnswerCount => Answers?.Count ?? 0;
+        public bool PaidConstultant { get; set; }
+        public string DoctorId { get; set; }
     }
 }
