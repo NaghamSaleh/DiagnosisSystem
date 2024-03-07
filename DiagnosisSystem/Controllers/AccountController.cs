@@ -180,11 +180,11 @@ namespace DiagnosisSystem.Controllers
 
         #region Register Admin
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult CreateAdmin()
         {
             return View();
         }
-        public async Task<IActionResult> Create(RegisterVM registerVM)
+        public async Task<IActionResult> CreateAdmin(RegisterVM registerVM)
         {
             if (ModelState.IsValid)
             {

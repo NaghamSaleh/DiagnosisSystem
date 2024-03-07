@@ -20,16 +20,18 @@ namespace DiagnosisSystem.Controllers
         private readonly IDoctorRepo _doctorRepo;
         private readonly IPatientRepo _patientRepo;
         private readonly IAdminRepo _adminRepo;
+        private readonly UserManager<IdentityUser> _userManager;
         #endregion
 
         #region Constructors
         public AdminController(ApplicationDbContext context, IDoctorRepo doctorRepo, 
-            IPatientRepo patientRepo, IAdminRepo accountRepo)
+            IPatientRepo patientRepo, IAdminRepo accountRepo, UserManager<IdentityUser> userManager)
         {
             _context = context;
             _doctorRepo = doctorRepo;
             _patientRepo = patientRepo;
             _adminRepo = accountRepo;
+            _userManager = userManager;
         }
         #endregion
 
@@ -38,17 +40,10 @@ namespace DiagnosisSystem.Controllers
         public IActionResult Index()
         {
             Stats stats = new();
-           
             stats.numOfIRequests = _doctorRepo.GetDrPendingRequestsCount();
             stats.numOfDoctors = _doctorRepo.GetRegisteredDrCount();
-
-
             //TODO: Get Rejected Doctors
-          
-            
             stats.numOfPatients = _patientRepo.GetPatientCount();
-
-
             #region Get Registered Admins
             
             stats.numOfAdmins = _adminRepo.GetAdminCount();
@@ -57,6 +52,28 @@ namespace DiagnosisSystem.Controllers
             return View(stats);
         }
         #endregion
+       
+
+        public async Task<IActionResult> Admins()
+        {
+            string roleName = "Admin";
+            List<RegisterVM> registeredAdmins = new();
+            var role = await _context.Roles.Where(r => r.Name == roleName).Select(r => r.Id).FirstOrDefaultAsync();
+            var userId = await _context.UserRoles.Where(i => i.RoleId.Equals(role)).Select(i => i.UserId).ToListAsync();
+            foreach (var user in userId)
+            {
+                var rAdmins = _context.Users
+                    .Where(u => u.Id == user).Select(d => new RegisterVM
+                    {
+                        FirstName = d.FirstName,
+                        LastName = d.LastName,
+                        Email = d.Email,
+                    });
+                  
+            }
+            return View(registeredAdmins);
+        }
+
 
         #region Manage Doctor Account
         public async Task<IActionResult> Doctors()
