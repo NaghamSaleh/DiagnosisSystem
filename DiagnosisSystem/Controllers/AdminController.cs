@@ -2,12 +2,10 @@
 using DiagnosisSystem.Entities;
 using DiagnosisSystem.Models;
 using DiagnosisSystem.Repositories;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using NuGet.Protocol;
 using System.Data;
+using System.Security.Claims;
 
 namespace DiagnosisSystem.Controllers
 {
@@ -44,45 +42,82 @@ namespace DiagnosisSystem.Controllers
             stats.numOfDoctors = _doctorRepo.GetRegisteredDrCount();
             //TODO: Get Rejected Doctors
             stats.numOfPatients = _patientRepo.GetPatientCount();
-            #region Get Registered Admins
+           
             
             stats.numOfAdmins = _adminRepo.GetAdminCount();
-            #endregion
+            var admin = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var fullName = _adminRepo.GetAdminUsername(admin);
+            
 
             return View(stats);
         }
         #endregion
-       
 
+        [HttpGet]
         public async Task<IActionResult> Admins()
         {
             string roleName = "Admin";
-            List<RegisterVM> registeredAdmins = new();
+            List<DoctorRegisterVM> registeredAdmins = new();
             var role = await _context.Roles.Where(r => r.Name == roleName).Select(r => r.Id).FirstOrDefaultAsync();
             var userId = await _context.UserRoles.Where(i => i.RoleId.Equals(role)).Select(i => i.UserId).ToListAsync();
             foreach (var user in userId)
             {
                 var rAdmins = _context.Users
-                    .Where(u => u.Id == user).Select(d => new RegisterVM
+                    .Where(u => u.Id == user).Select(d => new DoctorRegisterVM
                     {
-                        FirstName = d.FirstName,
-                        LastName = d.LastName,
-                        Email = d.Email,
+                        UserID = d.Id,
+                        FirstName = d.FirstName ?? d.Email,
+                        LastName = d.LastName ?? "No Name saved",
+                        Email = d.Email ,
+                        
                     });
-                  
+                registeredAdmins.AddRange(rAdmins);
             }
             return View(registeredAdmins);
         }
 
 
         #region Manage Doctor Account
+        [HttpGet]
         public async Task<IActionResult> Doctors()
         {
-            string roleName = "InitialDoctor";
+            string roleName = "Doctor";
             List<DoctorRegisterVM> doctorRegisterVMs= new List<DoctorRegisterVM>();
             var role = await _context.Roles.Where(r => r.Name == roleName).Select(r => r.Id).FirstOrDefaultAsync();
             var userId = await _context.UserRoles.Where(i => i.RoleId.Equals(role)).Select(i => i.UserId).ToListAsync();
             foreach(var user in userId)
+            {
+                var iDoctors = _context.Users
+                    .Where(u => u.Id == user)
+                    .Select(d => new DoctorRegisterVM
+                    {
+                        UserID = d.Id,
+                        AddedOn = d.CreatedOn,
+                        CurrentHospital = d.CurrentHospital,
+                        DateOfBirth = d.DateOfBirth,
+                        Email = d.Email,
+                        Experience = d.Experience,
+                        FirstName = d.FirstName,
+                        Gender = d.Gender,
+                        LastName = d.LastName,
+                        Languages = d.Languages,
+                        ShortBio = d.ShortBio,
+                        Specialty = d.Specialty,
+                        Telephone = d.Telephone,
+                    });
+                doctorRegisterVMs.AddRange(iDoctors);
+            }
+            return View(doctorRegisterVMs);
+        }
+
+        
+        public async Task<IActionResult> Requests()
+        {
+            string roleName = "InitialDoctor";
+            List<DoctorRegisterVM> doctorRegisterVMs = new List<DoctorRegisterVM>();
+            var role = await _context.Roles.Where(r => r.Name == roleName).Select(r => r.Id).FirstOrDefaultAsync();
+            var userId = await _context.UserRoles.Where(i => i.RoleId.Equals(role)).Select(i => i.UserId).ToListAsync();
+            foreach (var user in userId)
             {
                 var iDoctors = _context.Users
                     .Where(u => u.Id == user)
@@ -276,5 +311,30 @@ namespace DiagnosisSystem.Controllers
             return View(allTags);
         }
         #endregion
+
+        [HttpGet]
+        public async Task<IActionResult> Patients()
+        {
+            string roleName = "Patient";
+            List<DoctorRegisterVM> registeredAdmins = new();
+            var role = await _context.Roles.Where(r => r.Name == roleName).Select(r => r.Id).FirstOrDefaultAsync();
+            var userId = await _context.UserRoles.Where(i => i.RoleId.Equals(role)).Select(i => i.UserId).ToListAsync();
+            foreach (var user in userId)
+            {
+                var rAdmins = _context.Users
+                    .Where(u => u.Id == user).Select(d => new DoctorRegisterVM
+                    {
+                        FirstName = d.FirstName,
+                        LastName = d.LastName,
+                        Email = d.Email,
+                        Gender = d.Gender,
+                    });
+                registeredAdmins.AddRange(rAdmins);
+
+            }
+            return View(registeredAdmins);
+        }
+
+
     }
 }

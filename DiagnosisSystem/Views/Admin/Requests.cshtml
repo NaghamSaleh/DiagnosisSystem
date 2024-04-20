@@ -45,15 +45,18 @@
     </div>
 </div>
 
-<h1>Registrated Admins</h1>
+<h1>Doctors Pending Registrations</h1>
 
 <table>
 
     <thead>
         <tr>
             <th>Name</th>
+            <th>Specialty</th>
+            <th>Current Hospital</th>
             <th>Email</th>
-           
+            <th>Gender</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -61,10 +64,14 @@
         {
             <tr>
                 <td>@user.FirstName @user.LastName</td>
-               
+                <td>@user.Specialty</td>
+                <td>@user.CurrentHospital</td>
                 <td>@user.Email</td>
-                
-               
+                <td>@user.Gender</td>
+                <td class="action-column">
+                    <a asp-action="Approve" asp-route-userId="@user.UserID" class="b">Approve</a>
+                    <a asp-action="Reject" asp-route-userId="@user.UserID" class="b">Reject</a>
+                </td>
             </tr>
         }
     </tbody>

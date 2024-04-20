@@ -205,7 +205,7 @@ namespace DiagnosisSystem.Controllers
                 {
                     FirstName = registerVM.FirstName,
                     LastName = registerVM.LastName,
-                    //Email = registerVM.Email,
+                    Email = registerVM.Email,
                     UserName = registerVM.Email
 
                 };
@@ -236,6 +236,7 @@ namespace DiagnosisSystem.Controllers
             return View();
         }
         #endregion
+        
         #region Login
         [HttpGet]
         public IActionResult Login()
