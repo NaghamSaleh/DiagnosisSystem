@@ -2,6 +2,7 @@
 using DiagnosisSystem.Entities;
 using DiagnosisSystem.Models;
 using DiagnosisSystem.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
@@ -9,7 +10,7 @@ using System.Security.Claims;
 
 namespace DiagnosisSystem.Controllers
 {
-    //[Authorize(Roles ="Admin")]
+    [Authorize(Roles ="Admin")]
     public class AdminController : Controller
     {
 
