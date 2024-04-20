@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace DiagnosisSystem.Models
+﻿namespace DiagnosisSystem.Models
 {
     [DataContract]
     public class Stats

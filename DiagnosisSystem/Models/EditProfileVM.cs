@@ -1,6 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-
-namespace DiagnosisSystem.Models
+﻿namespace DiagnosisSystem.Models
 {
     public class EditProfileVM
     {

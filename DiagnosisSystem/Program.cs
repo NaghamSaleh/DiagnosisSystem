@@ -1,9 +1,17 @@
+global using DiagnosisSystem.Data;
+global using DiagnosisSystem.Entities;
+global using DiagnosisSystem.Models;
+global using DiagnosisSystem.Services;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
-using DiagnosisSystem.Data;
-using DiagnosisSystem.Entities;
-using DiagnosisSystem.Repositories;
-using DiagnosisSystem.Services;
-using Microsoft.AspNetCore.Identity;
+global using DiagnosisSystem.Repositories;
+global using System.Data;
+global using System.Security.Claims;
+global using System.Diagnostics;
+global using System.ComponentModel.DataAnnotations;
+global using System.Runtime.Serialization;
 
 
 var builder = WebApplication.CreateBuilder(args);

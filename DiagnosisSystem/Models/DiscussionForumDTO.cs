@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace DiagnosisSystem.Models
+﻿namespace DiagnosisSystem.Models
 {
     public class DiscussionForumDTO
     {

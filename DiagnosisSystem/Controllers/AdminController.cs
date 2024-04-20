@@ -1,14 +1,4 @@
-﻿using DiagnosisSystem.Data;
-using DiagnosisSystem.Entities;
-using DiagnosisSystem.Models;
-using DiagnosisSystem.Repositories;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using System.Data;
-using System.Security.Claims;
-
-namespace DiagnosisSystem.Controllers
+﻿namespace DiagnosisSystem.Controllers
 {
     [Authorize(Roles ="Admin")]
     public class AdminController : Controller
@@ -53,6 +43,8 @@ namespace DiagnosisSystem.Controllers
             return View(stats);
         }
         #endregion
+
+        #region Accounts Management
 
         [HttpGet]
         public async Task<IActionResult> Admins()
@@ -175,6 +167,31 @@ namespace DiagnosisSystem.Controllers
 
             return Ok("Successfully Deleted and Rejected");
         }
+        #endregion
+
+        [HttpGet]
+        public async Task<IActionResult> Patients()
+        {
+            string roleName = "Patient";
+            List<DoctorRegisterVM> registeredAdmins = new();
+            var role = await _context.Roles.Where(r => r.Name == roleName).Select(r => r.Id).FirstOrDefaultAsync();
+            var userId = await _context.UserRoles.Where(i => i.RoleId.Equals(role)).Select(i => i.UserId).ToListAsync();
+            foreach (var user in userId)
+            {
+                var rAdmins = _context.Users
+                    .Where(u => u.Id == user).Select(d => new DoctorRegisterVM
+                    {
+                        FirstName = d.FirstName,
+                        LastName = d.LastName,
+                        Email = d.Email,
+                        Gender = d.Gender,
+                    });
+                registeredAdmins.AddRange(rAdmins);
+
+            }
+            return View(registeredAdmins);
+        }
+
         #endregion
 
         #region Add Speciality
@@ -313,28 +330,7 @@ namespace DiagnosisSystem.Controllers
         }
         #endregion
 
-        [HttpGet]
-        public async Task<IActionResult> Patients()
-        {
-            string roleName = "Patient";
-            List<DoctorRegisterVM> registeredAdmins = new();
-            var role = await _context.Roles.Where(r => r.Name == roleName).Select(r => r.Id).FirstOrDefaultAsync();
-            var userId = await _context.UserRoles.Where(i => i.RoleId.Equals(role)).Select(i => i.UserId).ToListAsync();
-            foreach (var user in userId)
-            {
-                var rAdmins = _context.Users
-                    .Where(u => u.Id == user).Select(d => new DoctorRegisterVM
-                    {
-                        FirstName = d.FirstName,
-                        LastName = d.LastName,
-                        Email = d.Email,
-                        Gender = d.Gender,
-                    });
-                registeredAdmins.AddRange(rAdmins);
-
-            }
-            return View(registeredAdmins);
-        }
+        
 
 
     }

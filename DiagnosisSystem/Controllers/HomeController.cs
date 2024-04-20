@@ -1,9 +1,4 @@
-﻿using System.Diagnostics;
-using DiagnosisSystem.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-
-namespace DiagnosisSystem.Controllers
+﻿namespace DiagnosisSystem.Controllers
 {
     public class HomeController : Controller
     {

@@ -1,9 +1,4 @@
-﻿using DiagnosisSystem.Data;
-using DiagnosisSystem.Entities;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
-
-namespace DiagnosisSystem.Repositories
+﻿namespace DiagnosisSystem.Repositories
 {
     public class AdminRepo : IAdminRepo
     {

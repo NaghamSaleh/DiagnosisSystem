@@ -1,14 +1,4 @@
-﻿using DiagnosisSystem.Data;
-using DiagnosisSystem.Entities;
-using DiagnosisSystem.Models;
-using DiagnosisSystem.Services;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using System.Numerics;
-
-namespace DiagnosisSystem.Controllers
+﻿namespace DiagnosisSystem.Controllers
 {
     public class AccountController : Controller
     {

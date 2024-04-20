@@ -1,12 +1,4 @@
-﻿using DiagnosisSystem.Data;
-using DiagnosisSystem.Entities;
-using DiagnosisSystem.Models;
-using DiagnosisSystem.Repositories;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
-
-namespace DiagnosisSystem.Controllers
+﻿namespace DiagnosisSystem.Controllers
 {
     public class DoctorController: Controller
     {
