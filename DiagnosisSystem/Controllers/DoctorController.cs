@@ -1,6 +1,7 @@
 ﻿namespace DiagnosisSystem.Controllers
 {
-    public class DoctorController: Controller
+    [Authorize(Roles ="Doctor")]
+    public class DoctorController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly IDoctorRepo _doctorRepo;
@@ -19,7 +20,7 @@
         }
 
         #region All Question
-        
+
         public IActionResult Queries(QuerySearchFilter filters)
         {
             var queries = _context.Queries
@@ -27,13 +28,13 @@
                 {
                     Id = q.Id,
                     QueryTitle = q.QueryTitle,
-                    Votes= q.Votes,
-                    
-                    AnswerCount = q.Answers.Where(a=>a.QueryId == q.Id).Count(),
+                    Votes = q.Votes,
+                   // QuestionTag = q.Tag.Split('-', ),
+                    AnswerCount = q.Answers.Where(a => a.QueryId == q.Id).Count(),
                 })
                 .ToList();
-           
-            if(filters is not null && filters.Answered is false)
+
+            if (filters is not null && filters.Answered is false)
             {
                 queries = queries
                     .OrderByDescending(q => q.AnswerCount == 0 ? int.MaxValue : q.AnswerCount)
@@ -57,7 +58,7 @@
 
         #region View selected query
 
-        [HttpGet]        
+        [HttpGet]
         public IActionResult Answer(int id)
         {
             var queries = _context.Queries
@@ -67,9 +68,15 @@
                     Id = q.Id,
                     QueryTitle = q.QueryTitle,
                     Description = q.Description,
-                   
+                    
                 }).FirstOrDefault();
-            return View(queries);
+            var answers =
+                     new AnswerDTO
+                     {
+                         Query = queries,
+
+                     };
+            return View(answers);
         }
 
         [HttpPost]
@@ -78,10 +85,11 @@
             var ans = new Answer()
             {
                 AnswerBody = answer.AnswerBody,
-                DoctorId = answer.DoctorId,
+                DoctorId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value,
                 QueryId = answer.QueryId,
             };
-
+            _context.Answers.Add(ans);
+            _context.SaveChanges();
             return Ok("Successfully Answered");
         }
         #endregion
