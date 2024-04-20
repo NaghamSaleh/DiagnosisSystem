@@ -16,5 +16,8 @@ namespace DiagnosisSystem.Models
 
         [DataMember]
         public int numOfAdmins { get; set; }
+
+        [DataMember]
+        public string UserName { get; set; }
     }
 }
