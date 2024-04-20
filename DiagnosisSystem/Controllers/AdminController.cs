@@ -48,6 +48,7 @@ namespace DiagnosisSystem.Controllers
             
             stats.numOfAdmins = _adminRepo.GetAdminCount();
             #endregion
+            stats.UserName = "Reema";
 
             return View(stats);
         }
