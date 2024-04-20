@@ -46,7 +46,7 @@ namespace DiagnosisSystem.Controllers
             
             stats.numOfAdmins = _adminRepo.GetAdminCount();
             var admin = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var fullName = _adminRepo.GetAdminUsername(admin);
+            stats.UserName = _adminRepo.GetAdminUsername(admin);
             
 
             return View(stats);
