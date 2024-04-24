@@ -102,16 +102,13 @@ a {
 
 
 
+
 /* Form container styles */
 .form{
     padding: 20px;
 
 }
 
-    .form h1 {
-        text-align: center;
-        color: #155484;
-    }
 
 /* Registration form styles */
 .registration-container {
@@ -162,5 +159,5 @@ input[type="submit"] {
 
 /* Error message styles */
 .text-danger {
-    color: red;
+    color: #dc3545;
 }

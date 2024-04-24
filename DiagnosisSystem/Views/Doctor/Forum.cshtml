@@ -40,11 +40,11 @@
         <section class="search">
             <div class="wrapper">
                 <div id="search-container">
-                    <input type="search" id="search-input" placeholder="Search event name here..." oninput="searchEvent()">
+                    <input type="search" id="search-input" placeholder="Search doctor name here..." oninput="searchDoctor()">
                     <button id="search">Search</button>
                 </div>
                 <div id="buttons">
-                    <button class="button-value" onclick="filterEvent('all')">All</button>
+                    <button class="button-value" onclick="filterDoctor('all')">All</button>
                     <button class="button-value" onclick="filterEvent('Istanbul')">Istanbul</button>
                     <button class="button-value" onclick="filterEvent('Amasya')">Amasya</button>
                     <button class="button-value" onclick="filterEvent('Antalya')">Antalya</button>
@@ -58,7 +58,7 @@
                     <button class="button-value" onclick="filterEvent('İzmir')">İzmir</button>
                     <button class="button-value" onclick="filterEvent('Isparta')">Isparta</button>
                 </div>
-                <div id="events"></div>
+            <div id="doctors"></div>
             </div>
         </section>
         <script>
@@ -71,8 +71,8 @@
                 document.getElementById("navLinks").style.right = "-200px";
             }
 
-            // JavaScript code for filtering events
-            let events = {
+            // JavaScript code for filtering doctors
+        let doctors = {
                 data: [
                     {
                         eventName: "Amasya Ataturk Culture and Art Ceremony",
@@ -83,148 +83,12 @@
                         eventAgeCriteria: "Suitable for all ages",
                         eventLocation: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d96306.62485603332!2d28.841827665285436!3d41.03439950016162!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab773864aeb79%3A0x76144ace01a80af1!2sIstanbul%20E-pass!5e0!3m2!1sen!2str!4v1710549431218!5m2!1sen!2str",
                         eventDescription: "An annual cultural and artistic event held in Amasya, Turkey, to celebrate the legacy of Mustafa Kemal Atatürk, the founder of the Republic of Turkey. The ceremony features various cultural performances, art exhibitions, and activities that showcase the rich heritage of the region."
-                    },
-                    {
-                        eventName: "Golden Orange Festival",
-                        city: "Antalya",
-                        date: "13th October",
-                        image: "Images/2.1.jpeg",
-                        eventAgeCriteria: " Recommended for ages 12 and above due to film content",
-                        eventLocation: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12764.907149510802!2d30.65081296717628!3d36.884922536449395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c39034f52ab2ad%3A0xfe1ea535bef6a937!2sAntalya%20Culture%20Center!5e0!3m2!1sen!2ssa!4v1710673033713!5m2!1sen!2ssa",
-                        eventDescription: "The Golden Orange Festival is a prestigious film festival held annually in Antalya, Turkey. It serves as a platform for filmmakers from Turkey and around the world to showcase their work and compete for awards. The festival also includes film screenings, panel discussions, and workshops."
-
-                    },
-                    {
-                        eventName: "Alanya Tourism Ceremony",
-                        city: "Alanya",
-                        date: "4-9th June",
-                        image: "Images/3.1.jpeg",
-                        eventAgeCriteria: "Suitable for adults and families; children under 12 must be accompanied by an adult",
-                        eventLocation: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d51286.62341556997!2d31.938978021679706!3d36.54413040000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14dc986149d141eb%3A0x7afe797439d30052!2sTours%20in%20Alanya!5e0!3m2!1sen!2ssa!4v1710673246422!5m2!1sen!2ssa",
-                        eventDescription: "The Alanya Tourism Ceremony is an event held in Alanya, Turkey, aimed at promoting tourism in the region. It features cultural performances, exhibitions, and activities that highlight the attractions and offerings of Alanya as a tourist destination."
-                    },
-                    {
-                        eventName: "Akşehir Hodja Nasrettin Hoca Ceremonies",
-                        city: "Akşehir",
-                        date: "5-10th July",
-                        image: "Images/4.1.jpeg",
-                        eventAgeCriteria: "Suitable for all ages, family-friendly event",
-                        eventLocation: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3128.7066773965425!2d31.415718774607853!3d38.355770578482755!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cfe8415f7f8fcd%3A0x59ce68121d4dad05!2sMiddle%20of%20the%20World%20Nasreddin%20Hodja%20Tomb!5e0!3m2!1sen!2ssa!4v1710673381054!5m2!1sen!2ssa",
-                        eventDescription: "The Akşehir Hodja Nasrettin Hoca Ceremonies are held annually in Akşehir, Turkey, to commemorate Nasreddin Hodja, a legendary figure known for his wit and wisdom in Turkish folklore. The event includes theatrical performances, storytelling, and other cultural activities."
-                    },
-                    {
-                        eventName: "Pine Nut Festival",
-                        city: "Gaziantep",
-                        date: "25th December",
-                        image: "Images/5.1.jpeg",
-                        eventAgeCriteria: "All ages welcome; certain activities may be more suitable for older children and adults",
-                        eventLocation: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d203772.78732353987!2d37.08476835222089!3d37.05867939441453!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1531e6b4f7f18c2f%3A0xc02e8b35116baad0!2sGaziantep%2C%20T%C3%BCrkiye!5e0!3m2!1sen!2ssa!4v1710673728226!5m2!1sen!2ssa",
-                        eventDescription: "The Pine Nut Festival is an annual celebration held in Gaziantep, Turkey, to honor the pine nut, a significant agricultural product of the region. The festival features culinary competitions, cultural displays, and entertainment activities centered around the pine nut."
-                    },
-                    {
-                        eventName: "Foça Music and Folk Dance Festival",
-                        city: "İzmir",
-                        date: "20-23rd August",
-                        image: "Images/6.1.jpeg",
-                        eventAgeCriteria: "Suitable for all ages, with specific children's workshops and activities available",
-                        eventLocation: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d49833.76056824212!2d26.708071032229906!3d38.68082933346761!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14bbb55351848517%3A0xb5ae2824b370e2f4!2zRm_Dp2EgRmlsbSBEYXlzIHwgRm_Dp2EgRmlsbSBHw7xubGVyaQ!5e0!3m2!1sen!2ssa!4v1710674127397!5m2!1sen!2ssa",
-                        eventDescription: "The Foça Music and Folk Dance Festival is a cultural event held in İzmir, Turkey, showcasing traditional music and dance from the Aegean region. The festival brings together performers and enthusiasts to celebrate the cultural heritage of the area through live performances and workshops."
-                    },
-                    {
-                        eventName: "Rug and Rose Festival",
-                        city: "Isparta",
-                        date: "1-7th June",
-                        image: "Images/7.1.jpeg",
-                        eventAgeCriteria: "Open to all ages; some events may cater more to adults",
-                        eventLocation: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d25161.793690523657!2d30.376508330123645!3d37.971896535088284!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c5c46693b8af7f%3A0x123c07de44ba0158!2zR8O8bmV5a2VudCwgMzIwOTAgR8O8bmV5a2VudC9Hw7ZuZW4vSXNwYXJ0YSwgVMO8cmtpeWU!5e0!3m2!1sen!2ssa!4v1710674339480!5m2!1sen!2ssa",
-                        eventDescription: "The Rug and Rose Festival is an annual event held in Isparta, Turkey, celebrating the region's renowned carpet weaving tradition and the cultivation of roses. The festival features exhibitions of handwoven rugs, floral displays, and cultural performances."
-                    },
-                    {
-                        eventName: "Melon Festiva",
-                        city: "Diyarbakir",
-                        date: "22-24th September",
-                        image: "Images/8.1.jpeg",
-                        eventAgeCriteria: " All ages welcome, some workshops may have age restrictions",
-                        eventLocation: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d100714.31526319274!2d40.080275614200374!3d37.92289914300781!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40751fa80abac46b%3A0x53070c279310852c!2zRGl5YXJiYWvEsXIsIFTDvHJraXll!5e0!3m2!1sen!2ssa!4v1710674459968!5m2!1sen!2ssa",
-                        eventDescription: "The Melon Festival is a yearly celebration held in Diyarbakır, Turkey, to showcase the region's abundant melon production. The festival includes melon-themed events such as tastings, competitions, and cultural performances."
-                    },
-                    {
-                        eventName: "International Marmara Music and Folk Dance Festiva",
-                        city: "Istanbul",
-                        date: "2-7th June",
-                        image: "Images/9.1.jpeg",
-                        eventAgeCriteria: "Suitable for adults and older children; some content may be more appreciated by teenagers and adults",
-                        eventLocation: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d96277.25182312395!2d28.878574943359382!3d41.054473699999974!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab7b57b52e161%3A0xfbd1068c29ed81a9!2sUluslararas%C4%B1%20Do%C4%9Fa%C3%A7lama%20Dans%20Festivali!5e0!3m2!1sen!2ssa!4v1710674584790!5m2!1sen!2ssa",
-                        eventDescription: "The International Marmara Music and Folk Dance Festival is a multicultural event held in İstanbul, Turkey, featuring traditional music and dance performances from around the world. The festival aims to promote cultural exchange and appreciation of diverse folk traditions."
-                    },
-                    {
-                        eventName: "Yunus Emre Ceremonies",
-                        city: "Eskişehir",
-                        date: "6-9th May",
-                        image: "Images/10.1.jpeg",
-                        eventAgeCriteria: "Open to all ages, with cultural activities suitable for families",
-                        eventLocation: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d49306.439566853376!2d31.475156936812468!3d39.43198241940956!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cdf0d55cf82f0b%3A0x4a056785df0776a0!2sYunus%20Emre%2C%2026600%20Sivrihisar%2FEski%C5%9Fehir%2C%20T%C3%BCrkiye!5e0!3m2!1sen!2ssa!4v1710674750000!5m2!1sen!2ssa",
-                        eventDescription: "The Yunus Emre Ceremonies are held annually in Eskişehir, Turkey, to honor Yunus Emre, a prominent Turkish poet and mystic. The event includes poetry recitations, musical performances, and discussions on the life and teachings of Yunus Emre."
-                    },
-                    {
-                        eventName: "Abdal Musa Memorial Ceremonies",
-                        city: "Antalya",
-                        date: "9-10th June",
-                        image: "Images/11.1.jpeg",
-                        eventAgeCriteria: "Open to all ages, with cultural activities suitable for families",
-                        eventLocation: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3202.5957654304466!2d29.867881874505365!3d36.612043678285595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c19e88838e83d3%3A0xe8c2939669f6ff43!2sAbdal%20Musa%20Tomb!5e0!3m2!1sen!2ssa!4v1710674922589!5m2!1sen!2ssa",
-                        eventDescription: "The Abdal Musa Memorial Ceremonies take place in Antalya, Turkey, to commemorate Abdal Musa, a revered figure in Alevi-Bektashi culture. The ceremonies include rituals, prayers, and cultural activities that pay homage to Abdal Musa's legacy."
-                    },
-                    {
-                        eventName: "Selçuk Efes Culture and Art Festival",
-                        city: "Izmir",
-                        date: "1-8th May",
-                        image: "Images/12.1.jpeg",
-                        eventAgeCriteria: " Family-friendly event, suitable for all ages",
-                        eventLocation: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50344.254282681875!2d27.28191665070391!3d37.941738558411906!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14b94d1c69709201%3A0x633eff1b171bdc53!2sEFES%20SANAT%20MERKEZ%C4%B0!5e0!3m2!1sen!2ssa!4v1710680867211!5m2!1sen!2ssa",
-                        eventDescription: "The Selçuk Efes Culture and Art Festival is an annual event held in İzmir, Turkey, celebrating the cultural heritage of the ancient city of Ephesus (Efes). The festival features art exhibitions, historical reenactments, and performances showcasing the rich history of the region."
-                    },
-                    {
-                        eventName: "Kirkpinar Oil Wrestling Championship",
-                        city: "Edirne",
-                        date: "20-30th June",
-                        image: "Images/1.jpg",
-                        eventAgeCriteria: "age 20-40",
-                        eventLocation: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d47686.23085376895!2d26.532124510676454!3d41.66893231079853!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14b32f77a26304e1%3A0xa0cfc0ca431c30bc!2sEdirne%2C%20Edirne%20Merkez%2FEdirne%2C%20T%C3%BCrkiye!5e0!3m2!1sen!2ssa!4v1710681824364!5m2!1sen!2ssa",
-                        eventDescription: "The Kırkpınar oil wrestling festival takes place in Edirne, Turkey. Thousands of people from different age groups, cultures and regions travel every year to see Pehlivan (wrestlers) fight for the Kırkpınar Golden Belt and the title of Chief Pehlivan. Each festival is launched by its patron, the Kırkpınar Aga, in a ceremony featuring forty bands of davul drums and zurna shawms."
-                    },
-                    {
-                        eventName: "Istanbul Tulip Festival",
-                        city: "Istanbul",
-                        date: "1-3rd May",
-                        image: "Images/3.jpg",
-                        eventAgeCriteria: "Suitable for all ages",
-                        eventLocation: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12024.825813122658!2d29.035316891820074!3d41.10818199582043!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caca71639839cb%3A0xa087c72f7e1fb291!2sEmirgan%20Tulip%20Gardens!5e0!3m2!1sen!2ssa!4v1710683710972!5m2!1sen!2ssa",
-                        eventDescription: "The contemporary festival’s events happen across Istanbul every spring for the month of April. Exactly when the flowers are at their best however, is climate dependent. In 2024 the festival is expected to be for the last 3 weeks of April, possibly into early May."
-                    },
-                    {
-                        eventName: "Cappadocia Balloon Festival",
-                        city: "Cappadocia",
-                        date: "20-30th June",
-                        image: "Images/4.jpg",
-                        eventAgeCriteria: "Suitable for adults and older children; some content may be more appreciated by teenagers and adults",
-                        eventLocation: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1601546.0890688912!2d33.74744230811675!3d38.37166559315928!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d6025c679e1679%3A0xf9178b7341dc5e49!2sCappadocia%2C%20T%C3%BCrkiye!5e0!3m2!1sen!2ssa!4v1710683776346!5m2!1sen!2ssa",
-                        eventDescription: "Cappadocia, a semi-arid region in central Turkey, is known for its distinctive “fairy chimneys,” tall, cone-shaped rock formations clustered in Monks Valley, Göreme and elsewhere. Other notables sites include Bronze Age homes carved into valley walls by troglodytes (cave dwellers) and later used as refuges by early Christians. The 100m-deep Ihlara Canyon houses numerous rock-face churches."
-                    },
-                    {
-                        eventName: "Hidirellez",
-                        city: "Edirne",
-                        date: "5-6th May",
-                        image: "Images/2.jpg",
-                        eventAgeCriteria: "Suitable for adults and older children; some content may be more appreciated by teenagers and adults",
-                        eventLocation: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d47686.23085376895!2d26.532124510676454!3d41.66893231079853!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14b32f77a26304e1%3A0xa0cfc0ca431c30bc!2sEdirne%2C%20Edirne%20Merkez%2FEdirne%2C%20T%C3%BCrkiye!5e0!3m2!1sen!2ssa!4v1710681824364!5m2!1sen!2ssa",
-                        eventDescription: "Typically held on the 5-6 May, Hidirellez celebrations in İstanbul and Edirne are some of the biggest and most jubilant in Türkiye. If fire leaping, dancing and singing to traditional folk music are on your bucket list, this is the festival for you!"
                     }
                 ]
             };
 
 
-            function filterEvent(value) {
+            function filterDoctor(value) {
                 let buttons = document.querySelectorAll(".button-value");
                 buttons.forEach(button => {
                     if (value.toUpperCase() === button.innerText.toUpperCase()) {
@@ -234,10 +98,10 @@
                     }
                 });
 
-                let eventsContainer = document.getElementById("events");
-                eventsContainer.innerHTML = "";
+            let doctorsContainer = document.getElementById("doctors");
+            doctorsContainer.innerHTML = "";
 
-                events.data.forEach(event => {
+            doctors.data.forEach(event => {
                     if (value === "all" || event.city === value) {
                         let card = document.createElement("div");
                         card.classList.add("card");
@@ -271,8 +135,8 @@
                         card.appendChild(eventDate);
                         card.appendChild(eventCity);
 
-                        // Append card to the events container
-                        eventsContainer.appendChild(card);
+                    // Append card to the doctors container
+                    doctorsContainer.appendChild(card);
                     }
                 });
             }
@@ -399,13 +263,13 @@
             }
 
 
-            // JavaScript code for searching events
+        // JavaScript code for searching doctors
             function searchEvent() {
                 let searchInput = document.getElementById("search-input").value.toLowerCase();
-                let eventsContainer = document.getElementById("events");
-                eventsContainer.innerHTML = "";
+            let doctorsContainer = document.getElementById("doctors");
+            doctorsContainer.innerHTML = "";
 
-                events.data.forEach(event => {
+            doctors.data.forEach(event => {
                     if (event.eventName.toLowerCase().includes(searchInput)) {
                         let card = document.createElement("div");
                         card.classList.add("card");
@@ -424,7 +288,7 @@
                         card.appendChild(eventName);
                         card.appendChild(eventDate);
 
-                        eventsContainer.appendChild(card);
+                    doctorsContainer.appendChild(card);
                     }
                 });
             }
@@ -435,7 +299,7 @@
                 window.open(popupUrl, "_blank", "width=800,height=600,scrollbars=yes");
             }
 
-            // Initially filter events to show all
+        // Initially filter doctors to show all
             window.onload = () => {
                 filterEvent("all");
             }

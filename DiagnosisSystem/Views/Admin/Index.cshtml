@@ -1,17 +1,10 @@
 ﻿@model Stats
 
 <link rel="stylesheet" type="text/css" href="/css/Admin/Index.css">
+@Html.Partial("shared.cshtml")
 
 
-        <a href="#section1" class="section">STAFF MANAGEMENT</a>
-        <ul class="sub-sections">
-            <li>
-                <a href="#doctorsInformation">Doctors Information</a>
-                <ul class="sub-sub-sections">
-                    <li><a asp-action="Doctors" asp-controller="Admin">View Pending Registrations</a></li>
-                </ul>
-            </li>
-        </ul>
+    <div class="content">
 
         <div class="stats-container">
             <div class="stat-box">
