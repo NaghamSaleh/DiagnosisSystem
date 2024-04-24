@@ -6,7 +6,7 @@ namespace DiagnosisSystem.Repositories
     {
         int GetDrPendingRequestsCount();
         int GetRegisteredDrCount();
-        List<DoctorRegisterVM> GetAllDoctors();
+        List<DoctorDTO> GetAllDoctors();
         DoctorRegisterVM GetDoctorbyId(string id);
     }
 }

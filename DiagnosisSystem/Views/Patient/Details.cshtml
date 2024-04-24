@@ -1,4 +1,4 @@
-﻿@model DoctorDetailsViewModel
+﻿@model QueryVM
 
 <!DOCTYPE html>
 <html>
@@ -31,31 +31,31 @@
 
     <h1>Doctor Details</h1>
 
-    <div>
-        <h3>Full Name: @($"{Model.DoctorDetails.FirstName} {Model.DoctorDetails.LastName}")</h3>
+  @*  <div>
+        <h3>Full Name: @($"{Model..FirstName} {Model.DoctorDetails.LastName}")</h3>
         <p class="transparent-container">Specialty: @Model.DoctorDetails.Specialty</p>
         <p class="transparent-container">Short Bio: @Model.DoctorDetails.ShortBio</p>
         <p class="transparent-container">Experience: @Model.DoctorDetails.Experience</p>
         <p class="transparent-container">Languages: @Model.DoctorDetails.Languages</p>
-    </div>
+    </div>*@
    
         <button type="button" class="btn btn-primary" onclick="processPayment()">Pay Consultation Fees</button>
 
 
 
-    <div class="modal fade" id="paymentSuccessModal" tabindex="-1" aria-labelledby="paymentSuccessModalLabel" aria-hidden="true">
+    @*<div class="modal fade" id="paymentSuccessModal" tabindex="-1" aria-labelledby="paymentSuccessModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
                     Your payment was successful.
                     <form asp-controller="Patient" asp-action="AskDoctor" method="post">
-                        <input type="hidden" asp-for="@Model.DoctorDetails.UserID"/>
+                        <input type="hidden" asp-for="@Model."/>
                         <div class="mb-3">
                             <label asp-for="@Model.QueryVM.QueryTitle" class="form-label">Title</label>
                             <input type="text" class="form-control" asp-for="@Model.QueryVM.QueryTitle">
                         </div>
                         <div class="mb-3">
-                            <label asp-for="@Model.QueryVM.Description" class="form-label">Body</label>
+                            <label asp-for="@Model.Description" class="form-label">Body</label>
                             <textarea class="form-control" asp-for="@Model.QueryVM.Description" rows="3"></textarea>
                         </div>
                         <div class="form-group">
@@ -75,6 +75,6 @@
             </div>
         </div>
     </div>
-
+*@
 </body>
 </html>

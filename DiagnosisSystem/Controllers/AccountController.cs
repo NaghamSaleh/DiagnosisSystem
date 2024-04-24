@@ -253,7 +253,7 @@
                     var roles = await _userManager.GetRolesAsync(user);
                     if (roles.Contains("Doctor"))
                     {
-                        return RedirectToAction("Index", "Doctor");
+                        return RedirectToAction("Queries", "Doctor");
                     }
                     else if (roles.Contains("InitialDoctor"))
                     {

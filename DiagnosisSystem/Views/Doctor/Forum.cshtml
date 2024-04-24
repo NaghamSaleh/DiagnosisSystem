@@ -1,5 +1,7 @@
-﻿@model List<DoctorRegisterVM>
-
+﻿@model FilterVM<DoctorDTO>
+@{
+    var speciality = ViewBag.speciality as List<SpecialityVM>;
+}
 <link rel="stylesheet" type="text/css" href="/css/doctor/forum.css">
 
 <html>
@@ -18,12 +20,29 @@
         </nav>
     </header>
 
+    <form>
+        <div class="row mt-4">
+            <div class="col-md-2 align-self-end">
+                <label asp-for="SpecilityName">Choose Bus:</label>
+                <select asp-for="SpecilityName" class="form-select mb-3" name="SpecilityName">
+                    <option value="0"> All</option>
+                    @foreach (var item in speciality)
+                    {
+                        <option value="@item.Id">
+                            @item.Name
+                        </option>
 
+                    }
+
+                </select>
+            </div>
+</div>
+</form>
 
     <a asp-action="CreateForum" asp-controller="Doctor" class="create-group-btn">Create Discussion Group</a>
 
     <div class="doctors-container">
-        @foreach (var doctor in Model)
+        @foreach (var doctor in Model.Results)
         {
             <div class="doctor-square">
                 <div class="doctor-image">
@@ -31,7 +50,7 @@
 
                 </div>
                 <h2>Dr. @doctor.FirstName @doctor.LastName</h2>
-                <p>@doctor.Specialty</p>
+                <p>@doctor.Speciality</p>
             </div>
         }
     </div>

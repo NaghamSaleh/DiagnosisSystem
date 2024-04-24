@@ -95,22 +95,34 @@
         #endregion
 
         #region Forum
-        public IActionResult Forum()
+        public IActionResult Forum(string? currentHospital, string? experience, string? languages, string? specialityInput)
         {
+            //Select * from Specialities
+            var speciality = _context.Specialities.Select(s=> new SpecialityVM()
+            {
+                Name = s.SpecialtyName,
+                Id = s.SpecialtyID
+            }).ToList();
+            ViewBag.speciality = speciality;
+            ViewBag.specialityinput = specialityInput;
+            FilterVM<DoctorDTO> reportResult = new();
+            reportResult.SpecilityName = specialityInput;
+            
             var doctors = _doctorRepo.GetAllDoctors();
-            return View(doctors);
+            reportResult.Results = doctors;
+            return View(reportResult);
         }
 
-        [HttpGet]
-        public IActionResult CreateForum()
-        {
-            var doctors = _doctorRepo.GetAllDoctors();
-            var forumVM = new DiscussionForumDTO
-            {
-                AllMembers = doctors
-            };
-            return View(forumVM);
-        }
+        //[HttpGet]
+        //public IActionResult CreateForum()
+        //{
+        //    var doctors = _doctorRepo.GetAllDoctors();
+        //    var forumVM = new DiscussionForumDTO
+        //    {
+        //        AllMembers = doctors
+        //    };
+        //    return View(forumVM);
+        //}
 
         [HttpPost]
         public IActionResult Create(DiscussionForumDTO discussionForum)
@@ -136,5 +148,22 @@
         //    return RedirectToAction("Index");
         //}
         #endregion
+
+        [HttpGet]
+        public IActionResult MyAccount()
+        {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = _context.Users
+                .Where(i => i.Id == userId)
+                .Select(u => new EditProfileVM()
+                {
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Email = u.Email,
+                    Gender = u.Gender,
+                    Telephone = u.Telephone
+                }).FirstOrDefault();
+            return View(user);
+        }
     }
 }

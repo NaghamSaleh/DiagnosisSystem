@@ -64,7 +64,8 @@
                 Id= q.Id,
                 QueryTitle = q.QueryTitle,
                 Votes= q.Votes,
-                   // QuestionTag = q.Tag != null ? q.Tag.Split(',').ToList() : new List<string>()
+                AnswerCount = q.Answers.Where(a => a.QueryId == q.Id).Count(),
+                    // QuestionTag = q.Tag != null ? q.Tag.Split(',').ToList() : new List<string>()
 
                 }).ToList();
             return View(questions);
@@ -129,16 +130,27 @@
 
         public IActionResult Details(string id)
         {
-            var doctor = _doctorRepo.GetDoctorbyId(id);
-            doctor.UserID = id;
-            QueryVM questionVM = new();
-            questionVM.QuestionTag = _context.Tags.Select(s => s.Name).ToList();
-            DoctorDetailsViewModel doctorDetails = new()
+            var Id = Int16.Parse(id);
+            
+            var answers = _context.Answers.Where(a => a.QueryId == Id).Select(ans => new AnswerDTO()
             {
-                DoctorDetails = doctor,
-                QueryVM = questionVM
-            };
-            return View(doctorDetails);
+                AnswerBody = ans.AnswerBody,
+                DoctorId = ans.DoctorId
+            }).ToList();
+            var queryDetails = _context.Queries
+                .Where(q => q.Id.Equals(id))
+                .Select(qu => new QueryVM()
+                {
+                    Description = qu.Description,
+                    QueryTitle = qu.QueryTitle,
+                    Id = qu.Id,
+                    Answers = answers
+                    
+                })
+                .FirstOrDefault() ?? new QueryVM();
+            queryDetails.Answers = answers;
+            
+            return View(queryDetails);
         }
 
 

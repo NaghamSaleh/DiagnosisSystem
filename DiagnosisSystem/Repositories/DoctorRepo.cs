@@ -33,20 +33,20 @@ namespace DiagnosisSystem.Repositories
             return doctorId.Count;
         }
 
-        public List<DoctorRegisterVM> GetAllDoctors()
+        public List<DoctorDTO> GetAllDoctors()
         {
             string roleDoctor = "Doctor";
             var doctorRoleId = _context.Roles.Where(r => r.Name == roleDoctor).Select(r => r.Id).FirstOrDefault();
             var doctorId = _context.UserRoles.Where(i => i.RoleId.Equals(doctorRoleId)).Select(i => i.UserId).ToList();
-            var doctorUsers = _context.Users.Where(u => doctorId.Contains(u.Id)).Select(d=> new DoctorRegisterVM
+            var doctorUsers = _context.Users.Where(u => doctorId.Contains(u.Id)).Select(d=> new DoctorDTO
             {
-                UserID = d.Id,
-                Specialty=d.Specialty,
+                Id = d.Id,
+                Speciality=d.Specialty,
                 FirstName= d.FirstName,
                 LastName = d.LastName,
-                ShortBio=d.ShortBio,
                 Experience=d.Experience,
                 Languages=d.Languages,
+                CurrentHospital = d.CurrentHospital,
             }).ToList();
             return doctorUsers;
         }

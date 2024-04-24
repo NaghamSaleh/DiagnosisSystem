@@ -1,7 +1,10 @@
 ﻿@model Stats
 
 <link rel="stylesheet" type="text/css" href="/css/Admin/Index.css">
-@Html.Partial("shared.cshtml")
+<partial>
+    @Html.Partial("shared.cshtml", Model.UserName);
+</partial>
+
 
 
     <div class="content">
