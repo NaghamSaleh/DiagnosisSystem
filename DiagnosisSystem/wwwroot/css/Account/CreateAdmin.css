@@ -109,7 +109,7 @@ a {
 }
 
     .form h1 {
-        margin: 50px 0 50px 380px; /* Adjust the left margin to match the width of the sidebar */
+        text-align: center;
         color: #155484;
     }
 
