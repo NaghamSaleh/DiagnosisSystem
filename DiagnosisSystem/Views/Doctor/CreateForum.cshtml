@@ -44,13 +44,23 @@
         <input asp-for="DiscussionTopic" class="form-control" />
         <span asp-validation-for="DiscussionTopic" class="text-danger"></span>
     </div>
+    <div class="row mt-4">
+        <div class="col-md-2 align-self-end">
+            <label>Choose Doctors:</label>
+            <select asp-for="SelectedMembers" class="control-label d-block checkbox-label" name="SelectedMembers">
+               
+                <ul class="list-unstyled checkboxes"
+                @foreach (var item in Model.AllMembers)
+                {
+                    
+                    <option value="@item.Id">
+                        @item.FirstName @item.LastName
+                    </option>
 
-    <select asp-for="SelectedMembers" multiple class="form-control">
-    @foreach (var user in Model.AllMembers)
-    {
-        <option value="@user.UserID">@user.FirstName @user.LastName</option>
-    }
-    </select>
+                }
 
+            </select>
+        </div>
+    </div>
     <button type="submit" class="btn btn-primary">Create</button>
 </form>

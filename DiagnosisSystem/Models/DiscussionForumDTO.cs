@@ -15,14 +15,14 @@
         [Required(ErrorMessage = "Discussion Topic is required")]
         public string DiscussionTopic { get; set; }
 
-        public virtual ICollection<DoctorRegisterVM> AllMembers { get; set; }
+        public virtual ICollection<DoctorDTO> AllMembers { get; set; }
         public  List<string> SelectedMembers { get; set; }
         public DiscussionForumDTO()
         {
-            AllMembers = new List<DoctorRegisterVM>();
+            AllMembers = new List<DoctorDTO>();
         }
 
-        public void AddMember(DoctorRegisterVM member)
+        public void AddMember(DoctorDTO member)
         {
             AllMembers.Add(member);
         }

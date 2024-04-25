@@ -147,16 +147,16 @@
             return View(reportResult);
         }
 
-        //[HttpGet]
-        //public IActionResult CreateForum()
-        //{
-        //    var doctors = _doctorRepo.GetAllDoctors();
-        //    var forumVM = new DiscussionForumDTO
-        //    {
-        //        AllMembers = doctors
-        //    };
-        //    return View(forumVM);
-        //}
+        [HttpGet]
+        public IActionResult CreateForum()
+        {
+            var doctors = _doctorRepo.GetAllDoctors();
+            var forumVM = new DiscussionForumDTO
+            {
+                AllMembers = doctors
+            };
+            return View(forumVM);
+        }
 
         [HttpPost]
         public IActionResult Create(DiscussionForumDTO discussionForum)

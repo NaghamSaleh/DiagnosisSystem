@@ -88,13 +88,13 @@
 
         #region Doctor Register 
         [HttpGet]
-        public IActionResult doctorRegister()
+        public IActionResult DoctorRegister()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> doctorRegister(DoctorRegisterVM MedicalPractitionerVM)
+        public async Task<IActionResult> DoctorRegister(DoctorRegisterVM MedicalPractitionerVM)
         {
             if (ModelState.IsValid)
             {
@@ -138,6 +138,18 @@
                     
 
                 };
+                var specialities = _context.Specialities.Select(s=> s.SpecialtyName);
+                if (!specialities.Contains(MedicalPractitionerVM.Specialty))
+                {
+                    var newSpeciality = new Specialty
+                    {
+                        SpecialtyName = MedicalPractitionerVM.Specialty,
+
+                        Description = string.Empty,
+                    };
+                    _context.Specialities.Add(newSpeciality);
+                    _context.SaveChanges();
+                }
 
                 try
                 {
