@@ -121,7 +121,6 @@
             return View(model); 
         }
 
-
         public IActionResult Consultants()
         {
             var doctors = _doctorRepo.GetAllDoctors();
@@ -153,24 +152,26 @@
             return View(queryDetails);
         }
 
-
         [HttpGet]
         public IActionResult AskDoctor(string doctorId)
         {
             return View(doctorId);
         }
+        
         [HttpPost]
         public async Task<IActionResult> AskDoctor(DoctorDetailsViewModel detailsViewModel)
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            Query query = new Query();
-            query.DoctorId = detailsViewModel.DoctorDetails.UserID;
-            query.QueryTitle = detailsViewModel.QueryVM.QueryTitle;
-            query.Description = detailsViewModel.QueryVM.Description;
-            query.Tag = string.Join(',', detailsViewModel.QueryVM.QuestionTag);
-            query.PatientId = userId;
-            query.PaidConstultant = true;
+            Query query = new ()
+            {
+                DoctorId = detailsViewModel.DoctorDetails.UserID,
+                QueryTitle = detailsViewModel.QueryVM.QueryTitle,
+                Description = detailsViewModel.QueryVM.Description,
+                Tag = string.Join(',', detailsViewModel.QueryVM.QuestionTag),
+                PatientId = userId,
+                PaidConstultant = true
+            };
             _context.Queries.Add(query);
             _context.SaveChanges();
             

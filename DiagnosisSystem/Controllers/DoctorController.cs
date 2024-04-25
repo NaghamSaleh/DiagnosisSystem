@@ -1,6 +1,6 @@
 ﻿namespace DiagnosisSystem.Controllers
 {
-    [Authorize(Roles ="Doctor")]
+   // [Authorize(Roles = "Doctor")]
     public class DoctorController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -29,7 +29,7 @@
                     Id = q.Id,
                     QueryTitle = q.QueryTitle,
                     Votes = q.Votes,
-                   // QuestionTag = q.Tag.Split('-', ),
+                    // QuestionTag = q.Tag.Split('-', ),
                     AnswerCount = q.Answers.Where(a => a.QueryId == q.Id).Count(),
                 })
                 .ToList();
@@ -68,7 +68,7 @@
                     Id = q.Id,
                     QueryTitle = q.QueryTitle,
                     Description = q.Description,
-                    
+
                 }).FirstOrDefault();
             var answers =
                      new AnswerDTO
@@ -95,21 +95,55 @@
         #endregion
 
         #region Forum
-        public IActionResult Forum(string? currentHospital, string? experience, string? languages, string? specialityInput)
+        public async Task<IActionResult> Forum(FilterVM filter)
         {
             //Select * from Specialities
-            var speciality = _context.Specialities.Select(s=> new SpecialityVM()
+            var speciality = await _context.Specialities.Select(s => new SpecialityVM()
             {
                 Name = s.SpecialtyName,
                 Id = s.SpecialtyID
-            }).ToList();
+            }).ToListAsync();
+
+            var hospitals = _context.Users
+                .Where(a => a.CurrentHospital != null)
+                .Select(h => 
+                h.CurrentHospital)
+                .ToList();
+
+            var alllanguages = _context.Users.Where(l=> l.Languages != null)
+                .Select(l => l.Languages).ToList();
+
+            var dExperiences = _context.Users
+                .Select(e => e.Experience).ToList();
+
             ViewBag.speciality = speciality;
-            ViewBag.specialityinput = specialityInput;
-            FilterVM<DoctorDTO> reportResult = new();
-            reportResult.SpecilityName = specialityInput;
+            ViewBag.specialityinput = filter.SpecilityName;
+            ViewBag.hospitals = hospitals;
+            ViewBag.alllanguages = alllanguages;
+            ViewBag.dExperiences = dExperiences;
             
             var doctors = _doctorRepo.GetAllDoctors();
-            reportResult.Results = doctors;
+
+
+            if(filter.CurrentHospital is not null)
+            {
+                doctors = doctors.Where(c => c.CurrentHospital == filter.CurrentHospital).ToList();
+            }
+            if(filter.Experience > 0)
+            {
+                doctors = doctors.Where(e=>e.Experience == filter.Experience).ToList();
+            }
+            if(filter.Languages != "0" && filter.Languages is not null)
+            {
+                doctors = doctors.Where(e => e.Languages == filter.Languages).ToList();
+            }
+            if (filter.SpecilityName is not null)
+            {
+                doctors = doctors.Where(e => e.Speciality == filter.SpecilityName).ToList();
+            }
+            FilterVM reportResult = new();
+
+            reportResult.Doctors = doctors;
             return View(reportResult);
         }
 

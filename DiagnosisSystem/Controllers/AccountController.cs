@@ -251,25 +251,18 @@
                 if (user != null)
                 {
                     var roles = await _userManager.GetRolesAsync(user);
-                    if (roles.Contains("Doctor"))
+                    switch (roles.FirstOrDefault())
                     {
-                        return RedirectToAction("Queries", "Doctor");
-                    }
-                    else if (roles.Contains("InitialDoctor"))
-                    {
-                        return BadRequest("Account still waiting Acceptance");
-                    }
-                    else if (roles.Contains("Patient"))
-                    {
-                        return RedirectToAction("Queries", "Patient");
-                    }
-                    else if (roles.Contains("Admin"))
-                    {
-                        return RedirectToAction("Index", "Admin");
-                    }
-                    else
-                    {
-                        return BadRequest("Invalid Role");
+                        case "Doctor":
+                            return RedirectToAction("Queries", "Doctor");
+                        case "InitialDoctor":
+                            return BadRequest("Account still waiting Acceptance");
+                        case "Patient":
+                            return RedirectToAction("Queries", "Patient");
+                        case "Admin":
+                            return RedirectToAction("Index", "Admin");
+                        default:
+                            return BadRequest("Invalid Role");
                     }
                 }
                 else

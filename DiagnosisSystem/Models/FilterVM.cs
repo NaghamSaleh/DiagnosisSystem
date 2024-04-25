@@ -1,13 +1,14 @@
 ﻿namespace DiagnosisSystem.Models
 {
-    public class FilterVM<T>
+    public class FilterVM
     {
-        public FilterVM()
-        {
-            Results = new List<T>();
+        
+        public string? SpecilityName { get; set; }
+        public string? Name { get; set; }
+        public string? CurrentHospital { get; set; }
+        public int? Experience { get; set; }
+        public string? Languages { get; set; }
+        public List<DoctorDTO> Doctors { get; set; }
 
-        }
-        public string SpecilityName { get; set; }
-        public List<T> Results { get; set; }
     }
 }
