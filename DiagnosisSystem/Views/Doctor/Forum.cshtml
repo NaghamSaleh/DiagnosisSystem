@@ -28,7 +28,7 @@
             <div class="col-md-2 align-self-end">
                 <label>Choose Speciality:</label>
                 <select asp-for="SpecilityName" class="form-select mb-3" name="SpecilityName">
-                    <option value="0"> All</option>
+                    <option value="All"> All</option>
                     @foreach (var item in speciality)
                     {
                         <option value="@item.Id">
@@ -44,7 +44,7 @@
         <div class="col-md-2 align-self-end">
             <label>Choose Hospital:</label>
             <select asp-for="CurrentHospital" class="form-select mb-3" name="CurrentHospital">
-                <option value="0"> All</option>
+                    <option value="All"> All</option>
 
                 @foreach (var item in hospital)
                 {
@@ -59,7 +59,7 @@
         <div class="col-md-2 align-self-end">
             <label>Choose Languages:</label>
                 <select asp-for="Languages" class="form-select mb-3" name="Languages">
-                <option value="0"> All</option>
+                    <option value="All"> All</option>
 
                 @foreach (var item in languages)
                 {

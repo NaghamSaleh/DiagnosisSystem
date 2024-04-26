@@ -125,7 +125,7 @@
             var doctors = _doctorRepo.GetAllDoctors();
 
 
-            if(filter.CurrentHospital is not null)
+            if (filter.CurrentHospital is not null && filter.CurrentHospital != "All")
             {
                 doctors = doctors.Where(c => c.CurrentHospital == filter.CurrentHospital).ToList();
             }
@@ -133,11 +133,11 @@
             {
                 doctors = doctors.Where(e=>e.Experience == filter.Experience).ToList();
             }
-            if(filter.Languages != "0" && filter.Languages is not null)
+            if(filter.Languages is not null && filter.Languages != "All")
             {
                 doctors = doctors.Where(e => e.Languages == filter.Languages).ToList();
             }
-            if (filter.SpecilityName is not null)
+            if (filter.SpecilityName is not null && filter.SpecilityName != "All")
             {
                 doctors = doctors.Where(e => e.Speciality == filter.SpecilityName).ToList();
             }

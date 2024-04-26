@@ -47,6 +47,7 @@ namespace DiagnosisSystem.Repositories
                 Experience=d.Experience,
                 Languages=d.Languages,
                 CurrentHospital = d.CurrentHospital,
+                ShortBio=d.ShortBio,
             }).ToList();
             return doctorUsers;
         }

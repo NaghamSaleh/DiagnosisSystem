@@ -39,7 +39,7 @@
                     <td>@query.AnswerCount</td>
                     <td>
                         <div>
-                            <span class="query-title" onclick="window.location.href = '@Url.Action("Details", "Patient", new { id = query.Id })'">@query.QueryTitle</span>
+                            <span class="query-title" onclick="window.location.href = '@Url.Action("Answers", "Patient", new { id = query.Id })'">@query.QueryTitle</span>
                         </div>
                        @* @if(query.QuestionTag.Count>1)
                         {

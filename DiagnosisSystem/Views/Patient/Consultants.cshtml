@@ -1,4 +1,4 @@
-﻿@model List<DoctorRegisterVM>
+﻿@model List<DoctorDTO>
 <link rel="stylesheet" type="text/css" href="/css/Patient/consultants.css">
 
 <!DOCTYPE html>
@@ -27,7 +27,7 @@
         {
             <div class="doctor-square">
                 <h2>
-                    <a asp-action="Details" asp-controller="Patient" asp-route-id="@doctor.UserID">
+                    <a asp-action="Details" asp-controller="Patient" asp-route-id="@doctor.Id">
                         Dr. @doctor.FirstName @doctor.LastName
                     </a>
                 </h2>

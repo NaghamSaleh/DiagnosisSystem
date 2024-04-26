@@ -6,14 +6,16 @@
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IDoctorRepo _doctorRepo;
+        private readonly IQueryRepo _queryRepo;
 
        
         public PatientController(ApplicationDbContext context, UserManager<IdentityUser> userManager,
-            IDoctorRepo doctorRepo)
+            IDoctorRepo doctorRepo, IQueryRepo queryRepo)
         {
             _context = context;
             _userManager = userManager;
             _doctorRepo = doctorRepo;
+            _queryRepo = queryRepo;
         }
         public IActionResult Index()
         {
@@ -127,28 +129,9 @@
             return View(doctors);
         }
 
-        public IActionResult Details(string id)
+        public IActionResult Answers(string id)
         {
-            var Id = Int16.Parse(id);
-            
-            var answers = _context.Answers.Where(a => a.QueryId == Id).Select(ans => new AnswerDTO()
-            {
-                AnswerBody = ans.AnswerBody,
-                DoctorId = ans.DoctorId
-            }).ToList();
-            var queryDetails = _context.Queries
-                .Where(q => q.Id.Equals(id))
-                .Select(qu => new QueryVM()
-                {
-                    Description = qu.Description,
-                    QueryTitle = qu.QueryTitle,
-                    Id = qu.Id,
-                    Answers = answers
-                    
-                })
-                .FirstOrDefault() ?? new QueryVM();
-            queryDetails.Answers = answers;
-            
+            var queryDetails = _queryRepo.GetAllAnswers(id);
             return View(queryDetails);
         }
 
@@ -176,6 +159,13 @@
             _context.SaveChanges();
             
             return RedirectToAction("Queries", "Patient");
+        }
+
+        public IActionResult Details(string id)
+        {
+            var doctors = _doctorRepo.GetAllDoctors();
+            var getChosenDoctor = doctors.Where(i => i.Id == id).FirstOrDefault();
+            return View(getChosenDoctor);
         }
     }
 }

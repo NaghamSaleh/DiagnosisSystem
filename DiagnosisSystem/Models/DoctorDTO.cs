@@ -9,6 +9,7 @@
         public int Experience { get; set; }
         public string Languages { get; set; }
         public string CurrentHospital { get; set; }
+        public string ShortBio { get; set; }
 
     }
 }
