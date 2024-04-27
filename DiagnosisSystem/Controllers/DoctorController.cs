@@ -95,9 +95,14 @@
         #endregion
 
         #region Forum
-        public async Task<IActionResult> Forum(FilterVM filter)
+        public IActionResult Forum()
         {
-            //Select * from Specialities
+            var doctors = _doctorRepo.GetAllDoctors();
+            return View(doctors);
+        }
+
+        public async Task<IActionResult> CreateForum(FilterVM DoctorFilters, DiscussionForumDTO forumDTO)
+        {
             var speciality = await _context.Specialities.Select(s => new SpecialityVM()
             {
                 Name = s.SpecialtyName,
@@ -106,59 +111,75 @@
 
             var hospitals = _context.Users
                 .Where(a => a.CurrentHospital != null)
-                .Select(h => 
+                .Select(h =>
                 h.CurrentHospital)
+                .Distinct()
                 .ToList();
 
-            var alllanguages = _context.Users.Where(l=> l.Languages != null)
+            var alllanguages = _context.Users
+                .Where(l => l.Languages != null)
+                .Distinct()
                 .Select(l => l.Languages).ToList();
 
             var dExperiences = _context.Users
-                .Select(e => e.Experience).ToList();
+                .Select(e => e.Experience)
+                .Distinct().ToList();
 
             ViewBag.speciality = speciality;
-            ViewBag.specialityinput = filter.SpecilityName;
+            ViewBag.specialityinput = DoctorFilters.SpecilityName;
             ViewBag.hospitals = hospitals;
             ViewBag.alllanguages = alllanguages;
             ViewBag.dExperiences = dExperiences;
-            
+
             var doctors = _doctorRepo.GetAllDoctors();
 
 
-            if (filter.CurrentHospital is not null && filter.CurrentHospital != "All")
+            if (DoctorFilters.CurrentHospital is not null && DoctorFilters.CurrentHospital != "All")
             {
-                doctors = doctors.Where(c => c.CurrentHospital == filter.CurrentHospital).ToList();
+                doctors = doctors.Where(c => c.CurrentHospital == DoctorFilters.CurrentHospital).ToList();
             }
-            if(filter.Experience > 0)
+            if (DoctorFilters.Experience > 0)
             {
-                doctors = doctors.Where(e=>e.Experience == filter.Experience).ToList();
+                doctors = doctors.Where(e => e.Experience == DoctorFilters.Experience).ToList();
             }
-            if(filter.Languages is not null && filter.Languages != "All")
+            if (DoctorFilters.Languages is not null && DoctorFilters.Languages != "All")
             {
-                doctors = doctors.Where(e => e.Languages == filter.Languages).ToList();
+                doctors = doctors.Where(e => e.Languages == DoctorFilters.Languages).ToList();
             }
-            if (filter.SpecilityName is not null && filter.SpecilityName != "All")
+            if (DoctorFilters.SpecilityName is not null && DoctorFilters.SpecilityName != "All")
             {
-                doctors = doctors.Where(e => e.Speciality == filter.SpecilityName).ToList();
+                doctors = doctors.Where(e => e.Speciality == DoctorFilters.SpecilityName).ToList();
             }
-            FilterVM reportResult = new();
 
-            reportResult.Doctors = doctors;
-            return View(reportResult);
-        }
-
-        [HttpGet]
-        public IActionResult CreateForum()
-        {
-            var doctors = _doctorRepo.GetAllDoctors();
-            var forumVM = new DiscussionForumDTO
+            var filterResult = new FilterVM()
             {
-                AllMembers = doctors
+                Doctors = doctors
             };
-            return View(forumVM);
+            DiscussionForumTable forumTable = new DiscussionForumTable
+            {
+                DoctorFilters = filterResult,
+                ForumDTO = forumDTO
+            };
+
+            if (forumDTO.GroupTitle is not null)
+            {
+                var forumEntity = new DiscussionForum
+                {
+                    DiscussionTopic = forumDTO.DiscussionTopic,
+                    GroupTitle = forumDTO.GroupTitle,
+                    GroupAdmin = forumDTO.GroupAdmin,
+                    SelectedMembers = string.Join(',', forumDTO.SelectedMembers),
+
+                };
+                _context.DiscussionForums.Add(forumEntity);
+                _context.SaveChanges();
+            }
+
+
+            return View(forumTable);
         }
 
-        [HttpPost]
+   
         public IActionResult Create(DiscussionForumDTO discussionForum)
         {
             if (ModelState.IsValid)

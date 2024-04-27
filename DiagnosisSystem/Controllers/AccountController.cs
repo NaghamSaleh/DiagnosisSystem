@@ -96,8 +96,8 @@
         [HttpPost]
         public async Task<IActionResult> DoctorRegister(DoctorRegisterVM MedicalPractitionerVM)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 var checkEmail = _context.Users.Any(e => e.Email == MedicalPractitionerVM.Email);
 
                 if (checkEmail)
@@ -173,7 +173,7 @@
                 {
                     ModelState.AddModelError(ex.Message, "Error saving to database");
                 }
-            }
+            //}
 
             // If ModelState is not valid, return to the registration view with validation errors
             return View(MedicalPractitionerVM);

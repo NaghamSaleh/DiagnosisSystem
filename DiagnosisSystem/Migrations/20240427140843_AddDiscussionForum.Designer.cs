@@ -4,6 +4,7 @@ using DiagnosisSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DiagnosisSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240427140843_AddDiscussionForum")]
+    partial class AddDiscussionForum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,19 +60,16 @@ namespace DiagnosisSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("GroupAdmin")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("GroupAdminId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("GroupTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SelectedMembers")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("GroupAdminId");
 
                     b.ToTable("DiscussionForums");
                 });
@@ -213,29 +212,29 @@ namespace DiagnosisSystem.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "66d1c61a-62e2-4238-88a9-840b2eaa48fa",
-                            ConcurrencyStamp = "58b37861-e225-4a28-8d28-99e0578307ea",
+                            Id = "181171e0-1c55-41f9-8219-c144b2f01ea6",
+                            ConcurrencyStamp = "43067a5f-b955-45be-8bba-98a5236ce0a0",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "f8e12c7f-5021-42b0-bb0f-c177fa8cf3ac",
-                            ConcurrencyStamp = "4650bca6-abbd-4715-9a11-3e8d14d58af8",
+                            Id = "be04ae00-c727-4941-955e-e5fecf1340f6",
+                            ConcurrencyStamp = "1f108994-41f1-41c8-8368-260fc04b24a3",
                             Name = "Patient",
                             NormalizedName = "PATIENT"
                         },
                         new
                         {
-                            Id = "aeb3946f-95f6-4302-9d5f-80bc76cf3b15",
-                            ConcurrencyStamp = "5bc59010-906a-4471-8fef-ab1dbf6b1311",
+                            Id = "1abcd5ae-701b-49e2-a33d-7086efc053cf",
+                            ConcurrencyStamp = "050b165c-1703-4e48-8ee9-d1e28a42e4d6",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         },
                         new
                         {
-                            Id = "e3ffc0fd-5964-4d30-ad4c-bae6353c2931",
-                            ConcurrencyStamp = "e1734247-3d2e-48e8-98db-b0f5a440e5a0",
+                            Id = "d1fd072f-c6d8-49d1-98dd-561b65a825f6",
+                            ConcurrencyStamp = "d14270ce-bdfd-4ab0-8b70-e1938d031031",
                             Name = "InitialDoctor",
                             NormalizedName = "INITIALDOCTOR"
                         });
@@ -339,17 +338,17 @@ namespace DiagnosisSystem.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "287fa021-fdff-4155-a24e-fde68aa200fc",
+                            Id = "27d8230c-d142-4c43-8729-919768f4598f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ff334dce-591e-4414-86bb-9f3c4c8fe2a1",
+                            ConcurrencyStamp = "2b87ab60-1baf-405c-a0a2-9b7428e97675",
                             Email = "naghamsaleh@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "NAGHAMSALEH@GMAIL.COM",
                             NormalizedUserName = "NAGHAMSALEH@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAED0oJTd2zzThRyB7wCNPiIpqsmsluocCUNOL1eax58rk0MNbVa34V34zCELLbAl5Ww==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEArn0NpI9ID2UsvxmXY4/jASe9WEs0qbirOm55sfkt/5UZYz4kvfPetuWNRHNfcZ+w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a64b1e22-e7fd-4e5b-a4a3-2dfda94fce15",
+                            SecurityStamp = "b131a3ee-455d-49cb-8b3b-89461f8fc30c",
                             TwoFactorEnabled = false,
                             UserName = "naghamsaleh@gmail.com"
                         });
@@ -419,8 +418,8 @@ namespace DiagnosisSystem.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "287fa021-fdff-4155-a24e-fde68aa200fc",
-                            RoleId = "66d1c61a-62e2-4238-88a9-840b2eaa48fa"
+                            UserId = "27d8230c-d142-4c43-8729-919768f4598f",
+                            RoleId = "181171e0-1c55-41f9-8219-c144b2f01ea6"
                         });
                 });
 
@@ -457,6 +456,9 @@ namespace DiagnosisSystem.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("DiscussionForumId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("Experience")
                         .HasColumnType("int");
 
@@ -491,6 +493,8 @@ namespace DiagnosisSystem.Migrations
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("datetime2");
 
+                    b.HasIndex("DiscussionForumId");
+
                     b.HasDiscriminator().HasValue("User");
                 });
 
@@ -503,6 +507,15 @@ namespace DiagnosisSystem.Migrations
                         .IsRequired();
 
                     b.Navigation("Query");
+                });
+
+            modelBuilder.Entity("DiagnosisSystem.Entities.DiscussionForum", b =>
+                {
+                    b.HasOne("DiagnosisSystem.Entities.User", "GroupAdmin")
+                        .WithMany()
+                        .HasForeignKey("GroupAdminId");
+
+                    b.Navigation("GroupAdmin");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -554,6 +567,18 @@ namespace DiagnosisSystem.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DiagnosisSystem.Entities.User", b =>
+                {
+                    b.HasOne("DiagnosisSystem.Entities.DiscussionForum", null)
+                        .WithMany("SelectedMembers")
+                        .HasForeignKey("DiscussionForumId");
+                });
+
+            modelBuilder.Entity("DiagnosisSystem.Entities.DiscussionForum", b =>
+                {
+                    b.Navigation("SelectedMembers");
                 });
 
             modelBuilder.Entity("DiagnosisSystem.Entities.Query", b =>

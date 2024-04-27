@@ -1,19 +1,17 @@
 ﻿namespace DiagnosisSystem.Controllers
 {
-    [Authorize(Roles = "Patient")]
+    //[Authorize(Roles = "Patient")]
     public class PatientController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
         private readonly IDoctorRepo _doctorRepo;
         private readonly IQueryRepo _queryRepo;
 
        
-        public PatientController(ApplicationDbContext context, UserManager<IdentityUser> userManager,
+        public PatientController(ApplicationDbContext context, 
             IDoctorRepo doctorRepo, IQueryRepo queryRepo)
         {
             _context = context;
-            _userManager = userManager;
             _doctorRepo = doctorRepo;
             _queryRepo = queryRepo;
         }
@@ -155,8 +153,8 @@
                 PatientId = userId,
                 PaidConstultant = true
             };
-            _context.Queries.Add(query);
-            _context.SaveChanges();
+             _context.Queries.Add(query);
+            await _context.SaveChangesAsync();
             
             return RedirectToAction("Queries", "Patient");
         }

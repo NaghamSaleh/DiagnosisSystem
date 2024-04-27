@@ -21,7 +21,7 @@ namespace DiagnosisSystem.Data
         public DbSet<Specialty> Specialities { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Query> Queries { get; set; }
-
+        public DbSet<DiscussionForum> DiscussionForums { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

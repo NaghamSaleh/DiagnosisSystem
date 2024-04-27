@@ -1,11 +1,8 @@
-﻿@model FilterVM
-@{
-    var speciality = ViewBag.speciality as List<SpecialityVM>;
-    var hospital = ViewBag.hospitals as List<string>;
-    var experience = ViewBag.dExperiences as List<int>;
-    var languages = ViewBag.alllanguages as List<string>;
-}
+﻿@model List<DoctorDTO>
+
 <link rel="stylesheet" type="text/css" href="/css/doctor/forum.css">
+<link rel="stylesheet" type="text/css" href="/css/site.css">
+<script src="~/js/Doctor/Forum.js" ></script>
 
 <html>
 <body>
@@ -22,85 +19,14 @@
 
         </nav>
     </header>
-
-    <form>
-        <div class="row mt-4">
-            <div class="col-md-2 align-self-end">
-                <label>Choose Speciality:</label>
-                <select asp-for="SpecilityName" class="form-select mb-3" name="SpecilityName">
-                    <option value="All"> All</option>
-                    @foreach (var item in speciality)
-                    {
-                        <option value="@item.Id">
-                            @item.Name
-                        </option>
-
-                    }
-
-                </select>
-            </div>
-        
-
-        <div class="col-md-2 align-self-end">
-            <label>Choose Hospital:</label>
-            <select asp-for="CurrentHospital" class="form-select mb-3" name="CurrentHospital">
-                    <option value="All"> All</option>
-
-                @foreach (var item in hospital)
-                {
-                    <option value="@item">
-                        @item
-                    </option>
-
-                }
-
-            </select>
-        </div>
-        <div class="col-md-2 align-self-end">
-            <label>Choose Languages:</label>
-                <select asp-for="Languages" class="form-select mb-3" name="Languages">
-                    <option value="All"> All</option>
-
-                @foreach (var item in languages)
-                {
-                    <option value="@item">
-                        @item
-                    </option>
-
-                }
-
-            </select>
-        </div>
-            <div class="col-md-2 align-self-end">
-                <label>Choose Years of Experiences:</label>
-                <select asp-for="Experience" class="form-select mb-3" name="Experience">
-                    <option value="0"> All</option>
-
-                    @foreach (var item in experience)
-                    {
-                        <option value="@item">
-                            @item
-                        </option>
-
-                    }
-
-                </select>
-            </div>
-            <div class="col-md-2 align-self-center pt-3 text-end">
-                <button type="submit" asp-controller="Doctor" asp-action="Forum" class="btn btn-primary px-3">Search</button>
-
-            </div>
-        </div>
-    </form>
-
+    <a asp-action="CreateForum" asp-controller="Doctor" class="create-group-btn">Create Discussion Group</a>
    
-
     <div class="doctors-container">
-        @foreach (var doctor in Model.Doctors)
+        @foreach (var doctor in Model)
         {
             <div class="doctor-square">
                 <div class="doctor-image">
-                    <img src="https://i.imgur.com/69kGIrt.png" alt="My Account" class="account-icon">
+                    <img src="~/img_doctor.jpg" alt="My Account" class="account-icon">
 
                 </div>
                 <h2>Dr. @doctor.FirstName @doctor.LastName</h2>
@@ -109,265 +35,6 @@
         }
     </div>
 
-    <a asp-action="CreateForum" asp-controller="Doctor" class="create-group-btn">Create Discussion Group</a>
-
-    <script>
-        // JavaScript code for hiding and showing navigation menu
-        function showMenu() {
-            document.getElementById("navLinks").style.right = "0";
-        }
-
-        function hideMenu() {
-            document.getElementById("navLinks").style.right = "-200px";
-        }
-
-        // JavaScript code for filtering doctors
-        let doctors = {
-            data: [
-                {
-                    eventName: "Amasya Ataturk Culture and Art Ceremony",
-                    city: "Amasya",
-                    date: "12-19th June",
-                    image: "Images/1.2.jpeg",
-                    url: "event1.html",
-                    eventAgeCriteria: "Suitable for all ages",
-                    eventLocation: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d96306.62485603332!2d28.841827665285436!3d41.03439950016162!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab773864aeb79%3A0x76144ace01a80af1!2sIstanbul%20E-pass!5e0!3m2!1sen!2str!4v1710549431218!5m2!1sen!2str",
-                    eventDescription: "An annual cultural and artistic event held in Amasya, Turkey, to celebrate the legacy of Mustafa Kemal Atatürk, the founder of the Republic of Turkey. The ceremony features various cultural performances, art exhibitions, and activities that showcase the rich heritage of the region."
-                }
-            ]
-        };
-
-
-        function filterDoctor(value) {
-            let buttons = document.querySelectorAll(".button-value");
-            buttons.forEach(button => {
-                if (value.toUpperCase() === button.innerText.toUpperCase()) {
-                    button.classList.add("active");
-                } else {
-                    button.classList.remove("active");
-                }
-            });
-
-            let doctorsContainer = document.getElementById("doctors");
-            doctorsContainer.innerHTML = "";
-
-            doctors.data.forEach(event => {
-                if (value === "all" || event.city === value) {
-                    let card = document.createElement("div");
-                    card.classList.add("card");
-                    card.addEventListener("click", () => openPopup(event)); // Add event listener for click event
-
-                    let eventLink = document.createElement("a");
-                    eventLink.href = event.url || "#"; // Set the href to the URL of the event or "#" if not available
-                    eventLink.style.textDecoration = "none"; // Optional: Remove underline
-                    card.appendChild(eventLink);
-
-                    let img = document.createElement("img");
-                    img.src = event.image;
-
-                    let eventName = document.createElement("h3");
-                    eventName.textContent = event.eventName;
-
-                    let eventDate = document.createElement("p");
-                    eventDate.textContent = event.date;
-
-                    let eventCity = document.createElement("p");
-                    eventCity.textContent = event.city;
-
-                    // Add eventAgeCriteria, eventLocation, and eventDescription to the event object
-                    event.eventAgeCriteria = event.eventAgeCriteria || "Not specified";
-                    event.eventLocation = event.eventLocation || "";
-                    event.eventDescription = event.eventDescription || "No description available";
-
-                    // Append event details to the card
-                    card.appendChild(img);
-                    card.appendChild(eventName);
-                    card.appendChild(eventDate);
-                    card.appendChild(eventCity);
-
-                    // Append card to the doctors container
-                    doctorsContainer.appendChild(card);
-                }
-            });
-        }
-
-        // Function to open pop-up window with event details
-        function openPopup(event) {
-            const popupWidth = 800; // Width of the pop-up window
-            const popupHeight = 700; // Height of the pop-up window
-            const left = (window.screen.width - popupWidth) / 2;
-            const top = (window.screen.height - popupHeight) / 2;
-            const features = `width=${popupWidth},height=${popupHeight},top=${top},left=${left},resizable=yes,scrollbars=yes,status=yes`;
-            const popupWindow = window.open("", "_blank", features);
-            const popupContent = `
-                            <html>
-                            <head>
-                                <style>
-                                    *{
-                                        margin: 0;
-                                        padding: 0;
-                                        font-family: "Poppins", sans-serif;
-
-                                    }
-                                    /* Add styles for the popup container */
-                                    .popup-container {
-                                        background-color: #f0f0f0;
-                                        padding: 20px;
-                                        border-radius: 10px;
-                                        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-                                        margin: 20px;
-                                    }
-
-                                    /* Add styles for the event details */
-                                    .popup-container h2 {
-                                        color: #333;
-                                        font-size: 24px;
-                                        margin-bottom: 10px;
-                                    }
-
-                                    .popup-container p {
-                                        color: #666;
-                                        font-size: 16px;
-                                        margin-bottom: 5px;
-                                    }
-
-                                    .popup-container img {
-                                        margin-top: 10px; /* Adjust margin-top as needed */
-                                        max-width: 100%;
-                                        height: auto;
-                                        margin-bottom: 5px;
-                                    }
-
-                                    /* Add styles for the contact form */
-                                    .contact-form {
-                                        margin-top: 20px;
-                                    }
-
-                                    .contact-form h3 {
-                                        color: #333;
-                                        font-size: 20px;
-                                        margin-bottom: 10px;
-                                    }
-
-                                    .contact-form form {
-                                        display: flex;
-                                        flex-direction: column;
-                                    }
-
-                                    .contact-form label {
-                                        color: #666;
-                                        font-size: 16px;
-                                        margin-bottom: 5px;
-                                    }
-
-                                    .contact-form input[type="text"],
-                                    .contact-form input[type="email"],
-                                    .contact-form textarea {
-                                        padding: 10px;
-                                        margin-bottom: 10px;
-                                        border: 1px solid #ccc;
-                                        border-radius: 5px;
-                                    }
-
-                                    .contact-form input[type="submit"] {
-                                        padding: 10px 20px;
-                                        background-color: #007bff;
-                                        color: #fff;
-                                        border: none;
-                                        border-radius: 5px;
-                                        cursor: pointer;
-                                    }
-
-                                    .contact-form input[type="submit"]:hover {
-                                        background-color: #0056b3;
-                                    }
-                                </style>
-                            </head>
-                            <body>
-                                <div class="popup-container">
-                                    <h2>${event.eventName}</h2>
-                                    <p>Date: ${event.date}</p>
-                                    <p>City: ${event.city}</p>
-                                    <p>Age Criteria: ${event.eventAgeCriteria}</p>
-                                    <p>Description: ${event.eventDescription}</p>
-                                    <iframe src="${event.eventLocation}" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                                    <img src="${event.image}" alt="${event.eventName}">
-                                    <div class="contact-form">
-                                        <h3>Leave Us a Comment</h3>
-                                        <form>
-                                            <label for="name">Name:</label>
-                                            <input type="text" id="name" name="name" required>
-                                            <label for="email">Email:</label>
-                                            <input type="email" id="email" name="email" required>
-                                            <label for="message">Message:</label>
-                                            <textarea id="message" name="message" required></textarea>
-                                            <button type="submit">Send</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </body>
-                            </html>
-                        `;
-            popupWindow.document.write(popupContent);
-            popupWindow.document.close();
-        }
-
-
-        // JavaScript code for searching doctors
-        function searchEvent() {
-            let searchInput = document.getElementById("search-input").value.toLowerCase();
-            let doctorsContainer = document.getElementById("doctors");
-            doctorsContainer.innerHTML = "";
-
-            doctors.data.forEach(event => {
-                if (event.eventName.toLowerCase().includes(searchInput)) {
-                    let card = document.createElement("div");
-                    card.classList.add("card");
-
-                    let img = document.createElement("img");
-                    img.src = event.image;
-
-                    let eventName = document.createElement("h3");
-                    eventName.textContent = event.eventName;
-
-                    let eventDate = document.createElement("p");
-                    eventDate.textContent = event.date;
-
-
-                    card.appendChild(img);
-                    card.appendChild(eventName);
-                    card.appendChild(eventDate);
-
-                    doctorsContainer.appendChild(card);
-                }
-            });
-        }
-
-        function openEventDetails(eventName, eventDate, eventImage, eventCity, eventAgeCriteria, eventLocation, eventDescription) {
-            let popupUrl = `popup.html?name=${eventName}&date=${eventDate}&image=${eventImage}&city=${eventCity}&ageCriteria=${eventAgeCriteria}&location=${eventLocation}&description=${eventDescription}`;
-            // Open popup.html in a new pop-up window
-            window.open(popupUrl, "_blank", "width=800,height=600,scrollbars=yes");
-        }
-
-        // Initially filter doctors to show all
-        window.onload = () => {
-            filterEvent("all");
-        }
-
-
-
-        // JavaScript code for hiding and showing navigation menu
-        function showMenu() {
-            document.getElementById("navLinks").style.right = "0";
-        }
-
-        function hideMenu() {
-            document.getElementById("navLinks").style.right = "-200px";
-        }
-
-
-
-    </script>
 
     <section class="footer">
         <h4>About Us</h4>
@@ -378,14 +45,9 @@
             <i class="fa fa-twitter"></i>
             <i class="fa fa-instagram"></i>
             <i class="fa fa-linkedin"></i>
-            <p>This Website Was Developed By Waseem Sadideen and Nagham Saleh   </p>
+            <p>This Website Was Developed By Waseem Sadideen and Nagham Saleh</p>
         </div>
     </section>
-
-
-
-
-
 
 </body>
 </html>

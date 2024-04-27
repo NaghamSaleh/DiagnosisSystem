@@ -1,4 +1,11 @@
-﻿@model DiscussionForumDTO
+﻿@model DiscussionForumTable
+
+@{
+    var speciality = ViewBag.speciality as List<SpecialityVM>;
+    var hospital = ViewBag.hospitals as List<string>;
+    var experience = ViewBag.dExperiences as List<int>;
+    var languages = ViewBag.alllanguages as List<string>;
+}
 
 <link rel="stylesheet" type="text/css" href="/css/doctor/forum.css">
 
@@ -19,48 +26,121 @@
 
 
 <h1>Create Discussion Group</h1>
-
-<form asp-controller="DiscussionGroup" asp-action="Create" method="post">
-    <div class="form-group">
-        <label asp-for="GroupTitle">Group Title:</label>
-        <input asp-for="GroupTitle" class="form-control" />
-        <span asp-validation-for="GroupTitle" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="RelatedTags">Related Tags:</label>
-        <input asp-for="RelatedTags" class="form-control" />
-        <span asp-validation-for="RelatedTags" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="GroupAdmin">Group Admin:</label>
-        <input asp-for="GroupAdmin" class="form-control" />
-        <span asp-validation-for="GroupAdmin" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="DiscussionTopic">Discussion Topic:</label>
-        <input asp-for="DiscussionTopic" class="form-control" />
-        <span asp-validation-for="DiscussionTopic" class="text-danger"></span>
-    </div>
+<!-- Filtering form -->
+<form asp-controller="Doctor" asp-action="CreateForum" method="post">
     <div class="row mt-4">
         <div class="col-md-2 align-self-end">
-            <label>Choose Doctors:</label>
-            <select asp-for="SelectedMembers" class="control-label d-block checkbox-label" name="SelectedMembers">
-               
-                <ul class="list-unstyled checkboxes"
-                @foreach (var item in Model.AllMembers)
+            <label>Choose Speciality:</label>
+            <select asp-for="DoctorFilters.SpecilityName" class="form-select mb-3" name="DoctorFilters.SpecilityName">
+                <option value="All"> All</option>
+                @foreach (var item in speciality)
                 {
-                    
                     <option value="@item.Id">
-                        @item.FirstName @item.LastName
+                        @item.Name
                     </option>
 
                 }
 
             </select>
         </div>
+
+
+        <div class="col-md-2 align-self-end">
+            <label>Choose Hospital:</label>
+            <select asp-for="DoctorFilters.CurrentHospital" class="form-select mb-3" name="DoctorFilters.CurrentHospital">
+                <option value="All"> All</option>
+
+                @foreach (var item in hospital)
+                {
+                    <option value="@item">
+                        @item
+                    </option>
+
+                }
+
+            </select>
+        </div>
+        <div class="col-md-2 align-self-end">
+            <label>Choose Languages:</label>
+            <select asp-for="DoctorFilters.Languages" class="form-select mb-3" name="DoctorFilters.Languages">
+                <option value="All"> All</option>
+
+                @foreach (var item in languages)
+                {
+                    <option value="@item">
+                        @item
+                    </option>
+
+                }
+
+            </select>
+        </div>
+        <div class="col-md-2 align-self-end">
+            <label>Choose Years of Experiences:</label>
+            <select asp-for="DoctorFilters.Experience" class="form-select mb-3" name="DoctorFilters.Experience">
+                <option value="0"> All</option>
+
+                @foreach (var item in experience)
+                {
+                    <option value="@item">
+                        @item
+                    </option>
+
+                }
+
+            </select>
+        </div>
+        <div class="col-md-2 align-self-center pt-3 text-end">
+            <button type="submit" class="btn btn-primary px-3">Search</button>
+        </div>
     </div>
-    <button type="submit" class="btn btn-primary">Create</button>
 </form>
+
+<!-- Discussion group creation form -->
+<form asp-controller="Doctor" asp-action="CreateForum" method="post">
+    <div class="form-group">
+        <label asp-for="ForumDTO.GroupTitle">Group Title:</label>
+        <input asp-for="ForumDTO.GroupTitle" class="form-control" />
+        <span asp-validation-for="ForumDTO.GroupTitle" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ForumDTO.RelatedTags">Related Tags:</label>
+        <input asp-for="ForumDTO.RelatedTags" class="form-control" />
+        <span asp-validation-for="ForumDTO.RelatedTags" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ForumDTO.GroupAdmin">Group Admin:</label>
+        <input asp-for="ForumDTO.GroupAdmin" class="form-control" /> <!--Choose ID-->
+        <span asp-validation-for="ForumDTO.GroupAdmin" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ForumDTO.DiscussionTopic">Discussion Topic:</label>
+        <input asp-for="ForumDTO.DiscussionTopic" class="form-control" />
+        <span asp-validation-for="ForumDTO.DiscussionTopic" class="text-danger"></span>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-2 align-self-end">
+            <label>Choose Doctors:</label>
+            <div class="checkbox-list">
+                @foreach (var item in Model.DoctorFilters.Doctors)
+                {
+                    <div class="checkbox">
+                        <input type="checkbox" id="member_@item.Id" name="ForumDTO.SelectedMembers" value="@item.Id" />
+                        <label asp-for="ForumDTO.SelectedMembers" for="member_@item.Id">@item.FirstName @item.LastName</label>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Create button -->
+    <button type="submit" class="btn btn-primary px-3">Create</button>
+</form>
+
+
+   
+   
