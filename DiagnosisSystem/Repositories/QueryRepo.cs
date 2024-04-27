@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace DiagnosisSystem.Repositories
 {
@@ -11,6 +12,23 @@ namespace DiagnosisSystem.Repositories
         {
             _context = context;
         }
+
+        public List<QueryVM> GetAllQueries( string userId)
+        {
+            var questions = _context.Queries
+                .Where(i => i.PatientId == userId)
+                .Select(q => new QueryVM
+                {
+                    Id = q.Id,
+                    QueryTitle = q.QueryTitle,
+                    Votes = q.Votes,
+                    AnswerCount = q.Answers.Where(a => a.QueryId == q.Id).Count(),
+                    // QuestionTag = q.Tag != null ? q.Tag.Split(',').ToList() : new List<string>()
+
+                }).ToList();
+            return questions;
+        }
+
 
         public QueryVM GetAllAnswers(string id)
         {

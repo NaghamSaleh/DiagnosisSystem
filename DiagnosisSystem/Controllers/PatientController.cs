@@ -59,17 +59,7 @@
         public IActionResult Queries()
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var questions = _context.Queries
-                .Where(i => i.PatientId == userId)
-                .Select(q => new QueryVM
-            {
-                Id= q.Id,
-                QueryTitle = q.QueryTitle,
-                Votes= q.Votes,
-                AnswerCount = q.Answers.Where(a => a.QueryId == q.Id).Count(),
-                    // QuestionTag = q.Tag != null ? q.Tag.Split(',').ToList() : new List<string>()
-
-                }).ToList();
+            var questions = _queryRepo.GetAllQueries(userId);
             return View(questions);
         }
         #endregion
