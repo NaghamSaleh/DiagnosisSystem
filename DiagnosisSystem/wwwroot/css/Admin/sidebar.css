@@ -1,33 +1,50 @@
-﻿.sidebar {
+﻿
+.container {
+    display: flex;
+}
+
+
+
+
+a {
+    text-decoration: none;
+    color: #155484;
+}
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+.sidebar {
     height: 100%;
     width: 280px;
     position: fixed;
-    top: 0px;
-    left: 0;
+    top: 0px; /* Adjust the top position as needed */
+    left: 0; /* Adjust the left position as needed */
     background-color: #8FB9D4;
     padding-top: 0;
     color: white;
 }
 
 .profile-picture {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin: 20px auto;
+    width: 100px; /* Adjust the width of the profile picture */
+    height: 100px; /* Adjust the height of the profile picture */
+    border-radius: 50%; /* Create a circle by setting border-radius to 50% */
+    overflow: hidden; /* Ensure the image stays within the circular boundary */
+    margin: 20px auto; /* Adjust margin as needed */
 }
 
     .profile-picture img {
-        width: 100%;
-        height: auto;
+        width: 100%; /* Make the image fill the entire space of the circular container */
+        height: auto; /* Maintain aspect ratio */
         display: block;
     }
 
 .profile-name {
-    text-align: center;
-    margin-top: 10px;
-    font-size: 16px;
-    color: white;
+    text-align: center; /* Center the name */
+    margin-top: 10px; /* Adjust the top margin as needed */
+    font-size: 16px; /* Adjust the font size as needed */
+    color: white; /* Set the color of the name */
 }
 
 .section {

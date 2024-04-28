@@ -5,4 +5,5 @@
         int GetAdminCount();
         string GetAdminUsername(string id);
     }
+
 }

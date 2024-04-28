@@ -19,20 +19,28 @@
         </nav>
     </header>
 
-    <!-- Added sentence above doctor choices -->
     <h2 class="instruction">Choose your consultant</h2>
 
-    <div class="container">
-        @foreach (var doctor in Model)
-        {
-            <div class="doctor-square">
-                <h2>
-                    <a asp-action="Details" asp-controller="Patient" asp-route-id="@doctor.Id">
-                        Dr. @doctor.FirstName @doctor.LastName
-                    </a>
-                </h2>
-            </div>
-        }
-    </div>
+
+        <div class="doctors-container">
+            @foreach (var doctor in Model)
+            {
+                <a asp-action="Details" asp-controller="Patient" asp-route-id="@doctor.Id">
+
+                <div class="doctor-square">
+                    <div class="doctor-image">
+                        <img src="~/img_doctor.jpg" alt="My Account" class="account-icon">
+
+                    </div>
+                    <h2>Dr. @doctor.FirstName @doctor.LastName</h2>
+                    <p>@doctor.Speciality</p>
+                </div>
+            </a>
+
+            }
+        </div>
+
+
+
 </body>
 </html>

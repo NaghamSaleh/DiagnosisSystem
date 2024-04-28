@@ -7,6 +7,8 @@
         public string Languages { get; set; }
         public string CurrentHospital { get; set; }
         public string ShortBio { get; set; }
+
+        public string Message { get; set; }
        
 
     }

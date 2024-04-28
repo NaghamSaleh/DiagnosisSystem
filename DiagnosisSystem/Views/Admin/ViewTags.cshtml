@@ -1,9 +1,11 @@
 ﻿@model List<TagVM>
 
 <link rel="stylesheet" type="text/css" href="/css/Admin/ViewTags.css">
+<partial>
+@Html.Partial("shared.cshtml")
+</partial>
 
-
-<h1>Tag List</h1>
+<h1 style="margin-left: 570px;">Tag List</h1>
 
 <table>
     <thead>
@@ -24,4 +26,4 @@
         }
     </tbody>
 </table>
-<a asp-action="Tag" asp-controller="Admin" class="btn btn-outline-dark btn-sm me-1">Add Tag</a>
+<a asp-action="Tag" asp-controller="Admin" style="margin-left: 290px; margin-top:15px;" class="btn btn-outline-dark btn-sm me-1">Add Tag</a>

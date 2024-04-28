@@ -1,17 +1,19 @@
 ﻿body {
     background: linear-gradient(to bottom right, #94BCD7, white);
-    font-family: 'Arial', sans-serif;
+    font-family: 'DejaVu Sans Mono', monospace;
+    margin: 0;
 }
 
+
 h1 {
-    text-align: center;
     color: #155484;
     margin-top: 20px;
 }
 
 table {
     border-collapse: collapse;
-    width: 100%;
+    width: 110%;
+    margin-left: 290px;
     margin-top: 20px;
 }
 
@@ -42,5 +44,5 @@ tr:nth-child(even) {
 }
 
     .btn-outline-dark:hover {
-        background-color: #ddd;
+        background-color: #155484;
     }

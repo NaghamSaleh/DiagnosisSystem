@@ -1,6 +1,56 @@
 ﻿@model QueryVM
 
+<link rel="stylesheet" type="text/css" href="/css/Patient/answers.css">
 
-@foreach(var ans in Model.Answers){
-    <h5>@ans.AnswerBody</h5>
-}
+
+<header class="header">
+    <div class="brand">Qure</div>
+
+    <nav class="choices">
+        <a asp-action="Queries" asp-controller="Patient">User Queries</a>
+        <a asp-action="Consultants" asp-controller="Patient">Paid consultancy</a>
+        <a asp-action="" asp-controller="Patient">Analytics</a>
+        <a asp-action="MyAccount" asp-controller="Patient" class="account-link">
+            <img src="https://i.imgur.com/mFIq1e0.png" alt="My Account" class="account-icon">
+        </a>
+
+    </nav>
+</header>
+
+
+<div class="containerx">
+    <h1>Query Information</h1>
+    <div>
+        <label for="queryTitle">Query Title:</label>
+        <input type="text" id="queryTitle" value="@Model.QueryTitle" readonly>
+    </div>
+    <div>
+        <label for="description">Description:</label>
+        <textarea id="description" readonly>@Model.Description</textarea>
+    </div>
+    <div>
+        <label for="questionTag">Question Tag:</label>
+        <input type="text" id="questionTag" value="@Model.QuestionTag" readonly>
+    </div>
+    <div>
+        <label for="patientId">Patient ID:</label>
+        <input type="text" id="patientId" value="@Model.PatientId" readonly>
+    </div>
+    <div>
+        <label for="answerCount">Answer Count:</label>
+        <input type="text" id="answerCount" value="@Model.AnswerCount" readonly>
+    </div>
+    <div>
+        <label for="votes">Votes:</label>
+        <input type="text" id="votes" value="@Model.Votes" readonly>
+    </div>
+    <div class="answers-container">
+        <h2>Answers:</h2>
+        @foreach (var answer in Model.Answers)
+        {
+            <div class="answer">
+                <p>@answer.AnswerBody</p>
+            </div>
+        }
+    </div>
+</div>
