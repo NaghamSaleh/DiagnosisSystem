@@ -1,5 +1,6 @@
 ﻿namespace DiagnosisSystem.Controllers
 {
+    [AllowAnonymous]
     public class AccountController : Controller
     {
         #region Variables
