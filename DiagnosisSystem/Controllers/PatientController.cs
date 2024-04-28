@@ -24,10 +24,11 @@
         [HttpGet]
         public IActionResult Create()
         {
-            var questionVM = new QueryVM();
-            questionVM.QuestionTag = _context.Tags.Select(s => s.Name).ToList();
-
-            return View(questionVM);
+            var tags = _context.Tags
+                .Select(s => s.Name)
+                .Distinct().ToList();
+            ViewBag.tags = tags;
+            return View();
         }
 
         [HttpPost]
@@ -41,7 +42,7 @@
                 {
                     QueryTitle = patientQuestionVM.QueryTitle,
                     Description = patientQuestionVM.Description,
-                    Tag = string.Join(',', patientQuestionVM.QuestionTag),
+                    Tag = patientQuestionVM.QuestionTag,
                     PatientId = userId
                 };
 
@@ -130,13 +131,13 @@
         }
         
         [HttpPost]
-        public async Task<IActionResult> AskDoctor(DoctorDetailsViewModel detailsViewModel)
+        public async Task<IActionResult> AskDoctor(PaidConstultancy detailsViewModel)
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             Query query = new ()
             {
-                DoctorId = detailsViewModel.DoctorDetails.UserID,
+                DoctorId = detailsViewModel.DoctorDTO.Id,
                 QueryTitle = detailsViewModel.QueryVM.QueryTitle,
                 Description = detailsViewModel.QueryVM.Description,
                 Tag = string.Join(',', detailsViewModel.QueryVM.QuestionTag),
@@ -153,7 +154,15 @@
         {
             var doctors = _doctorRepo.GetAllDoctors();
             var getChosenDoctor = doctors.Where(i => i.Id == id).FirstOrDefault();
-            return View(getChosenDoctor);
+            var paidVM = new PaidConstultancy()
+            {
+                DoctorDTO = getChosenDoctor
+            };
+            var tags = _context.Tags
+               .Select(s => s.Name)
+               .Distinct().ToList();
+            ViewBag.tags = tags;
+            return View(paidVM);
         }
     }
 }

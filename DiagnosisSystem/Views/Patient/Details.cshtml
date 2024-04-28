@@ -1,5 +1,7 @@
-﻿@model DoctorDTO
-
+﻿@model PaidConstultancy
+@{
+    var tags = ViewBag.tags as List<string>;
+}
 <!DOCTYPE html>
 <html>
 <script>
@@ -32,11 +34,11 @@
     <h1>Doctor Details</h1>
 
     <div>
-        <h3>Full Name: @($"{Model.FirstName} {Model.LastName}")</h3>
-        <p class="transparent-container">Specialty: @Model.Speciality</p>
-        <p class="transparent-container">Short Bio: </p>
-        <p class="transparent-container">Experience: @Model.Experience</p>
-        <p class="transparent-container">Languages: @Model.Languages</p>
+        <h3>Full Name: @($"{Model.DoctorDTO.FirstName} {Model.DoctorDTO.LastName}")</h3>
+        <p class="transparent-container">Specialty: @Model.DoctorDTO.Speciality</p>
+        <p class="transparent-container">Short Bio: @Model.DoctorDTO.ShortBio</p>
+        <p class="transparent-container">Experience: @Model.DoctorDTO.Experience</p>
+        <p class="transparent-container">Languages: @Model.DoctorDTO.Languages</p>
     </div>
    
         <button type="button" class="btn btn-primary" onclick="processPayment()">Pay Consultation Fees</button>
@@ -48,28 +50,28 @@
             <div class="modal-content">
                 <div class="modal-body">
                     Your payment was successful.
-                   @* <form asp-controller="Patient" asp-action="AskDoctor" method="post">
-                        <input type="hidden" asp-for="@Model."/>
+                    <form asp-controller="Patient" asp-action="AskDoctor" method="post">
+                        <input type="hidden" asp-for="@Model.DoctorDTO.Id"/>
                         <div class="mb-3">
-                            <label asp-for="@QueryTitle" class="form-label">Title</label>
+                            <label asp-for="@Model.QueryVM.QueryTitle" class="form-label">Title</label>
                             <input type="text" class="form-control" asp-for="@Model.QueryVM.QueryTitle">
                         </div>
                         <div class="mb-3">
-                            <label asp-for="@Model.Description" class="form-label">Body</label>
+                            <label asp-for="@Model.QueryVM.Description" class="form-label">Body</label>
                             <textarea class="form-control" asp-for="@Model.QueryVM.Description" rows="3"></textarea>
                         </div>
                         <div class="form-group">
                         <label asp-for="@Model.QueryVM.QuestionTag"></label>
                             <select asp-for="@Model.QueryVM.QuestionTag" class="form-control">
-                                @foreach (var tag in Model.QueryVM.QuestionTag)
+                                @foreach (var tag in tags)
                                     {
-                                    <option>@tag</option>
+                                    <option value="@tag">@tag</option>
                                     }
                             </select>
                         <span asp-validation-for="@Model.QueryVM.QuestionTag" class="text-danger"></span>
                         </div>
                         <button type="submit" class="btn btn-primary">Ask Question</button>
-                    </form>*@
+                    </form>
                 </div>
 
             </div>

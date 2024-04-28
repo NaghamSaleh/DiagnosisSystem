@@ -311,10 +311,20 @@
                     Description = tagVM.Description,
                     SpecialityName = tagVM.SelectedSpeciality
                 };
-                _context.Tags.Add(tag);
-                _context.SaveChanges();
+                try
+                {
+                    _context.Tags.Add(tag);
+                    await _context.SaveChangesAsync();
+
+                    return Json(new { success = true });
+                }
+                catch(Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message });
+                }
+                
             }
-            return Ok("Successfully Saved");
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult ViewTags()

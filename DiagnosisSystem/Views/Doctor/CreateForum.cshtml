@@ -104,17 +104,28 @@
         <span asp-validation-for="ForumDTO.GroupTitle" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
+    @*<div class="form-group">
         <label asp-for="ForumDTO.RelatedTags">Related Tags:</label>
+        <select asp-for="ForumDTO.RelatedTags" name="ForumDTO.RelatedTags" class="form-control">
+            <option value="">Select Tag</option>
+           
+        </select>
         <input asp-for="ForumDTO.RelatedTags" class="form-control" />
         <span asp-validation-for="ForumDTO.RelatedTags" class="text-danger"></span>
-    </div>
+    </div>*@
 
     <div class="form-group">
         <label asp-for="ForumDTO.GroupAdmin">Group Admin:</label>
-        <input asp-for="ForumDTO.GroupAdmin" class="form-control" /> <!--Choose ID-->
-        <span asp-validation-for="ForumDTO.GroupAdmin" class="text-danger"></span>
+     
+        <select id="doctorDropdown" name="ForumDTO.GroupAdmin"  asp-for="ForumDTO.GroupAdmin"  class="form-control">
+            <option value="">Select a doctor</option>
+            @foreach (var item in Model.DoctorFilters.Doctors)
+            {
+                <option value="@item.Id">@item.FirstName @item.LastName</option>
+            }
+        </select>
     </div>
+
 
     <div class="form-group">
         <label asp-for="ForumDTO.DiscussionTopic">Discussion Topic:</label>

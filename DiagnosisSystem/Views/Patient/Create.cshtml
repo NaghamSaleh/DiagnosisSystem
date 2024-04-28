@@ -2,6 +2,7 @@
 <link rel="stylesheet" type="text/css" href="/css/Patient/create.css">
 @{
     ViewData["Title"] = "Create New Query";
+    var tags = ViewBag.tags as List<string>;
 }
 
 <div>
@@ -37,18 +38,16 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="QuestionTag"></label>
-                <select asp-for="QuestionTag" class="form-control" multiple>
-                    @foreach (var tag in Model.QuestionTag)
+                <label asp-for="QuestionTag">Question Tag</label>
+                <select asp-for="QuestionTag" name="QuestionTag" class="form-control">
+                    <option value="">Select Tag</option>
+                    @foreach (var tag in tags)
                     {
-                        <option>@tag</option>
+                        <option value="@tag">@tag</option>
                     }
                 </select>
-                <span asp-validation-for="QuestionTag" class="text-danger"></span>
             </div>
-
-            <!-- Add other fields as needed -->
-
+            
             <button type="submit" class="btn btn-primary" >Submit</button>
         </form>
     </div>

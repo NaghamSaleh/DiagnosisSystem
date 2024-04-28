@@ -169,6 +169,7 @@
                     GroupTitle = forumDTO.GroupTitle,
                     GroupAdmin = forumDTO.GroupAdmin,
                     SelectedMembers = string.Join(',', forumDTO.SelectedMembers),
+                    
 
                 };
                 _context.DiscussionForums.Add(forumEntity);
