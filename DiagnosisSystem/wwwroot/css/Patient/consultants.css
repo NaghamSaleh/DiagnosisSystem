@@ -75,9 +75,8 @@ body {
 }
 
 .doctor-square {
-    width: 200px;
-    height: 200px;
-    border: 1px solid #ccc;
+    position: relative;
+    width: 250px;
     margin: 10px;
     padding: 10px;
     display: flex;
@@ -93,11 +92,32 @@ body {
         font-size: 14px; /* Adjust font size */
     }
 
-.link {
-    text-decoration: none;
-    padding: 10px;
-    color: #155484;
-    border: 1px solid #155484;
+.wrapper {
+    width: 95%;
+    margin: 0 auto;
+}
+
+#search-container {
+    margin: 1em 0;
+}
+
+
+    #search-container input {
+        background-color: transparent;
+        width: 40%;
+        border-bottom: 2px solid #10718f;
+        padding: 1em 0.3em;
+    }
+
+        #search-container input:focus {
+            border-bottom-color: #10718f;
+        }
+
+    #search-container button {
+        padding: 1em 2em;
+        margin-left: 1em;
+        background-color: #10718f;
+        color: white;
     border-radius: 5px;
     transition: background-color 0.3s, color 0.3s;
 }
