@@ -2,7 +2,6 @@
 
 namespace DiagnosisSystem.Controllers
 {
-    [AllowAnonymous]
     public class AccountController : Controller
     {
         #region Variables
@@ -213,6 +212,7 @@ namespace DiagnosisSystem.Controllers
                 if (user != null)
                 {
                     var roles = await _userManager.GetRolesAsync(user);
+                    HttpContext.Session.SetString("Username", loginVM.Email);
                     return roles.FirstOrDefault() switch
                     {
                         "Doctor" => RedirectToAction("Queries", "Doctor"),
@@ -239,12 +239,11 @@ namespace DiagnosisSystem.Controllers
         #endregion
 
         #region Logout
-        [Authorize]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Logout()
+       
+        public IActionResult Logout()
         {
-            await _signInManager.SignOutAsync();
+            _signInManager.SignOutAsync();
+            HttpContext.Session.Remove("Username");
             return RedirectToAction("Index", "Home");
         }
         #endregion

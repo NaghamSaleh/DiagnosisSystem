@@ -1,4 +1,4 @@
-﻿@model AnswerDTO
+﻿@model QueryVM
 
 @{
     ViewData["Title"] = "Answer Query";
@@ -23,23 +23,38 @@
 <h2>Answer Query</h2>
 
 <div readonly>
+
+    <label asp-for="QueryTitle" class="control-label">Query:</label>
+    <input asp-for="QueryTitle" class="form-control">
+    Description: @Model.Description
+    Votes: @Model.Votes
     
-    <label asp-for="Query.QueryTitle" class="control-label">Query:</label>
-    <input asp-for="Query.QueryTitle" class="form-control">
-    Description: @Model.Query.Description
-    Votes: @Model.Query.Votes
+    @if (Model.Answers.Count > 0)
+    {
+        <h3>Previous Answers:</h3>
+        @foreach (var item in Model.Answers)
+        {
+            @*<h5>@item</h5>*@
+
+            <h5>@item.AnswerBody</h5>
+        }
+    }
+    
+
+
+
 
 </div>
 
 
 <form method="post">
-    <input hidden asp-for="QueryId" value="@Model.Query.Id" />
-<div>
-    <label class="control-label">Answer Body:</label>
-    <textarea asp-for="AnswerBody" class="form-control" rows="4"></textarea>
-</div>
+    <input hidden asp-for="Id" value="Id" />
+    <div>
+        <label class="control-label">Answer Body:</label>
+        <textarea asp-for="Answer" class="form-control" rows="4"></textarea>
+    </div>
 
-<div class="form-group">
-    <button type="submit" asp-controller="Doctor" asp-action="Answer"  class="btn btn-primary">Submit Answer</button>
-</div>
+    <div class="form-group">
+        <button type="submit" asp-controller="Doctor" asp-action="Answer" class="btn btn-primary">Submit Answer</button>
+    </div>
 </form>

@@ -117,7 +117,7 @@
                     Id = q.Id,
                     QueryTitle = q.QueryTitle,
                     Votes = q.Votes,
-                    // QuestionTag = q.Tag.Split('-', ),
+                    QuestionTag = q.Tag,
                     AnswerCount = q.Answers.Where(a => a.QueryId == q.Id).Count(),
                 })
                 .ToListAsync();

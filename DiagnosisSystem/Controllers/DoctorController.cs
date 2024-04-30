@@ -38,6 +38,13 @@
         [HttpGet]
         public IActionResult Answer(int id)
         {
+            
+            var ans = _context.Answers.Where(d => d.QueryId == id)
+                .Select(a => new AnswerDTO()
+                { AnswerBody = 
+                    a.AnswerBody
+                }).ToList();
+
             var queries = _context.Queries
                 .Where(d => d.Id == id)
                 .Select(q => new QueryVM
@@ -45,15 +52,10 @@
                     Id = q.Id,
                     QueryTitle = q.QueryTitle,
                     Description = q.Description,
+                    Answers = ans
 
                 }).FirstOrDefault();
-            var answers =
-                     new AnswerDTO
-                     {
-                         Query = queries,
-
-                     };
-            return View(answers);
+            return View(queries);
         }
 
         [HttpPost]

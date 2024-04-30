@@ -1,14 +1,8 @@
 ﻿@model Stats
 
 <link rel="stylesheet" type="text/css" href="/css/Admin/Index.css">
-<partial>
-    @Html.Partial("shared.cshtml", Model.UserName);
-</partial>
-
-
-
-    <div class="content">
-
+<div class="content">
+    <partial name="shared" />
         <div class="stats-container">
             <div class="stat-box">
                 <h1>Pending Requests</h1>
@@ -33,6 +27,3 @@
             </div>
         </div>
     </div>
-</div>
-
-

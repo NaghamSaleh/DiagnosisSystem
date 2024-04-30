@@ -11,5 +11,6 @@
         public int AnswerCount { get; set; }
         public int Votes { get; set; }
         public List<AnswerDTO>? Answers { get; set; }
+        public AnswerDTO Answer { get; set; }
     }
 }

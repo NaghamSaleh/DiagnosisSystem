@@ -1,6 +1,6 @@
 ﻿namespace DiagnosisSystem.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    //[Authorize(Roles ="Admin")]
     public class AdminController : Controller
     {
 
@@ -37,6 +37,10 @@
         [HttpGet]
         public IActionResult Index()
         {
+            if(HttpContext.Session.GetString("Username") == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             var stats = _accountServices.GetAccountsStats();
             var admin = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             stats.UserName = _adminRepo.GetAdminUsername(admin);
@@ -85,7 +89,7 @@
 
             }
 
-            return Ok("Successfully Updated");
+            return RedirectToAction("Requests");
         }
         //add role = rejected
         public IActionResult Reject(string userId)
