@@ -41,12 +41,34 @@ namespace DiagnosisSystem.Repositories
                         LastName = d.LastName ?? "No Name saved",
                         Email = d.Email,
                         Gender = d.Gender,
+                        Speciality = d.Specialty,
+                        CurrentHospital = d.CurrentHospital,
                     });
                 UserDetails.AddRange(Users);
             }
             return UserDetails;
         }
 
+        public List<RegisterVM> GetRequestDetails(List<string> SelectedUsers)
+        {
+            List<RegisterVM> UserDetails = new();
+            foreach (var user in SelectedUsers)
+            {
+                var Users = _context.Users
+                    .Where(u => u.Id == user).Select(d => new RegisterVM
+                    {
+                        UserID = d.Id,
+                        FirstName = d.FirstName ?? d.Email,
+                        LastName = d.LastName ?? "No Name saved",
+                        Email = d.Email,
+                        Gender = d.Gender,
+                        Speciality = d.Specialty,
+                        CurrentHospital = d.CurrentHospital,
+                    });
+                UserDetails.AddRange(Users);
+            }
+            return UserDetails;
+        }
 
         //might move to accountrepo
         public bool IsEmailFound(string Email)

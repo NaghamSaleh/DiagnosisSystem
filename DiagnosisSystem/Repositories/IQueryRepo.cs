@@ -6,7 +6,7 @@
         Task<List<QueryVM>> GetSelectedPatientQueries(string userId);
         
         Task AddSpecialityToDB(Specialty specialty);
-        Task AddSpecialityToDB(DoctorRegisterVM doctorVM);
+        Task AddSpecialityToDB(RegisterVM doctorVM);
         Task<List<SpecialtyVM>> GetAllSpecialties();
         
         //Task AddTagToDB(Tag tag);

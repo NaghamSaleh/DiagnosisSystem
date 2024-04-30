@@ -1,6 +1,6 @@
 ﻿namespace DiagnosisSystem.Controllers
 {
-    //[Authorize(Roles ="Admin")]
+    [Authorize(Roles ="Admin")]
     public class AdminController : Controller
     {
 
@@ -63,7 +63,7 @@
         public async Task<IActionResult> Requests()
         {
             var AllDoctors = await _userRepo.GetAllUsers("InitialDoctor");
-            var DoctorDetails = _userRepo.GetAccountDetails(AllDoctors);
+            var DoctorDetails = _userRepo.GetRequestDetails(AllDoctors);
             return View(DoctorDetails);
         }
 
@@ -215,9 +215,9 @@
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult ViewTags()
+        public async Task<IActionResult> ViewTags()
         {
-            var allTags = _queryRepo.GetAllTags();
+            var allTags = await _queryRepo.GetAllTags();
             return View(allTags);
         }
 

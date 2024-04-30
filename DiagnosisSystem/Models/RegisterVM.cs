@@ -15,5 +15,11 @@
         public string Telephone { get; set; } = string.Empty;
         public char Gender { get; set; } = 'N';
         public DateTime AddedOn { get; set; } = DateTime.Now.Date;
+
+        public string? Speciality { get; set; }
+        public int? Experience { get; set; }
+        public string? Languages { get; set; }
+        public string? CurrentHospital { get; set; }
+        public string? ShortBio { get; set; }
     }
 }

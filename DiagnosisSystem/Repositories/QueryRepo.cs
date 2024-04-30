@@ -124,14 +124,14 @@
 
             return Queries;
         }
-        public async Task AddSpecialityToDB(DoctorRegisterVM doctorVM)
+        public async Task AddSpecialityToDB(RegisterVM doctorVM)
         {
             var specialities = GetAllSpecialties().Result
                 .Select(s => s.Name);
 
-            if (!specialities.Contains(doctorVM.Specialty))
+            if (!specialities.Contains(doctorVM.Speciality))
             {
-                var speciality = _queryServices.ConvertToEntity(doctorVM.Specialty, string.Empty);
+                var speciality = _queryServices.ConvertToEntity(doctorVM.Speciality, string.Empty);
                 await AddSpecialityToDB(speciality);
             }
         }

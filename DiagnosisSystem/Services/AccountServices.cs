@@ -1,6 +1,4 @@
-﻿using DiagnosisSystem.Entities;
-
-namespace DiagnosisSystem.Services
+﻿namespace DiagnosisSystem.Services
 {
     public class AccountServices : IAccountServices
     {
@@ -16,7 +14,7 @@ namespace DiagnosisSystem.Services
                 numOfIRequests = _userRepo.GetRoleCount("InitialDoctor"),
                 numOfDoctors = _userRepo.GetRoleCount("Doctor"),
                 numOfPatients = _userRepo.GetRoleCount("Patient"),
-                numOfAdmins = _userRepo.GetRoleCount("Admin")
+                numOfAdmins = _userRepo.GetRoleCount("Admin") - 1
             };
             return stats;
         }

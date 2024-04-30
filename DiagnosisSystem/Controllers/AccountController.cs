@@ -83,17 +83,17 @@ namespace DiagnosisSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DoctorRegister(DoctorRegisterVM MedicalPractitionerVM)
+        public async Task<IActionResult> DoctorRegister(RegisterVM MedicalPractitionerVM)
         {
 
             var isRegistered = _accountServices.IsRegisterValid(MedicalPractitionerVM);
             var doctor = _userServices.CreateUserEntity(MedicalPractitionerVM);
                 var specialities = _context.Specialities.AsNoTracking().Select(s=> s.SpecialtyName);
-                if (!specialities.Contains(MedicalPractitionerVM.Specialty))
+                if (!specialities.Contains(MedicalPractitionerVM.Speciality))
                 {
                     var newSpeciality = new Specialty
                     {
-                        SpecialtyName = MedicalPractitionerVM.Specialty,
+                        SpecialtyName = MedicalPractitionerVM.Speciality,
 
                         Description = string.Empty,
                     };

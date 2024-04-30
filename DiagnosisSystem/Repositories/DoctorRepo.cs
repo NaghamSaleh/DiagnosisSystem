@@ -52,12 +52,12 @@ namespace DiagnosisSystem.Repositories
             return doctorUsers;
         }
 
-        public DoctorRegisterVM GetDoctorbyId(string id)
+        public RegisterVM GetDoctorbyId(string id)
         {
             var doctor = _context.Users.Where(d=> d.Id == id)
-                .Select(d => new DoctorRegisterVM
+                .Select(d => new RegisterVM
                 {
-                    Specialty = d.Specialty,
+                    Speciality = d.Specialty,
                     FirstName = d.FirstName,
                     LastName = d.LastName,
                     ShortBio = d.ShortBio,
