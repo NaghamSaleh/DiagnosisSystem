@@ -39,7 +39,9 @@ builder.Services.AddScoped<User>();
 builder.Services.AddScoped<IAdminRepo, AdminRepo>();
 builder.Services.AddScoped<IDoctorRepo, DoctorRepo>();
 builder.Services.AddScoped<IPatientRepo, PatientRepo>();
+builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IQueryRepo, QueryRepo>();
+builder.Services.AddScoped<IQueryServices,  QueryServices>();
 builder.Services.AddScoped<IAccountServices, AccountServices>();
 builder.Services.AddScoped<IUserServices, UserServices>();
 

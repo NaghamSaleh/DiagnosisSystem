@@ -17,21 +17,21 @@ namespace DiagnosisSystem.Repositories
             _context = context;
         }
         #endregion
-        public int GetDrPendingRequestsCount()
-        {
-            string roleNameI = "InitialDoctor";
-            var role = _context.Roles.Where(r => r.Name == roleNameI).Select(r => r.Id).FirstOrDefault();
-            var userId = _context.UserRoles.Where(i => i.RoleId.Equals(role)).Select(i => i.UserId).ToList();
-            return userId.Count;
-        }
+        //public int GetDrPendingRequestsCount()
+        //{
+        //    string roleNameI = "InitialDoctor";
+        //    var role = _context.Roles.AsNoTracking().Where(r => r.Name == roleNameI).Select(r => r.Id).FirstOrDefault();
+        //    var userId = _context.UserRoles.AsNoTracking().Where(i => i.RoleId.Equals(role)).Select(i => i.UserId).ToList();
+        //    return userId.Count;
+        //}
 
-        public int GetRegisteredDrCount()
-        {
-            string roleDoctor = "Doctor";
-            var doctorRoleId = _context.Roles.Where(r => r.Name == roleDoctor).Select(r => r.Id).FirstOrDefault();
-            var doctorId = _context.UserRoles.Where(i => i.RoleId.Equals(doctorRoleId)).Select(i => i.UserId).ToList();
-            return doctorId.Count;
-        }
+        //public int GetRegisteredDrCount()
+        //{
+        //    string roleDoctor = "Doctor";
+        //    var doctorRoleId = _context.Roles.Where(r => r.Name == roleDoctor).Select(r => r.Id).FirstOrDefault();
+        //    var doctorId = _context.UserRoles.Where(i => i.RoleId.Equals(doctorRoleId)).Select(i => i.UserId).ToList();
+        //    return doctorId.Count;
+        //}
 
         public List<DoctorDTO> GetAllDoctors()
         {

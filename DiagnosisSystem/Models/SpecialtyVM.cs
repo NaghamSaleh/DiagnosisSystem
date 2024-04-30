@@ -1,6 +1,6 @@
 ﻿namespace DiagnosisSystem.Models
 {
-    public class SpecialityVM
+    public class SpecialtyVM
     {
         public int Id { get; set; }
         public string Name { get; set; }

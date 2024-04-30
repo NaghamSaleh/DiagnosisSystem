@@ -4,9 +4,10 @@ namespace DiagnosisSystem.Repositories
 {
     public interface IDoctorRepo
     {
-        int GetDrPendingRequestsCount();
-        int GetRegisteredDrCount();
+        //int GetDrPendingRequestsCount();
+        //int GetRegisteredDrCount();
         List<DoctorDTO> GetAllDoctors();
         DoctorRegisterVM GetDoctorbyId(string id);
+        //int GetRoleCount(string RoleName);
     }
 }

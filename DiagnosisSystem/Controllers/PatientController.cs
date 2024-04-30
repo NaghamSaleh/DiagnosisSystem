@@ -7,8 +7,8 @@
         private readonly IDoctorRepo _doctorRepo;
         private readonly IQueryRepo _queryRepo;
 
-       
-        public PatientController(ApplicationDbContext context, 
+
+        public PatientController(ApplicationDbContext context,
             IDoctorRepo doctorRepo, IQueryRepo queryRepo)
         {
             _context = context;
@@ -17,24 +17,22 @@
         }
         public IActionResult Index()
         {
-           return View();
+            return View();
         }
-        
+
         #region Create Patient Question
         [HttpGet]
         public IActionResult Create()
         {
-            var tags = _context.Tags
-                .Select(s => s.Name)
-                .Distinct().ToList();
-            ViewBag.tags = tags;
+            var allTags = _queryRepo.GetAllTags();
+            ViewBag.tags = allTags.Result.Select(s => s.Name).Distinct().ToList(); 
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(QueryVM patientQuestionVM)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -54,14 +52,14 @@
         }
         #endregion
 
-        #region User Question
-        public IActionResult Queries()
+
+        public async Task<IActionResult> Queries()
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var questions = _queryRepo.GetAllQueries(userId);
+            var questions = await _queryRepo.GetSelectedPatientQueries(userId);
             return View(questions);
         }
-        #endregion
+
 
         [HttpGet]
         public IActionResult MyAccount()
@@ -80,7 +78,7 @@
             return View(user);
         }
 
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Route("/Edit")]
@@ -103,13 +101,13 @@
                     _context.Users.Update(user);
                     await _context.SaveChangesAsync();
 
-                    return RedirectToAction("Index", "Home"); 
+                    return RedirectToAction("Index", "Home");
                 }
 
                 return NotFound();
             }
 
-            return View(model); 
+            return View(model);
         }
 
         public IActionResult Consultants()
@@ -129,13 +127,13 @@
         {
             return View(doctorId);
         }
-        
+
         [HttpPost]
-        public async Task<IActionResult> AskDoctor(PaidConstultancy detailsViewModel)
+        public async Task<IActionResult> AskDoctor(PaidConsultancy detailsViewModel)
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            Query query = new ()
+            Query query = new()
             {
                 DoctorId = detailsViewModel.DoctorDTO.Id,
                 QueryTitle = detailsViewModel.QueryVM.QueryTitle,
@@ -144,9 +142,9 @@
                 PatientId = userId,
                 PaidConstultant = true
             };
-             _context.Queries.Add(query);
+            _context.Queries.Add(query);
             await _context.SaveChangesAsync();
-            
+
             return RedirectToAction("Queries", "Patient");
         }
 
@@ -154,7 +152,7 @@
         {
             var doctors = _doctorRepo.GetAllDoctors();
             var getChosenDoctor = doctors.Where(i => i.Id == id).FirstOrDefault();
-            var paidVM = new PaidConstultancy()
+            var paidVM = new PaidConsultancy()
             {
                 DoctorDTO = getChosenDoctor
             };

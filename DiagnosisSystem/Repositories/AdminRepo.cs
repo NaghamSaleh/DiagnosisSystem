@@ -20,5 +20,6 @@
             var username = _context.Users.Where(i => i.Id.Equals(id)).Select(i => i.FirstName).FirstOrDefault() ?? "Hello there!"; //?? means if null
             return username;
         }
+        
     }
 }

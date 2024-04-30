@@ -1,7 +1,4 @@
-﻿using DiagnosisSystem.Entities;
-using DiagnosisSystem.Models;
-
-namespace DiagnosisSystem.Services
+﻿namespace DiagnosisSystem.Services
 {
     public class UserServices : IUserServices
     {
@@ -20,6 +17,26 @@ namespace DiagnosisSystem.Services
             };
 
             return user;
+        }
+        public User CreateUserEntity(DoctorRegisterVM doctorVM)
+        {
+            var doctor = new User
+            {
+                Email = doctorVM.Email,
+                FirstName = doctorVM.FirstName,
+                LastName = doctorVM.LastName,
+                DateOfBirth = doctorVM.DateOfBirth,
+                Gender = doctorVM.Gender,
+                Telephone = doctorVM.Telephone,
+                CurrentHospital = doctorVM.CurrentHospital,
+                Languages = doctorVM.Languages,
+                Specialty = doctorVM.Specialty,
+                Experience = doctorVM.Experience,
+                ShortBio = doctorVM.ShortBio,
+                CreatedOn = DateTime.Now,
+                UserName = doctorVM.Email,
+            };
+            return doctor;
         }
     }
 }

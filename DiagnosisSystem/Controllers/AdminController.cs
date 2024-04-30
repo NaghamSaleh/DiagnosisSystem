@@ -7,138 +7,70 @@
         #region Variables
         private readonly ApplicationDbContext _context;
         private readonly IDoctorRepo _doctorRepo;
+        private readonly IUserRepo _userRepo;
         private readonly IPatientRepo _patientRepo;
         private readonly IAdminRepo _adminRepo;
+        private readonly IAccountServices _accountServices;
+        private readonly IQueryRepo _queryRepo;
+        private readonly IQueryServices _queryServices;
         private readonly UserManager<IdentityUser> _userManager;
         #endregion
 
-        #region Constructors
-        public AdminController(ApplicationDbContext context, IDoctorRepo doctorRepo, 
-            IPatientRepo patientRepo, IAdminRepo accountRepo, UserManager<IdentityUser> userManager)
+        #region Constructor
+        public AdminController(ApplicationDbContext context, IDoctorRepo doctorRepo,
+            IPatientRepo patientRepo, IAdminRepo accountRepo,
+            UserManager<IdentityUser> userManager, IUserRepo userRepo,
+            IQueryRepo queryRepo, IQueryServices queryServices, IAccountServices accountServices)
         {
             _context = context;
             _doctorRepo = doctorRepo;
             _patientRepo = patientRepo;
             _adminRepo = accountRepo;
             _userManager = userManager;
+            _userRepo = userRepo;
+            _queryRepo = queryRepo;
+            _queryServices = queryServices;
+            _accountServices = accountServices;
         }
         #endregion
 
-        #region Index, Full Management
         [HttpGet]
         public IActionResult Index()
         {
-            Stats stats = new();
-            stats.numOfIRequests = _doctorRepo.GetDrPendingRequestsCount();
-            stats.numOfDoctors = _doctorRepo.GetRegisteredDrCount();
-            //TODO: Get Rejected Doctors
-            stats.numOfPatients = _patientRepo.GetPatientCount();
-           
-            
-            stats.numOfAdmins = _adminRepo.GetAdminCount();
+            var stats = _accountServices.GetAccountsStats();
             var admin = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             stats.UserName = _adminRepo.GetAdminUsername(admin);
-            
-
             return View(stats);
         }
-        #endregion
-
-        #region Accounts Management
 
         [HttpGet]
         public async Task<IActionResult> Admins()
         {
-            string roleName = "Admin";
-            List<DoctorRegisterVM> registeredAdmins = new();
-            var role = await _context.Roles.Where(r => r.Name == roleName).Select(r => r.Id).FirstOrDefaultAsync();
-            var userId = await _context.UserRoles.Where(i => i.RoleId.Equals(role)).Select(i => i.UserId).ToListAsync();
-            foreach (var user in userId)
-            {
-                var rAdmins = _context.Users
-                    .Where(u => u.Id == user).Select(d => new DoctorRegisterVM
-                    {
-                        UserID = d.Id,
-                        FirstName = d.FirstName ?? d.Email,
-                        LastName = d.LastName ?? "No Name saved",
-                        Email = d.Email ,
-                        
-                    });
-                registeredAdmins.AddRange(rAdmins);
-            }
-            return View(registeredAdmins);
+            var AllAdmins = await _userRepo.GetAllUsers("Admin");
+            var AdminDetails = _userRepo.GetAccountDetails(AllAdmins);
+            return View(AdminDetails);
         }
 
 
-        #region Manage Doctor Account
         [HttpGet]
         public async Task<IActionResult> Doctors()
         {
-            string roleName = "Doctor";
-            List<DoctorRegisterVM> doctorRegisterVMs= new List<DoctorRegisterVM>();
-            var role = await _context.Roles.Where(r => r.Name == roleName).Select(r => r.Id).FirstOrDefaultAsync();
-            var userId = await _context.UserRoles.Where(i => i.RoleId.Equals(role)).Select(i => i.UserId).ToListAsync();
-            foreach(var user in userId)
-            {
-                var iDoctors = _context.Users
-                    .Where(u => u.Id == user)
-                    .Select(d => new DoctorRegisterVM
-                    {
-                        UserID = d.Id,
-                        AddedOn = d.CreatedOn,
-                        CurrentHospital = d.CurrentHospital,
-                        DateOfBirth = d.DateOfBirth,
-                        Email = d.Email,
-                        Experience = d.Experience,
-                        FirstName = d.FirstName,
-                        Gender = d.Gender,
-                        LastName = d.LastName,
-                        Languages = d.Languages,
-                        ShortBio = d.ShortBio,
-                        Specialty = d.Specialty,
-                        Telephone = d.Telephone,
-                    });
-                doctorRegisterVMs.AddRange(iDoctors);
-            }
-            return View(doctorRegisterVMs);
+            var AllDoctors = await _userRepo.GetAllUsers("Doctor");
+            var DoctorDetails = _userRepo.GetAccountDetails(AllDoctors);
+            return View(DoctorDetails);
         }
 
-        
         public async Task<IActionResult> Requests()
         {
-            string roleName = "InitialDoctor";
-            List<DoctorRegisterVM> doctorRegisterVMs = new List<DoctorRegisterVM>();
-            var role = await _context.Roles.Where(r => r.Name == roleName).Select(r => r.Id).FirstOrDefaultAsync();
-            var userId = await _context.UserRoles.Where(i => i.RoleId.Equals(role)).Select(i => i.UserId).ToListAsync();
-            foreach (var user in userId)
-            {
-                var iDoctors = _context.Users
-                    .Where(u => u.Id == user)
-                    .Select(d => new DoctorRegisterVM
-                    {
-                        UserID = d.Id,
-                        AddedOn = d.CreatedOn,
-                        CurrentHospital = d.CurrentHospital,
-                        DateOfBirth = d.DateOfBirth,
-                        Email = d.Email,
-                        Experience = d.Experience,
-                        FirstName = d.FirstName,
-                        Gender = d.Gender,
-                        LastName = d.LastName,
-                        Languages = d.Languages,
-                        ShortBio = d.ShortBio,
-                        Specialty = d.Specialty,
-                        Telephone = d.Telephone,
-                    });
-                doctorRegisterVMs.AddRange(iDoctors);
-            }
-            return View(doctorRegisterVMs);
+            var AllDoctors = await _userRepo.GetAllUsers("InitialDoctor");
+            var DoctorDetails = _userRepo.GetAccountDetails(AllDoctors);
+            return View(DoctorDetails);
         }
 
         public IActionResult Approve(string userId)
         {
-            var entityToUpdate =  _context.UserRoles.FirstOrDefault(item => item.UserId == userId);
-            var roleId =  _context.Roles.Where(r => r.Name == "Doctor").Select(i => i.Id).FirstOrDefault();
+            var entityToUpdate = _context.UserRoles.FirstOrDefault(item => item.UserId == userId);
+            var roleId = _context.Roles.Where(r => r.Name == "Doctor").Select(i => i.Id).FirstOrDefault();
             if (entityToUpdate != null)
             {
                 _context.UserRoles.Remove(entityToUpdate);
@@ -158,7 +90,7 @@
         //add role = rejected
         public IActionResult Reject(string userId)
         {
-            var entityToDelete = _context.UserRoles.FirstOrDefault(item => item.UserId == userId); 
+            var entityToDelete = _context.UserRoles.FirstOrDefault(item => item.UserId == userId);
             if (entityToDelete != null)
             {
                 _context.UserRoles.Remove(entityToDelete);
@@ -167,34 +99,17 @@
 
             return Ok("Successfully Deleted and Rejected");
         }
-        #endregion
+
 
         [HttpGet]
         public async Task<IActionResult> Patients()
         {
-            string roleName = "Patient";
-            List<DoctorRegisterVM> registeredAdmins = new();
-            var role = await _context.Roles.Where(r => r.Name == roleName).Select(r => r.Id).FirstOrDefaultAsync();
-            var userId = await _context.UserRoles.Where(i => i.RoleId.Equals(role)).Select(i => i.UserId).ToListAsync();
-            foreach (var user in userId)
-            {
-                var rAdmins = _context.Users
-                    .Where(u => u.Id == user).Select(d => new DoctorRegisterVM
-                    {
-                        FirstName = d.FirstName,
-                        LastName = d.LastName,
-                        Email = d.Email,
-                        Gender = d.Gender,
-                    });
-                registeredAdmins.AddRange(rAdmins);
+            var AllPatients = await _userRepo.GetAllUsers("Patient");
+            var PatientDetails = _userRepo.GetAccountDetails(AllPatients);
 
-            }
-            return View(registeredAdmins);
+            return View(PatientDetails);
         }
 
-        #endregion
-
-        #region Add Speciality
         [HttpGet]
         public IActionResult Speciality()
         {
@@ -202,19 +117,12 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Speciality(SpecialityVM specialityVM)
+        public async Task<IActionResult> Speciality(SpecialtyVM specialityVM)
         {
             if (ModelState.IsValid)
             {
-                var speciality = new Specialty()
-                {
-                    SpecialtyName = specialityVM.Name,
-                    Description = specialityVM.Description
-                };
-
-                _context.Specialities.Add(speciality);
-                _context.SaveChanges();
-                return Ok("Successfully added");
+                var speciality = _queryServices.ConvertToEntity(specialityVM.Name, specialityVM.Description);
+                await _queryRepo.AddSpecialityToDB(speciality);
             }
             return View();
         }
@@ -222,7 +130,7 @@
         [HttpGet]
         public async Task<IActionResult> EditSpeciality(int id)
         {
-            if(id == null || _context.Specialities == null)
+            if (id == null || _context.Specialities == null)
             {
                 return NotFound();
             }
@@ -237,9 +145,9 @@
             return View(specialityVM);
         }
         [HttpPost]
-        public async Task<IActionResult> EditSpeciality(int id, SpecialityVM specialityVM)
+        public async Task<IActionResult> EditSpeciality(int id, SpecialtyVM specialityVM)
         {
-            if(id != specialityVM.Id)
+            if (id != specialityVM.Id)
             {
                 return NotFound();
             }
@@ -248,7 +156,7 @@
                 try
                 {
                     var SpecialityEntity = await _context.Specialities.Where(s => s.SpecialtyID == id).FirstAsync();
-                    if(SpecialityEntity == null)
+                    if (SpecialityEntity == null)
                     {
                         throw new ArgumentException(nameof(SpecialityEntity));
                     }
@@ -264,39 +172,24 @@
                     throw;
                 }
                 return RedirectToAction(nameof(Index));
-               
+
             }
             return View(specialityVM);
         }
 
-        public IActionResult ViewSpecialities()
+        public async Task<IActionResult> ViewSpecialities()
         {
-            var allSpecialities = _context.Specialities
-                .Select(t => new SpecialityVM
-                {
-                    Name = t.SpecialtyName,
-                    Description = t.Description,
-                    
-                }).ToList();
-
-            return View(allSpecialities);
+            var allSpecialties = await _queryRepo.GetAllSpecialties();
+            return View(allSpecialties);
         }
 
-        #endregion
-
-        #region Add Tag
         [HttpGet]
-        public IActionResult Tag()
+        public async Task<IActionResult> Tag()
         {
-            var tagVM = new TagVM();
-            tagVM.SpecialityName = _context.Specialities.Select(s => new SpecialityVM
+            var tagVM = new TagVM
             {
-                Description = s.Description,
-                Name = s.SpecialtyName,
-                Id = s.SpecialtyID,
-            }).ToList();
-           
-           
+                SpecialityName = await _queryRepo.GetAllSpecialties()
+            };
             return View(tagVM);
         }
 
@@ -305,12 +198,7 @@
         {
             if (ModelState.IsValid)
             {
-                var tag = new Tag()
-                {
-                    Name = tagVM.Name,
-                    Description = tagVM.Description,
-                    SpecialityName = tagVM.SelectedSpeciality
-                };
+                var tag = _queryServices.ConvertToEntity(tagVM);
                 try
                 {
                     _context.Tags.Add(tag);
@@ -318,29 +206,23 @@
 
                     return Json(new { success = true });
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     return Json(new { success = false, message = ex.Message });
                 }
-                
+
             }
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult ViewTags()
         {
-            var allTags = _context.Tags
-                .Select(t => new TagVM
-                {
-                    Name = t.Name,
-                    Description = t.Description,
-                    SelectedSpeciality = t.SpecialityName
-                }).ToList();
+            var allTags = _queryRepo.GetAllTags();
             return View(allTags);
         }
-        #endregion
 
-        
+
+
 
 
     }

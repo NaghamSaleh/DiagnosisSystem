@@ -1,4 +1,6 @@
-﻿namespace DiagnosisSystem.Controllers
+﻿using DiagnosisSystem.Entities;
+
+namespace DiagnosisSystem.Controllers
 {
     [AllowAnonymous]
     public class AccountController : Controller
@@ -36,49 +38,35 @@
         {
             if (ModelState.IsValid)
             {
-                var checkEmail = _context.Users.Any(e => e.Email == userVM.Email);
-
-                if (checkEmail)
+                var isRegistered = _accountServices.IsRegisterValid(userVM);
+                if (isRegistered)
                 {
-                    ModelState.AddModelError("Email", "Email already exists");
-                    return View();
-                }
-
-                if (userVM.Password != userVM.ConfirmPassword)
-                {
-                    ModelState.AddModelError("ConfirmPassword", "Password doesnt match");
-                    return View();
-                }
-
-                if (!_accountServices.ValidBirthDate(userVM.DateOfBirth))
-                {
-                    ModelState.AddModelError("DateOfBirth", "Invalid date of birth. Must be between 18 and 100 years old.");
-                    return View();
-                }
-
-                var user = _userServices.CreateUserEntity(userVM);
-                try
-                {
-                    _context.Users.Add(user);
-                    var result = await _userManager.CreateAsync(user, userVM.Password);
-                    if (result.Succeeded)
+                    var user = _userServices.CreateUserEntity(userVM);
+                    try
                     {
-                        await _userManager.AddToRoleAsync(user, "Patient");
-                        _context.SaveChanges();
-                        return RedirectToAction("Login", "Account"); // Redirect to login after successful registration
-                    }
-                    else
-                    {
-                        foreach (var error in result.Errors)
+                        _context.Users.Add(user);
+                        var result = await _userManager.CreateAsync(user, userVM.Password);
+                        if (result.Succeeded)
                         {
-                            ModelState.AddModelError(string.Empty, error.Description);
+                            await _userManager.AddToRoleAsync(user, "Patient");
+                            _context.SaveChanges();
+                            return RedirectToAction("Login", "Account"); // Redirect to login after successful registration
+                        }
+                        else
+                        {
+                            foreach (var error in result.Errors)
+                            {
+                                ModelState.AddModelError(string.Empty, error.Description);
+                            }
                         }
                     }
+                    catch (Exception ex)
+                    {
+                        ModelState.AddModelError(string.Empty, "Error saving to database");
+                    }
                 }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError(string.Empty, "Error saving to database");
-                }
+                    
+               
             }
 
             // If ModelState is not valid, return to the registration view with validation errors
@@ -97,49 +85,10 @@
         [HttpPost]
         public async Task<IActionResult> DoctorRegister(DoctorRegisterVM MedicalPractitionerVM)
         {
-            //if (ModelState.IsValid)
-            //{
-                var checkEmail = _context.Users.Any(e => e.Email == MedicalPractitionerVM.Email);
 
-                if (checkEmail)
-                {
-                    ModelState.AddModelError("Email", "Email already exists");
-                    return View();
-                }
-
-                if (MedicalPractitionerVM.Password != MedicalPractitionerVM.ConfirmPassword)
-                {
-                    ModelState.AddModelError("ConfirmPassword", "Password and Confirm Password do not match");
-                    return View();
-                }
-
-                var minDateOfBirth = DateTime.Today.AddYears(-100);
-                var maxDateOfBirth = DateTime.Today.AddYears(-18);
-                if (MedicalPractitionerVM.DateOfBirth < minDateOfBirth || MedicalPractitionerVM.DateOfBirth > maxDateOfBirth)
-                {
-                    ModelState.AddModelError("DateOfBirth", "Invalid date of birth. Must be between 18 and 100 years old.");
-                    return View();
-                }
-
-                var doctor = new User
-                {
-                    Email = MedicalPractitionerVM.Email,
-                    FirstName = MedicalPractitionerVM.FirstName,
-                    LastName = MedicalPractitionerVM.LastName,
-                    DateOfBirth = MedicalPractitionerVM.DateOfBirth,
-                    Gender = MedicalPractitionerVM.Gender,
-                    Telephone = MedicalPractitionerVM.Telephone,
-                    CurrentHospital = MedicalPractitionerVM.CurrentHospital,
-                    Languages = MedicalPractitionerVM.Languages,
-                    Specialty = MedicalPractitionerVM.Specialty,
-                    Experience = MedicalPractitionerVM.Experience,
-                    ShortBio = MedicalPractitionerVM.ShortBio,
-                    CreatedOn = DateTime.Now,
-                    UserName = MedicalPractitionerVM.Email,
-                    
-
-                };
-                var specialities = _context.Specialities.Select(s=> s.SpecialtyName);
+            var isRegistered = _accountServices.IsRegisterValid(MedicalPractitionerVM);
+            var doctor = _userServices.CreateUserEntity(MedicalPractitionerVM);
+                var specialities = _context.Specialities.AsNoTracking().Select(s=> s.SpecialtyName);
                 if (!specialities.Contains(MedicalPractitionerVM.Specialty))
                 {
                     var newSpeciality = new Specialty
@@ -174,7 +123,7 @@
                 {
                     ModelState.AddModelError(ex.Message, "Error saving to database");
                 }
-            //}
+            
 
             // If ModelState is not valid, return to the registration view with validation errors
             return View(MedicalPractitionerVM);
@@ -191,7 +140,7 @@
         {
             if (ModelState.IsValid)
             {
-                var checkEmail = _context.Users.Any(e => e.Email == registerVM.Email);
+                var checkEmail = _context.Users.AsNoTracking().Any(e => e.Email == registerVM.Email);
 
                 if (checkEmail)
                 {
@@ -264,19 +213,14 @@
                 if (user != null)
                 {
                     var roles = await _userManager.GetRolesAsync(user);
-                    switch (roles.FirstOrDefault())
+                    return roles.FirstOrDefault() switch
                     {
-                        case "Doctor":
-                            return RedirectToAction("Queries", "Doctor");
-                        case "InitialDoctor":
-                            return BadRequest("Account still waiting Acceptance");
-                        case "Patient":
-                            return RedirectToAction("Queries", "Patient");
-                        case "Admin":
-                            return RedirectToAction("Index", "Admin");
-                        default:
-                            return BadRequest("Invalid Role");
-                    }
+                        "Doctor" => RedirectToAction("Queries", "Doctor"),
+                        "InitialDoctor" => BadRequest("Account still waiting Acceptance"),
+                        "Patient" => RedirectToAction("Queries", "Patient"),
+                        "Admin" => RedirectToAction("Index", "Admin"),
+                        _ => BadRequest("Invalid Role"),
+                    };
                 }
                 else
                 {

@@ -5,11 +5,16 @@
     {
         private readonly ApplicationDbContext _context;
         private readonly IDoctorRepo _doctorRepo;
+        private readonly IQueryRepo _queryRepo;
+        private readonly IQueryServices _queryServices;
 
-        public DoctorController(ApplicationDbContext context, IDoctorRepo doctorRepo)
+        public DoctorController(ApplicationDbContext context, IDoctorRepo doctorRepo,
+            IQueryRepo queryRepo, IQueryServices queryServices)
         {
             _context = context;
             _doctorRepo = doctorRepo;
+            _queryRepo = queryRepo;
+            _queryServices = queryServices;
         }
 
         public IActionResult Index()
@@ -19,42 +24,14 @@
             return View();
         }
 
-        #region All Question
 
-        public IActionResult Queries(QuerySearchFilter filters)
+        public async Task<IActionResult> Queries(QuerySearchFilter filters)
         {
-            var queries = _context.Queries
-                .Select(q => new QueryVM
-                {
-                    Id = q.Id,
-                    QueryTitle = q.QueryTitle,
-                    Votes = q.Votes,
-                    // QuestionTag = q.Tag.Split('-', ),
-                    AnswerCount = q.Answers.Where(a => a.QueryId == q.Id).Count(),
-                })
-                .ToList();
-
-            if (filters is not null && filters.Answered is false)
-            {
-                queries = queries
-                    .OrderByDescending(q => q.AnswerCount == 0 ? int.MaxValue : q.AnswerCount)
-                    .ToList();
-            }
-            if (filters is not null && filters.Answered is false)
-            {
-                queries = queries
-                    .OrderByDescending(q => q.AnswerCount >= 0 ? int.MaxValue : q.AnswerCount)
-                    .ToList();
-            }
-            var filteredqueries = new QueryTableVM()
-            {
-                Queries = queries
-            };
+            var queries = await _queryRepo.GetAllQueries();
+            var filteredqueries = _queryServices.FilterQueries(filters, queries);
             return View(filteredqueries);
         }
 
-
-        #endregion
 
         #region View selected query
 
@@ -103,7 +80,7 @@
 
         public async Task<IActionResult> CreateForum(FilterVM DoctorFilters, DiscussionForumDTO forumDTO)
         {
-            var speciality = await _context.Specialities.Select(s => new SpecialityVM()
+            var speciality = await _context.Specialities.Select(s => new SpecialtyVM()
             {
                 Name = s.SpecialtyName,
                 Id = s.SpecialtyID

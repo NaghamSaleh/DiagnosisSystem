@@ -5,7 +5,7 @@
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<SpecialityVM> SpecialityName { get; set; } = new List<SpecialityVM>();
+        public List<SpecialtyVM> SpecialityName { get; set; } = new List<SpecialtyVM>();
         public string SelectedSpeciality { get; set; } = string.Empty;
     }
 }
