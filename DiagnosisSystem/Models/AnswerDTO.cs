@@ -6,6 +6,6 @@
         public int QueryId { get; set; }
         public string AnswerBody { get; set; }
         public string DoctorId { get; set; }
-        public QueryVM Query { get; set; }
+        public string DoctorName { get; set; }
     }
 }

@@ -25,20 +25,16 @@
         <input type="text" id="queryTitle" value="@Model.QueryTitle" readonly>
     </div>
     <div>
+        <label for="consultancyType">Consultancy Type:</label>
+        <input type="text" id="consultancyType" value="@Model.ConsuntacyType" readonly>
+    </div>
+    <div>
         <label for="description">Description:</label>
         <textarea id="description" readonly>@Model.Description</textarea>
     </div>
     <div>
         <label for="questionTag">Question Tag:</label>
         <input type="text" id="questionTag" value="@Model.QuestionTag" readonly>
-    </div>
-    <div>
-        <label for="patientId">Patient ID:</label>
-        <input type="text" id="patientId" value="@Model.PatientId" readonly>
-    </div>
-    <div>
-        <label for="answerCount">Answer Count:</label>
-        <input type="text" id="answerCount" value="@Model.AnswerCount" readonly>
     </div>
     <div>
         <label for="votes">Votes:</label>
@@ -48,9 +44,13 @@
         <h2>Answers:</h2>
         @foreach (var answer in Model.Answers)
         {
+            <div class="doctor">
+                <h5>Answered by:</h5><p>@answer.DoctorName</p>
+            </div>
             <div class="answer">
                 <p>@answer.AnswerBody</p>
             </div>
+
         }
     </div>
 </div>

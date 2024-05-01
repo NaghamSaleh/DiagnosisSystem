@@ -27,28 +27,33 @@
                 }).ToListAsync();
             return questions;
         }
-        public QueryVM GetAllAnswers(string id)
+        public QueryVM GetAllAnswers(int id)
         {
-            var Id = Int16.Parse(id);
+            var answers = _context.Answers
+                .Where(a => a.QueryId == id)
+                .Join(
+                    _context.Users,
+                    ans => ans.DoctorId,
+                    user => user.Id,
+                    (ans, user) => new AnswerDTO
+                    {
+                        AnswerBody = ans.AnswerBody,
+                        DoctorId = ans.DoctorId,
+                        DoctorName = user.FirstName + " " + user.LastName // Concatenate first name and last name to get the doctor's full name
+                    })
+                .ToList();
 
-            var answers = _context.Answers.Where(a => a.QueryId == Id).Select(ans => new AnswerDTO()
-            {
-                AnswerBody = ans.AnswerBody,
-                DoctorId = ans.DoctorId
-            }).ToList();
             var queryDetails = _context.Queries
-                .Where(q => q.Id.Equals(id))
+                .Where(q => q.Id == id)
                 .Select(qu => new QueryVM()
                 {
                     Description = qu.Description,
                     QueryTitle = qu.QueryTitle,
-                    Id = qu.Id,
-                    Answers = answers
-
+                    QuestionTag = qu.Tag,
+                    ConsuntacyType = qu.PaidConstultant == true? "Paid" : "Free",
                 })
                 .FirstOrDefault() ?? new QueryVM();
             queryDetails.Answers = answers;
-
             return queryDetails;
         }
 

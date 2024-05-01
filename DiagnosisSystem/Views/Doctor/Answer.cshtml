@@ -35,7 +35,7 @@
         @foreach (var item in Model.Answers)
         {
             @*<h5>@item</h5>*@
-
+            <h5>@item.DoctorName</h5>
             <h5>@item.AnswerBody</h5>
         }
     }
@@ -48,10 +48,10 @@
 
 
 <form method="post">
-    <input hidden asp-for="Id" value="Id" />
+    <input hidden asp-for="Answer.QueryId" value="@Model.Id" />
     <div>
         <label class="control-label">Answer Body:</label>
-        <textarea asp-for="Answer" class="form-control" rows="4"></textarea>
+        <textarea asp-for="Answer.AnswerBody" class="form-control" rows="4"></textarea>
     </div>
 
     <div class="form-group">

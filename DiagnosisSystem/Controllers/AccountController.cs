@@ -38,7 +38,7 @@ namespace DiagnosisSystem.Controllers
             if (ModelState.IsValid)
             {
                 var isRegistered = _accountServices.IsRegisterValid(userVM);
-                if (isRegistered)
+                if (!isRegistered)
                 {
                     var user = _userServices.CreateUserEntity(userVM);
                     try

@@ -25,30 +25,27 @@
         public IActionResult Create()
         {
             var allTags = _queryRepo.GetAllTags();
-            ViewBag.tags = allTags.Result.Select(s => s.Name).Distinct().ToList(); 
+            ViewBag.tags = allTags.Result.Select(s => s.Name).Distinct().ToList();
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(QueryVM patientQuestionVM)
         {
-            if (ModelState.IsValid)
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var pQuestion = new Query()
             {
-                string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                QueryTitle = patientQuestionVM.QueryTitle,
+                Description = patientQuestionVM.Description,
+                Tag = patientQuestionVM.QuestionTag,
+                PatientId = userId
+            };
 
-                var pQuestion = new Query()
-                {
-                    QueryTitle = patientQuestionVM.QueryTitle,
-                    Description = patientQuestionVM.Description,
-                    Tag = patientQuestionVM.QuestionTag,
-                    PatientId = userId
-                };
+            _context.Queries.Add(pQuestion);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Queries");
 
-                _context.Queries.Add(pQuestion);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            return BadRequest("Error Saving Question");
         }
         #endregion
 
@@ -116,7 +113,7 @@
             return View(doctors);
         }
 
-        public IActionResult Answers(string id)
+        public IActionResult Answers(int id)
         {
             var queryDetails = _queryRepo.GetAllAnswers(id);
             return View(queryDetails);
