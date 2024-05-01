@@ -213,8 +213,9 @@
                 };
 
                 _context.Specialities.Add(speciality);
-                _context.SaveChanges();
-                return Ok("Successfully added");
+                await _context.SaveChangesAsync();
+
+                return Json(new { success = true });
             }
             return View();
         }
