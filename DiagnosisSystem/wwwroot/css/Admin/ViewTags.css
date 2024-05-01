@@ -12,9 +12,8 @@ h1 {
 
 table {
     border-collapse: collapse;
-    width: 110%;
-    margin-left: 290px;
-    margin-top: 20px;
+    width: 90%; /* Adjust the width as needed */
+    margin: 20px auto; /* Center the table horizontally */
 }
 
 th, td {
