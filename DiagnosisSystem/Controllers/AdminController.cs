@@ -211,14 +211,25 @@
                     SpecialtyName = specialityVM.Name,
                     Description = specialityVM.Description
                 };
+                try
+                {
+                    _context.Specialities.Add(speciality);
+                    await _context.SaveChangesAsync();
 
-                _context.Specialities.Add(speciality);
-                await _context.SaveChangesAsync();
-
-                return Json(new { success = true });
+                    return Json(new { success = true });
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message });
+                }
             }
-            return View();
+            return RedirectToAction(nameof(Index));
         }
+        #endregion
+
+
+
+        #region edit Speciality
 
         [HttpGet]
         public async Task<IActionResult> EditSpeciality(int id)
@@ -269,6 +280,9 @@
             }
             return View(specialityVM);
         }
+        #endregion
+
+        #region view Speciality
 
         public IActionResult ViewSpecialities()
         {
