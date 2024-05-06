@@ -106,20 +106,29 @@ a{
 
 
 /* CSS for Doctor Display */
+/* Consultant selection */
+.instruction {
+    text-align: center;
+    margin-top: 80px; /* Adjust top margin as needed */
+}
+
 .doctors-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-around;
+    margin-top: 20px;
 }
 
 .doctor-square {
+    width: 250px; /* Set a fixed width for each doctor square */
+    height: 300px; /* Set a fixed height for each doctor square */
     position: relative;
-    width: 250px;
+    border: 1px solid #ccc; /* Add a border for visual separation */
     margin: 10px;
     padding: 20px;
     background-color: rgba(130, 195, 197);
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a shadow for depth */
     text-align: center;
     color: #fff;
     overflow: hidden;
