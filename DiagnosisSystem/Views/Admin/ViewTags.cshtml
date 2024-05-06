@@ -1,11 +1,9 @@
 ﻿@model List<TagVM>
 
 <link rel="stylesheet" type="text/css" href="/css/Admin/ViewTags.css">
-<partial>
 @Html.Partial("shared.cshtml")
-</partial>
 
-<h1 style="margin-left: 570px;">Tag List</h1>
+<h1>Tag List</h1>
 
 <table>
     <thead>
@@ -21,7 +19,7 @@
             <tr>
                 <td>@tag.Name</td>
                 <td>@tag.SelectedSpeciality</td>
-                <td>@tag.Description</td>
+                <td class="description-column">@tag.Description</td>
             </tr>
         }
     </tbody>

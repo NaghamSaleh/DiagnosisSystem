@@ -124,8 +124,13 @@
                 var speciality = _queryServices.ConvertToEntity(specialityVM.Name, specialityVM.Description);
                 await _queryRepo.AddSpecialityToDB(speciality);
             }
-            return View();
+            return RedirectToAction(nameof(Index));
         }
+        #endregion
+
+
+
+        #region edit Speciality
 
         [HttpGet]
         public async Task<IActionResult> EditSpeciality(int id)
@@ -176,6 +181,9 @@
             }
             return View(specialityVM);
         }
+        #endregion
+
+        #region view Speciality
 
         public async Task<IActionResult> ViewSpecialities()
         {
