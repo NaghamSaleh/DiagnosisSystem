@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity;
-
-namespace DiagnosisSystem.Entities
+﻿namespace DiagnosisSystem.Entities
 {
 
     public class User : IdentityUser

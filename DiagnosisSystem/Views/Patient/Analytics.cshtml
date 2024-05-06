@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctors per Specialty</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    @{
+        // Convert ViewBag.YAxis to a list or array
+        var yAxisList = ViewBag.YAxis as List<AnalyticsDTO>;
+        var yAxisArray = yAxisList?.ToArray();
+    }
+    <canvas id="barChart" width="800" height="400"></canvas>
+    <script>
+        
+        var specialties = @Html.Raw(Json.Serialize(ViewBag.Specialties));
+        var yAxis = @Html.Raw(Json.Serialize(yAxisArray.Select(y => y.Count)));
+
+        var ctx = document.getElementById('barChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: specialties.map(s => s.SpecialtyName),
+                datasets: [{
+                    label: 'Doctors per Specialty',
+                    data: yAxis,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1 // Skip count by 1
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

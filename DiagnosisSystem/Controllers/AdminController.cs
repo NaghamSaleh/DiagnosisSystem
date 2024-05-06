@@ -1,6 +1,6 @@
 ﻿namespace DiagnosisSystem.Controllers
 {
-    //[Authorize(Roles ="Admin")]
+    [Authorize(Roles ="Admin")]
     public class AdminController : Controller
     {
 
@@ -130,7 +130,6 @@
             }
             return RedirectToAction(nameof(Index));
         }
-        #endregion
 
 
 
@@ -187,7 +186,6 @@
         }
         #endregion
 
-        #region view Speciality
 
         public async Task<IActionResult> ViewSpecialities()
         {
