@@ -1,6 +1,6 @@
 ﻿namespace DiagnosisSystem.Controllers
 {
-    //[Authorize(Roles = "Patient")]
+    [Authorize(Roles = "Patient")]
     public class PatientController : Controller
     {
         private readonly ApplicationDbContext _context;
