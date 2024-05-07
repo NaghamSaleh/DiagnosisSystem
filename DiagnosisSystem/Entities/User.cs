@@ -15,6 +15,8 @@
         public string? CurrentHospital { get; set; }
         public string? ShortBio { get; set; }
         public DateTime UpdatedOn { get; set; }
+        public byte[] ImageData { get; set; }
+        public string ImageType { get; set; }
 
 
 

@@ -73,7 +73,10 @@
                     LastName = u.LastName,
                     Email = u.Email,
                     Gender = u.Gender,
-                    Telephone = u.Telephone
+                    Telephone = u.Telephone,
+                    ImageData = u.ImageData,
+                    ImageType = u.ImageType
+                    
                 }).FirstOrDefault();
             var PatientDTO = new PatientDTO();
             PatientDTO.QueryVM = questions;
@@ -81,37 +84,63 @@
             return View(PatientDTO);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Edit()
+        {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            
+
+            var user = await _context.Users
+                .Where(i => i.Id == userId)
+                .Select(u => new EditProfileVM()
+                {
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Email = u.Email,
+                    Gender = u.Gender,
+                    Telephone = u.Telephone
+                }).FirstOrDefaultAsync();
+
+            return View(user);
+
+        }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        //[Route("/Edit")]
-        public async Task<IActionResult> MyAccount(EditProfileVM model)
+        public async Task<IActionResult> Edit(EditProfileVM model)
         {
-            if (ModelState.IsValid)
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
             {
-                string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-                var user = _context.Users.FirstOrDefault(u => u.Id == userId);
-
-                if (user != null)
-                {
-                    user.FirstName = model.FirstName;
-                    user.LastName = model.LastName;
-                    user.Email = model.Email;
-                    user.Gender = model.Gender;
-                    user.Telephone = model.Telephone;
-
-                    _context.Users.Update(user);
-                    await _context.SaveChangesAsync();
-
-                    return RedirectToAction("Index", "Home");
-                }
-
                 return NotFound();
             }
 
-            return View(model);
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Gender = model.Gender;
+            user.Telephone = model.Telephone;
+
+            if (model.ImageFile != null && model.ImageFile.Length > 0)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await model.ImageFile.CopyToAsync(memoryStream);
+                    user.ImageData = memoryStream.ToArray();
+                    user.ImageType = model.ImageFile.ContentType;
+                }
+            }
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("MyAccount", "Patient");
         }
+
 
         public IActionResult Consultants()
         {

@@ -10,6 +10,8 @@
 
 <div class="myaccountcontainer" id="myAccount-container">
     <h1 class="section-title">My Account Information</h1>
+    <a asp-action="Edit" asp-controller="Patient" >Edit Account</a>
+    
 
     <div class="info-item">
         <span class="info-label">Full Name:</span>
@@ -107,9 +109,21 @@
         <a asp-action="" asp-controller="Patient">Paid consultancy</a>
         <a asp-action="" asp-controller="Patient">Analytics</a>
         <a asp-action="MyAccount" asp-controller="Patient" class="account-link">
-            <img src="https://i.imgur.com/mFIq1e0.png" alt="My Account" class="account-icon">
+            <div class="info-item">
+                @if (Model.EditProfileVM.ImageData != null && Model.EditProfileVM.ImageData.Length > 0)
+                {
+                    var imageBase64 = Convert.ToBase64String(Model.EditProfileVM.ImageData);
+                    var imageSrc = $"data:{Model.EditProfileVM.ImageType};base64,{imageBase64}";
+                    <img src="@imageSrc" alt="Profile Picture" class="account-icon" />
+                }
+                else
+                {
+                    <img src="~/user.png" alt="My Account" class="account-icon">
+                }
+            </div>
         </a>
     </nav>
+    
 </header>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

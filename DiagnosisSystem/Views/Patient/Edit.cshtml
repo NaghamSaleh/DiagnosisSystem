@@ -1,0 +1,38 @@
+﻿@model EditProfileVM
+@{
+    ViewData["Title"] = "Edit Profile";
+}
+
+<h1>Edit Profile</h1>
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <div class="myaccountcontainer" id="myAccount-container">
+        <input type="hidden" name="Email" value="@Model.Email">
+        <div class="info-item">
+            <span class="info-label">Profile Picture:</span>
+            <input type="file" name="ImageFile" accept="image/*">
+        </div>
+
+        <div class="info-item">
+            <span class="info-label">Full Name:</span>
+            <input type="text" name="FirstName" value="@Model.FirstName"> <input type="text" name="LastName" value="@Model.LastName">
+        </div>
+
+        <div class="info-item">
+            <span class="info-label">Email:</span>
+            <span class="info-value">@Model.Email</span>
+        </div>
+
+        <div class="info-item">
+            <span class="info-label">Gender:</span>
+            <input type="text" name="Gender" value="@Model.Gender">
+        </div>
+
+        <div class="info-item">
+            <span class="info-label">Telephone:</span>
+            <input type="text" name="Telephone" value="@Model.Telephone">
+        </div>
+
+        <button type="submit">Save</button>
+    </div>
+</form>
