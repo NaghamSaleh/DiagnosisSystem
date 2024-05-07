@@ -27,6 +27,7 @@
         <thead>
             <tr>
                 <th>Votes</th>
+                <th>Upvote?</th>
                 <th>Number of Answers</th>
                 <th>Question</th>
             </tr>
@@ -36,19 +37,19 @@
             {
                 <tr>
                     <td>@query.Votes</td>
+                    <td>
+                        <form asp-action="Upvote" asp-controller="Patient" method="post">
+                            <input type="hidden" name="queryId" value="@query.Id" />
+                            <button type="submit">Upvote</button>
+                        </form>
+                    </td>
                     <td>@query.AnswerCount</td>
                     <td>
                         <div>
                             <span class="query-title" onclick="window.location.href = '@Url.Action("Answers", "Patient", new { id = query.Id })'">@query.QueryTitle</span>
                         </div>
-                       @* @if(query.QuestionTag.Count>1)
-                        {
-                            <div class="query-tags">Tags: @string.Join(", ", query.QuestionTag)</div>
-                        }else{
-                            <div class="query-tags">Tags: query.QuestionTag</div>
-                        }*@
-                       
                     </td>
+                    
                 </tr>
             }
         </tbody>

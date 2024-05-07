@@ -50,7 +50,7 @@
         </ul>
 
         <!-- Logout button -->
-        <a href="#" id="logoutButton" style="color: white;">
+        <a asp-action="Logout" asp-controller="Account" id="logoutButton" style="color: white;">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 12h-6M3 12h16M7 16l-4-4 4-4" />
             </svg>
@@ -59,7 +59,7 @@
     </div>
 </div>
 
-<script>
+@*<script>
     function Logout() {
         // Send a request to your logout endpoint or perform logout action here
         // For example, you can use fetch or XMLHttpRequest to send a request to the server
@@ -111,4 +111,4 @@
             });
         });
     });
-</script>
+</script>*@

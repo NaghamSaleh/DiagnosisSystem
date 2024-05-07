@@ -52,16 +52,19 @@
 
         public async Task<IActionResult> Queries()
         {
-            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var questions = await _queryRepo.GetSelectedPatientQueries(userId);
+            //string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            //var questions = await _queryRepo.GetSelectedPatientQueries(userId);
+            var questions = await _queryRepo.GetAllQueries();
             return View(questions);
         }
 
 
         [HttpGet]
-        public IActionResult MyAccount()
+        public async Task<IActionResult> MyAccount()
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var questions = await _queryRepo.GetSelectedPatientQueries(userId);
+
             var user = _context.Users
                 .Where(i => i.Id == userId)
                 .Select(u => new EditProfileVM()
@@ -72,7 +75,10 @@
                     Gender = u.Gender,
                     Telephone = u.Telephone
                 }).FirstOrDefault();
-            return View(user);
+            var PatientDTO = new PatientDTO();
+            PatientDTO.QueryVM = questions;
+            PatientDTO.EditProfileVM = user;
+            return View(PatientDTO);
         }
 
 
@@ -177,6 +183,23 @@
             ViewBag.YAxis = yAxis.ToList();
 
             return View(yAxis);
+        }
+
+
+        [HttpPost]
+        public IActionResult Upvote(int queryId)
+        {
+            var query = _context.Queries.Find(queryId);
+
+            if (query == null)
+            {
+                return NotFound();
+            }
+
+            query.Votes++;
+            _context.SaveChanges();
+
+            return RedirectToAction("Queries");
         }
     }
 }
