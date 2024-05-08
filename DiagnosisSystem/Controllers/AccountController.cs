@@ -12,12 +12,14 @@ namespace DiagnosisSystem.Controllers
         private readonly IUserServices _userServices;
         private readonly IRegisterRepo _registerRepo;
         private readonly IQueryRepo _queryRepo;
+        private readonly IAuthenticationService _authService;
         #endregion
 
         #region Constructors
         public AccountController(ApplicationDbContext context, UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager, IAccountServices accountServices,
-            IUserServices userServices, IRegisterRepo registerRepo, IQueryRepo queryRepo)
+            IUserServices userServices, IRegisterRepo registerRepo, IQueryRepo queryRepo,
+            IAuthenticationService authenticationService)
         {
             _context = context;
             _userManager = userManager;
@@ -26,6 +28,7 @@ namespace DiagnosisSystem.Controllers
             _userServices = userServices;
             _registerRepo = registerRepo;
             _queryRepo = queryRepo;
+            _authService = authenticationService;
         }
         #endregion
 
@@ -82,7 +85,7 @@ namespace DiagnosisSystem.Controllers
             return View();
         }
         #endregion
-        
+
         #region Login
         [HttpGet]
         public IActionResult Login()
@@ -93,20 +96,13 @@ namespace DiagnosisSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginVM loginVM)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                // If model state is not valid, return the view with validation errors
-                return View(loginVM);
-            }
 
-            var result = await _signInManager.PasswordSignInAsync(loginVM.Email, loginVM.Password, false, lockoutOnFailure: false);
+                var roles = await _authService.SignInAsync(loginVM.Email, loginVM.Password);
 
-            if (result.Succeeded)
-            {
-                var user = await _userManager.FindByEmailAsync(loginVM.Email);
-                if (user != null)
+                if (roles != null)
                 {
-                    var roles = await _userManager.GetRolesAsync(user);
                     HttpContext.Session.SetString("Username", loginVM.Email);
                     return roles.FirstOrDefault() switch
                     {
@@ -122,19 +118,15 @@ namespace DiagnosisSystem.Controllers
                     return BadRequest("User not found");
                 }
             }
-            else
-            {
-                // Authentication failed, return error message
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                return View(loginVM);
-            }
+            return View();
+
         }
 
 
         #endregion
 
         #region Logout
-       
+
         public IActionResult Logout()
         {
             _signInManager.SignOutAsync();

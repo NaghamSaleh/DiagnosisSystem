@@ -1,9 +1,4 @@
-﻿using DiagnosisSystem.Entities;
-using Microsoft.AspNetCore.Identity;
-using System.Drawing.Printing;
-using System.Numerics;
-
-namespace DiagnosisSystem.Repositories
+﻿namespace DiagnosisSystem.Repositories
 {
     public class UserRepo : IUserRepo
     {
