@@ -77,14 +77,23 @@ namespace DiagnosisSystem.Repositories
         }
         public async Task CreateUser(User user, string password, string roleName)
         {
-            _context.Users.Add(user);
-            var result = await _userManager.CreateAsync(user, password);
-            if (result.Succeeded)
+            try
             {
-                await _userManager.AddToRoleAsync(user, roleName);
-                _context.SaveChanges();
-
+                _context.Users.Add(user);
+                var result = await _userManager.CreateAsync(user, password);
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(user, roleName);
+                    _context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error creating user: {ex.Message}");
+                
+                throw; 
             }
         }
+
     }
 }

@@ -29,10 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\js\Account\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="Views\Patient\shared.cshtml" />
   </ItemGroup>
 

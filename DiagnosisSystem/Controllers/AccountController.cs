@@ -10,18 +10,22 @@ namespace DiagnosisSystem.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IAccountServices _accountServices;
         private readonly IUserServices _userServices;
+        private readonly IRegisterRepo _registerRepo;
+        private readonly IQueryRepo _queryRepo;
         #endregion
 
         #region Constructors
         public AccountController(ApplicationDbContext context, UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager, IAccountServices accountServices,
-            IUserServices userServices)
+            IUserServices userServices, IRegisterRepo registerRepo, IQueryRepo queryRepo)
         {
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
             _accountServices = accountServices;
             _userServices = userServices;
+            _registerRepo = registerRepo;
+            _queryRepo = queryRepo;
         }
         #endregion
 
@@ -37,38 +41,9 @@ namespace DiagnosisSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                var isRegistered = _accountServices.IsRegisterValid(userVM);
-                if (!isRegistered)
-                {
-                    var user = _userServices.CreateUserEntity(userVM);
-                    try
-                    {
-                        _context.Users.Add(user);
-                        var result = await _userManager.CreateAsync(user, userVM.Password);
-                        if (result.Succeeded)
-                        {
-                            await _userManager.AddToRoleAsync(user, "Patient");
-                            _context.SaveChanges();
-                            return RedirectToAction("Login", "Account"); // Redirect to login after successful registration
-                        }
-                        else
-                        {
-                            foreach (var error in result.Errors)
-                            {
-                                ModelState.AddModelError(string.Empty, error.Description);
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        ModelState.AddModelError(string.Empty, "Error saving to database");
-                    }
-                }
-                    
-               
+                await _registerRepo.CreateAsync(userVM, "Patient");
+                return RedirectToAction("Login");
             }
-
-            // If ModelState is not valid, return to the registration view with validation errors
             return View(userVM);
         }
 
@@ -84,48 +59,10 @@ namespace DiagnosisSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> DoctorRegister(RegisterVM MedicalPractitionerVM)
         {
+            await _registerRepo.CreateAsync(MedicalPractitionerVM, "InitialDoctor");
+            await _queryRepo.AddSpecialityToDB(MedicalPractitionerVM);
 
-            var isRegistered = _accountServices.IsRegisterValid(MedicalPractitionerVM);
-            var doctor = _userServices.CreateUserEntity(MedicalPractitionerVM);
-                var specialities = _context.Specialities.AsNoTracking().Select(s=> s.SpecialtyName);
-                if (!specialities.Contains(MedicalPractitionerVM.Speciality))
-                {
-                    var newSpeciality = new Specialty
-                    {
-                        SpecialtyName = MedicalPractitionerVM.Speciality,
-
-                        Description = string.Empty,
-                    };
-                    _context.Specialities.Add(newSpeciality);
-                    _context.SaveChanges();
-                }
-
-                try
-                {
-                    _context.Users.Add(doctor);
-                    var result = await _userManager.CreateAsync(doctor, MedicalPractitionerVM.Password);
-                    if (result.Succeeded)
-                    {
-                        await _userManager.AddToRoleAsync(doctor, "InitialDoctor");
-                        _context.SaveChanges();
-                        return RedirectToAction("Login", "Account"); // Redirect to login after successful registration
-                    }
-                    else
-                    {
-                        foreach (var error in result.Errors)
-                        {
-                            ModelState.AddModelError(string.Empty, error.Description);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError(ex.Message, "Error saving to database");
-                }
-            
-
-            // If ModelState is not valid, return to the registration view with validation errors
-            return View(MedicalPractitionerVM);
+            return PartialView("doctorRegister", new RegisterVM());
         }
         #endregion
 
@@ -139,50 +76,8 @@ namespace DiagnosisSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                var checkEmail = _context.Users.AsNoTracking().Any(e => e.Email == registerVM.Email);
-
-                if (checkEmail)
-                {
-                    ModelState.AddModelError("Email", "Email already exists");
-                    return View();
-                }
-
-                if (registerVM.Password != registerVM.ConfirmPassword)
-                {
-                    ModelState.AddModelError("ConfirmPassword", "Password and Confirm Password do not match");
-                    return View();
-                }
-                var admin = new User
-                {
-                    FirstName = registerVM.FirstName,
-                    LastName = registerVM.LastName,
-                    Email = registerVM.Email,
-                    UserName = registerVM.Email
-
-                };
-                try
-                {
-                    _context.Users.Add(admin);
-                    var result = await _userManager.CreateAsync(admin, registerVM.Password);
-                    if (result.Succeeded)
-                    {
-                        await _userManager.AddToRoleAsync(admin, "Admin");
-                        _context.SaveChanges();
-                        return RedirectToAction("Login", "Account"); // Redirect to login after successful registration
-                    }
-                    else
-                    {
-                        foreach (var error in result.Errors)
-                        {
-                            ModelState.AddModelError(string.Empty, error.Description);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError(ex.Message, "Error saving to database");
-                }
-                
+                await _registerRepo.CreateAsync(registerVM, "Admin");
+                return View();
             }
             return View();
         }

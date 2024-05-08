@@ -51,6 +51,7 @@ builder.Services.AddScoped<IQueryRepo, QueryRepo>();
 builder.Services.AddScoped<IQueryServices,  QueryServices>();
 builder.Services.AddScoped<IAccountServices, AccountServices>();
 builder.Services.AddScoped<IUserServices, UserServices>();
+builder.Services.AddScoped<IRegisterRepo, RegiserRepo>();
 
 var app = builder.Build();
 
