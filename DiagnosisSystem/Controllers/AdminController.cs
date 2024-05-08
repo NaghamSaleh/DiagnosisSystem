@@ -41,9 +41,11 @@
             {
                 return RedirectToAction("Login", "Account");
             }
+
             var stats = _accountServices.GetAccountsStats();
             var admin = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             stats.UserName = _adminRepo.GetAdminUsername(admin);
+
             return View(stats);
         }
 
@@ -54,7 +56,6 @@
             var AdminDetails = _userRepo.GetAccountDetails(AllAdmins);
             return View(AdminDetails);
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Doctors()
@@ -73,37 +74,14 @@
 
         public IActionResult Approve(string userId)
         {
-            var entityToUpdate = _context.UserRoles.FirstOrDefault(item => item.UserId == userId);
-            var roleId = _context.Roles.Where(r => r.Name == "Doctor").Select(i => i.Id).FirstOrDefault();
-            if (entityToUpdate != null)
-            {
-                _context.UserRoles.Remove(entityToUpdate);
-                _context.SaveChanges();
-                entityToUpdate.RoleId = roleId;
-                entityToUpdate.UserId = userId;
-
-                _context.UserRoles.Add(entityToUpdate);
-
-                // Save changes to the database
-                _context.SaveChanges();
-
-            }
-
+            _userRepo.UpdateUserRole(userId);
             return RedirectToAction("Requests");
         }
-        //add role = rejected
         public IActionResult Reject(string userId)
         {
-            var entityToDelete = _context.UserRoles.FirstOrDefault(item => item.UserId == userId);
-            if (entityToDelete != null)
-            {
-                _context.UserRoles.Remove(entityToDelete);
-                _context.SaveChanges();
-            }
-
-            return Ok("Successfully Deleted and Rejected");
+            _userRepo.DeleteUser(userId);
+            return PartialView("Requests", new List<RegisterVM>());
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Patients()

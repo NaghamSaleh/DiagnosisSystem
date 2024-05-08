@@ -20,7 +20,6 @@
         public IActionResult Index()
         {
             var doctor = User.FindFirst(ClaimTypes.Name)?.Value;
-
             return View();
         }
 

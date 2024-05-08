@@ -1,38 +1,27 @@
-﻿using DiagnosisSystem.Entities;
-
-namespace DiagnosisSystem.Controllers
+﻿namespace DiagnosisSystem.Controllers
 {
     public class AccountController : Controller
     {
         #region Variables
-        private readonly ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IAuthenticationService _authService;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly IAccountServices _accountServices;
-        private readonly IUserServices _userServices;
         private readonly IRegisterRepo _registerRepo;
         private readonly IQueryRepo _queryRepo;
-        private readonly IAuthenticationService _authService;
+        
         #endregion
 
         #region Constructors
-        public AccountController(ApplicationDbContext context, UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager, IAccountServices accountServices,
-            IUserServices userServices, IRegisterRepo registerRepo, IQueryRepo queryRepo,
+        public AccountController(SignInManager<IdentityUser> signInManager, IRegisterRepo registerRepo, IQueryRepo queryRepo,
             IAuthenticationService authenticationService)
         {
-            _context = context;
-            _userManager = userManager;
             _signInManager = signInManager;
-            _accountServices = accountServices;
-            _userServices = userServices;
             _registerRepo = registerRepo;
             _queryRepo = queryRepo;
             _authService = authenticationService;
         }
         #endregion
 
-        #region Patient Register
+    
         [HttpGet]
         public IActionResult Register()
         {
@@ -50,9 +39,8 @@ namespace DiagnosisSystem.Controllers
             return View(userVM);
         }
 
-        #endregion
 
-        #region Doctor Register 
+        #region Register Doctors
         [HttpGet]
         public IActionResult DoctorRegister()
         {
@@ -98,7 +86,6 @@ namespace DiagnosisSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 var roles = await _authService.SignInAsync(loginVM.Email, loginVM.Password);
 
                 if (roles != null)

@@ -1,15 +1,11 @@
 ﻿@model List<RegisterVM>
 
-
 <link rel="stylesheet" type="text/css" href="/css/Admin/doctors.css">
 <script src="~/js/Admin/doctors.js"></script>
-@Html.Partial("shared.cshtml")
-
+@Html.Partial("shared")
+@Html.Partial("_RequestModal")
 
 <h1>Doctors Pending Registrations</h1>
-
-
-
 <table>
 
     <thead>
@@ -32,11 +28,13 @@
                 <td>@user.Email</td>
                 <td>@user.Gender</td>
                 <td class="action-column">
-                    <a asp-action="Approve" asp-route-userId="@user.UserID" class="b">Approve</a>
-                    <a asp-action="Reject" asp-route-userId="@user.UserID" class="b">Reject</a>
+                    <a asp-action="Approve" asp-route-userId="@user.UserID" class="b approve-form">Approve</a>
+                    <a asp-action="Reject" asp-route-userId="@user.UserID" class="b reject-form">Reject</a>
                 </td>
             </tr>
         }
     </tbody> 
 </table>
-
+@section scripts {
+    <script src="~/js/Admin/RequestModal.js"></script>
+}
