@@ -1,15 +1,30 @@
 <link rel="stylesheet" type="text/css" href="/css/Patient/create.css">
 
 <header class="header">
-    <div class="brand">Qure</div>
+    <div class="brand">
+        <a href="https://naghammzs02.wordpress.com/" style="text-decoration: none; color: inherit;">Qure</a>
+    </div>
 
     <nav class="choices">
         <a asp-action="Queries" asp-controller="Patient">User Queries</a>
         <a asp-action="Consultants" asp-controller="Patient">Paid consultancy</a>
         <a asp-action="Analytics" asp-controller="Patient">Analytics</a>
         <a asp-action="MyAccount" asp-controller="Patient" class="account-link">
-            <img src="https://i.imgur.com/mFIq1e0.png" alt="My Account" class="account-icon">
+            <div class="info-item">
+                @if (Model.EditProfileVM.ImageData != null && Model.EditProfileVM.ImageData.Length > 0)
+                {
+                    var imageBase64 = Convert.ToBase64String(Model.EditProfileVM.ImageData);
+                    var imageSrc = $"data:{Model.EditProfileVM.ImageType};base64,{imageBase64}";
+                    <img src="@imageSrc" alt="Profile Picture" class="account-icon" />
+                }
+                else
+                {
+                    <img src="~/user.png" alt="My Account" class="account-icon">
+                }
+            </div>
         </a>
 
     </nav>
+
+
 </header>

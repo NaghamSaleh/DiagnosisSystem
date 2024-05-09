@@ -8,11 +8,12 @@
 </head>
 <body>
     <header class="header">
-        <div class="brand">Qure</div>
-        <nav class="choices">
+        <div class="brand">
+            <a href="https://naghammzs02.wordpress.com/" style="text-decoration: none; color: inherit;">Qure</a>
+        </div>        <nav class="choices">
             <a asp-action="Queries" asp-controller="Patient">User Queries</a>
             <a asp-action="Consultants" asp-controller="Patient">Paid consultancy</a>
-            <a asp-action="" asp-controller="Patient">Analytics</a>
+            <a asp-action="Analytics" asp-controller="Patient">Analytics</a>
             <a asp-action="MyAccount" asp-controller="Patient" class="account-link">
                 <img src="https://i.imgur.com/mFIq1e0.png" alt="My Account" class="account-icon">
             </a>

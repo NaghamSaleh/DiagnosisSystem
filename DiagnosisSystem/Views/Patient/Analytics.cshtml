@@ -1,6 +1,4 @@
-﻿<!DOCTYPE html>
-<html>
-
+﻿
 <head>
     <title>Doctors per Specialty</title>
     <link rel="stylesheet" type="text/css" href="/css/Patient/Analyticss.css">
@@ -8,10 +6,10 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-
     <header class="header">
-        <div class="brand">Qure</div>
-
+        <div class="brand">
+            <a href="https://naghammzs02.wordpress.com/" style="text-decoration: none; color: inherit;">Qure</a>
+        </div>
 
         <nav class="choices">
             <a asp-action="Queries" asp-controller="Patient">User Queries</a>
@@ -22,6 +20,8 @@
             </a>
 
         </nav>
+
+
     </header>
 
     @{
@@ -32,6 +32,7 @@
     }
     <canvas id="barChart" width="800" height="400"></canvas>
     <script>
+
         var specName = @Html.Raw(Json.Serialize(specName));
         var count = @Html.Raw(Json.Serialize(count));
 
@@ -59,6 +60,7 @@
                 }
             }
         });
+
     </script>
+
 </body>
-</html>

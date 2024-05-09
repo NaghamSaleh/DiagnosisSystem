@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\js\Account\" />
+    <Folder Include="wwwroot\js\Patient\" />
   </ItemGroup>
 
   <ItemGroup>

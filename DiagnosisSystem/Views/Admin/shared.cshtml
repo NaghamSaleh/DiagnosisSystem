@@ -1,4 +1,5 @@
 ﻿<link rel="stylesheet" type="text/css" href="/css/Admin/sidebar.css">
+<script src="~/js/Admin/doctors.js"></script>
 
 <div class="container">
     <div class="sidebar">
@@ -59,56 +60,3 @@
     </div>
 </div>
 
-@*<script>
-    function Logout() {
-        // Send a request to your logout endpoint or perform logout action here
-        // For example, you can use fetch or XMLHttpRequest to send a request to the server
-        fetch('Controller/AccountController.cs', {
-            method: 'POST', // or 'GET'
-            headers: {
-                'Content-Type': 'application/json',
-                // Add any additional headers if needed
-            },
-            // You may need to include credentials (cookies) if your server requires them
-            credentials: 'include',
-        }).then(response => {
-            // Handle the response accordingly
-            if (response.ok) {
-                // Redirect to the login page or perform any other action
-                window.location.href = 'C:/Users/nagham/Desktop/DiagnosisSystem/DiagnosisSystem/Views/Account/Login.cshtml';
-            } else {
-                console.error('Logout failed');
-            }
-        }).catch(error => {
-            console.error('Error:', error);
-        });
-    }
-
-    // Add event listener to the logout button
-    document.getElementById('logoutButton').addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent default link behavior
-
-        // Call the Logout() function
-        Logout();
-    });
-
-    // Toggle visibility of sub-sections
-    document.addEventListener('DOMContentLoaded', function () {
-        var sections = document.querySelectorAll('.section');
-        var subSections = document.querySelectorAll('.sub-sections');
-
-        sections.forEach(function (section) {
-            section.addEventListener('click', function () {
-                var subSectionsList = this.nextElementSibling;
-                subSectionsList.style.display = subSectionsList.style.display === 'none' ? 'block' : 'none';
-            });
-        });
-
-        subSections.forEach(function (subSections) {
-            subSections.addEventListener('click', function () {
-                var subSubSectionsList = this.querySelector('.sub-sub-sections');
-                subSubSectionsList.style.display = subSubSectionsList.style.display === 'none' ? 'block' : 'none';
-            });
-        });
-    });
-</script>*@

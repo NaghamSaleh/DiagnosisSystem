@@ -68,21 +68,13 @@
             opacity: 0.3; /* Adjusted opacity for subtle effect */
             border-radius: 5px; /* Added border-radius for smoother edges */
         }
-
-.myaccountcontainer,
-.myqueriescontainer,
-.contactuscontainer {
+.myaccountcontainer {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: rgba(255, 255, 255, 0.5);
     padding: 20px;
-    margin-top: 100px;
-    background-color: rgba(255, 255, 255, 0.3); /* Container background color */
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-.section-title {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #333;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .info-item {
@@ -91,48 +83,36 @@
 
 .info-label {
     font-weight: bold;
-    color: #666;
-    margin-right: 10px;
 }
 
 .info-value {
-    color: #444;
+    color: #555;
 }
 
-.navbar {
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 100px; /* Adjust as needed */
-    align-items: center;
-    width: 455px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 30px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+input[type="text"],
+input[type="file"],
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
 }
 
-.nav-option {
-    padding: 10px 20px;
-    margin: 0 10px;
-    color: #000;
-    cursor: pointer;
-}
-
-.selector {
-    position: absolute;
-    background-color: #538B8D;
-    border-radius: 30px;
-    width: 120px;
-    height: 40px;
-    transition: 0.3s ease-in-out;
-    z-index: -1;
-}
-
-.btn.btn-primary {
+button {
     background-color: #FF9F47;
     border-color: #FF9F47; /* Set the border color to match the background color */
     color: white; /* Set the text color for better contrast */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Add shadow effect */
+}
+
+    button:hover {
+        background-color: #FF9F47;
+        opacity: 0.5;
+    }
+
+h1 {
+    text-align: center;
+    margin-top: 80px;
 }

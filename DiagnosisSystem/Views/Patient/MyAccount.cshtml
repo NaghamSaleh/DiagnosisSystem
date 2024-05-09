@@ -1,17 +1,9 @@
 ﻿@model PatientDTO
 <link rel="stylesheet" type="text/css" href="/css/Patient/MyAccount.css">
 
-<div class="navbar">
-    <div class="nav-option" id="myAccount">My Account</div>
-    <div class="nav-option" id="myQueries">My Queries</div>
-    <div class="nav-option" id="contactUs">Contact Us</div>
-    <div class="selector"></div>
-</div>
 
 <div class="myaccountcontainer" id="myAccount-container">
     <h1 class="section-title">My Account Information</h1>
-    <a asp-action="Edit" asp-controller="Patient" >Edit Account</a>
-    
 
     <div class="info-item">
         <span class="info-label">Full Name:</span>
@@ -32,6 +24,9 @@
         <span class="info-label">Telephone:</span>
         <span class="info-value">@Model.EditProfileVM.Telephone</span>
     </div>
+
+    <a asp-action="Edit" asp-controller="Patient" class="btn btn-primary">Edit Account</a>
+
 </div>
 
 <div class="myqueriescontainer" id="myQueries-container">
@@ -65,16 +60,14 @@
 </div>
 
 <script>
-    // Sample queries array
-    var queries = []; // Replace this with your actual queries array
+    var queries = []; 
     
-    // Function to render queries or show "no queries" message
     function renderQueries() {
         var queriesList = document.getElementById('queries-list');
         var noQueriesMsg = document.getElementById('no-queries-msg');
         var startQueryLink = document.getElementById('start-query-link');
         
-        queriesList.innerHTML = ''; // Clear previous queries
+        queriesList.innerHTML = ''; 
         
         if (queries.length > 0) {
             queries.forEach(function(query) {
@@ -97,17 +90,15 @@
 </script>
 
 
-<div class="contactuscontainer" id="contactUs-container">
-    <!-- Contact Us Information -->
-</div>
-
 <header class="header">
-    <div class="brand">Qure</div>
+    <div class="brand">
+        <a href="https://naghammzs02.wordpress.com/" style="text-decoration: none; color: inherit;">Qure</a>
+    </div>
 
     <nav class="choices">
         <a asp-action="Queries" asp-controller="Patient">User Queries</a>
-        <a asp-action="" asp-controller="Patient">Paid consultancy</a>
-        <a asp-action="" asp-controller="Patient">Analytics</a>
+        <a asp-action="Consultants" asp-controller="Patient">Paid consultancy</a>
+        <a asp-action="Analytics" asp-controller="Patient">Analytics</a>
         <a asp-action="MyAccount" asp-controller="Patient" class="account-link">
             <div class="info-item">
                 @if (Model.EditProfileVM.ImageData != null && Model.EditProfileVM.ImageData.Length > 0)
@@ -122,7 +113,10 @@
                 }
             </div>
         </a>
+
     </nav>
+
+
     
 </header>
 

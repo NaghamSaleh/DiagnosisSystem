@@ -88,10 +88,6 @@
         background-color: #155484;
         color: white;
     }
-.instruction {
-    margin-top: 40px; 
-    text-align: center;
-}
 
 
 
@@ -109,7 +105,7 @@ a{
 /* Consultant selection */
 .instruction {
     text-align: center;
-    margin-top: 80px; /* Adjust top margin as needed */
+    margin-top: 50px; /* Adjust top margin as needed */
 }
 
 .doctors-container {
