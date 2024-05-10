@@ -43,6 +43,7 @@ builder.Services.AddSession(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddAuthentication();
 builder.Services.AddScoped<User>();
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IAdminRepo, AdminRepo>();
 builder.Services.AddScoped<IDoctorRepo, DoctorRepo>();
 builder.Services.AddScoped<IPatientRepo, PatientRepo>();
@@ -51,6 +52,7 @@ builder.Services.AddScoped<IQueryRepo, QueryRepo>();
 builder.Services.AddScoped<IQueryServices,  QueryServices>();
 builder.Services.AddScoped<IAccountServices, AccountServices>();
 builder.Services.AddScoped<IUserServices, UserServices>();
+builder.Services.AddScoped<IRegisterRepo, RegiserRepo>();
 
 var app = builder.Build();
 

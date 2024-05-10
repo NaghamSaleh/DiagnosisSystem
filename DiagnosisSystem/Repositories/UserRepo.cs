@@ -1,9 +1,4 @@
-﻿using DiagnosisSystem.Entities;
-using Microsoft.AspNetCore.Identity;
-using System.Drawing.Printing;
-using System.Numerics;
-
-namespace DiagnosisSystem.Repositories
+﻿namespace DiagnosisSystem.Repositories
 {
     public class UserRepo : IUserRepo
     {
@@ -77,13 +72,48 @@ namespace DiagnosisSystem.Repositories
         }
         public async Task CreateUser(User user, string password, string roleName)
         {
-            _context.Users.Add(user);
-            var result = await _userManager.CreateAsync(user, password);
-            if (result.Succeeded)
+            try
             {
-                await _userManager.AddToRoleAsync(user, roleName);
-                _context.SaveChanges();
+                _context.Users.Add(user);
+                var result = await _userManager.CreateAsync(user, password);
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(user, roleName);
+                    _context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error creating user: {ex.Message}");
+                
+                throw; 
+            }
+        }
 
+        public async Task UpdateUserRole(string userId)
+        {
+            var entityToUpdate = _context.UserRoles.FirstOrDefault(item => item.UserId == userId);
+            var roleId = await _context.Roles.Where(r => r.Name == "Doctor").Select(i => i.Id).FirstOrDefaultAsync();
+            if (entityToUpdate != null)
+            {
+                _context.UserRoles.Remove(entityToUpdate);
+
+                entityToUpdate.RoleId = roleId;
+                entityToUpdate.UserId = userId;
+
+                _context.UserRoles.Add(entityToUpdate);
+                await _context.SaveChangesAsync();
+
+            }
+            
+        }
+        public async Task DeleteUser(string userId)
+        {
+            var entityToDelete = _context.UserRoles.FirstOrDefault(item => item.UserId == userId);
+            if (entityToDelete != null)
+            {
+                _context.UserRoles.Remove(entityToDelete);
+                await _context.SaveChangesAsync();
             }
         }
     }
