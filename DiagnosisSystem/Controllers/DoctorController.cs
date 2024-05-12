@@ -26,7 +26,8 @@
 
         public async Task<IActionResult> Queries(QuerySearchFilter filters)
         {
-            var queries = await _queryRepo.GetAllQueries();
+            var doctor = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var queries = await _queryRepo.FilterQueriesbyDoctors(doctor);
             var filteredqueries = _queryServices.FilterQueries(filters, queries);
             return View(filteredqueries);
         }

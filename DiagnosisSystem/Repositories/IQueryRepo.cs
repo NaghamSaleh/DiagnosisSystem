@@ -13,5 +13,6 @@
         Task<List<TagVM>> GetAllTags();
 
         Task<List<QueryVM>> GetAllQueries();
+        Task<List<QueryVM>> FilterQueriesbyDoctors(string doctorName);
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace DiagnosisSystem.Repositories
+﻿using DiagnosisSystem.Models;
+
+namespace DiagnosisSystem.Repositories
 {
     public class QueryRepo : IQueryRepo
     {
@@ -124,6 +126,7 @@
                     Votes = q.Votes,
                     QuestionTag = q.Tag,
                     AnswerCount = q.Answers.Where(a => a.QueryId == q.Id).Count(),
+                    DoctorName = q.DoctorId ?? string.Empty
                 })
                 .ToListAsync();
 
@@ -139,6 +142,20 @@
                 var speciality = _queryServices.ConvertToEntity(doctorVM.Speciality, string.Empty);
                 await AddSpecialityToDB(speciality);
             }
+        }
+
+        public async Task<List<QueryVM>> FilterQueriesbyDoctors(string doctorName)
+        {
+            var AllQueries = await GetAllQueries();
+            var queries =  new List<QueryVM>();
+            foreach(var query in AllQueries)
+            {
+                if (string.IsNullOrEmpty(query.DoctorName) || query.DoctorName == doctorName) 
+                {
+                    queries.Add(query);
+                }
+            }
+            return queries;
         }
     }
 }
