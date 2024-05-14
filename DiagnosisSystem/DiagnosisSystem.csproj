@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Content Remove="Views\Home\Privacy.cshtml" />
-    <Content Remove="Views\Patient\shared.cshtml" />
     <Content Remove="wwwroot\css\Home\.editorconfig" />
   </ItemGroup>
 
@@ -31,10 +30,6 @@
   <ItemGroup>
     <Folder Include="wwwroot\js\Account\" />
     <Folder Include="wwwroot\js\Patient\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Views\Patient\shared.cshtml" />
   </ItemGroup>
 
 </Project>

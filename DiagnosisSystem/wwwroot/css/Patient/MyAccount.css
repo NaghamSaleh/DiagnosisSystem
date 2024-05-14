@@ -131,8 +131,8 @@
 }
 
 .btn.btn-primary {
-    background-color: #FF9F47;
-    border-color: #FF9F47; /* Set the border color to match the background color */
-    color: white; /* Set the text color for better contrast */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Add shadow effect */
+    background-color: #FF9F47 !important;
+    border-color: #FF9F47 !important; /* Set the border color to match the background color */
+    color: white !important; /* Set the text color for better contrast */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important; /* Add shadow effect */
 }

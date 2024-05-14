@@ -116,10 +116,6 @@
                 return NotFound();
             }
 
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
 
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
