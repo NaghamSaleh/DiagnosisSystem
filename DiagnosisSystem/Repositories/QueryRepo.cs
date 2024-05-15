@@ -126,7 +126,8 @@ namespace DiagnosisSystem.Repositories
                     Votes = q.Votes,
                     QuestionTag = q.Tag,
                     AnswerCount = q.Answers.Where(a => a.QueryId == q.Id).Count(),
-                    DoctorName = q.DoctorId ?? string.Empty
+                    DoctorName = q.DoctorId ?? string.Empty,
+                    ConsuntacyType = q.PaidConstultant ? "Paid" : "Free"
                 })
                 .ToListAsync();
 
