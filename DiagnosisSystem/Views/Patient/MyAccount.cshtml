@@ -1,69 +1,74 @@
 ﻿@model PatientDTO
-<link rel="stylesheet" type="text/css" href="/css/Patient/MyAccount.css">
-@{
-    Layout = "shared.cshtml";
-}
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/Patient/MyAccount.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/Patient/MyAccount.js"></script>
+    @{
+        Layout = "shared.cshtml";
+    }
+</head>
 
-<div class="myaccountcontainer" id="myAccount-container">
-    <h1 class="section-title">My Account Information</h1>
 
-    <div class="info-item">
-        <span class="info-label">Full Name:</span>
-        <span class="info-value">@Model.EditProfileVM.FirstName @Model.EditProfileVM.LastName</span>
+    <div class="myaccountcontainer" id="myAccount-container">
+        <h1 class="section-title">My Account Information</h1>
+
+        <div class="info-item">
+            <span class="info-label">Full Name:</span>
+            <span class="info-value">@Model.EditProfileVM.FirstName @Model.EditProfileVM.LastName</span>
+        </div>
+
+        <div class="info-item">
+            <span class="info-label">Email:</span>
+            <span class="info-value">@Model.EditProfileVM.Email</span>
+        </div>
+
+        <div class="info-item">
+            <span class="info-label">Gender:</span>
+            <span class="info-value">@Model.EditProfileVM.Gender</span>
+        </div>
+
+        <div class="info-item">
+            <span class="info-label">Telephone:</span>
+            <span class="info-value">@Model.EditProfileVM.Telephone</span>
+        </div>
+
+        <a asp-action="Edit" asp-controller="Patient" class="btn btn-primary">Edit Account</a>
+
     </div>
 
-    <div class="info-item">
-        <span class="info-label">Email:</span>
-        <span class="info-value">@Model.EditProfileVM.Email</span>
-    </div>
+    <div class="myqueriescontainer" id="myQueries-container">
+        <!-- My Queries Information -->
+        <ul id="queries-list">
+            @if (Model.QueryVM != null && Model.QueryVM.Any())
+            {
+                foreach (var query in Model.QueryVM)
+                {
+                    <li>
+                        <div>
+                            <span>@query.QueryTitle</span>
+                        </div>
 
-    <div class="info-item">
-        <span class="info-label">Gender:</span>
-        <span class="info-value">@Model.EditProfileVM.Gender</span>
-    </div>
-
-    <div class="info-item">
-        <span class="info-label">Telephone:</span>
-        <span class="info-value">@Model.EditProfileVM.Telephone</span>
-    </div>
-
-    <a asp-action="Edit" asp-controller="Patient" class="btn btn-primary">Edit Account</a>
-
-</div>
-
-<div class="myqueriescontainer" id="myQueries-container">
-    <!-- My Queries Information -->
-    <ul id="queries-list">
-        @if (Model.QueryVM != null && Model.QueryVM.Any())
-        {
-            foreach(var query in Model.QueryVM)
-        {
-            <li>
-                <div>
-                    <span>@query.QueryTitle</span>
-                </div>
-                
-                <div>
-                    <span>Votes: @query.Votes</span>
-                </div>
-                <div>
-                    <span>Number of Answers: @query.AnswerCount</span>
-                </div>
-                </li>
+                        <div>
+                            <span>Votes: @query.Votes</span>
+                        </div>
+                        <div>
+                            <span>Number of Answers: @query.AnswerCount</span>
+                        </div>
+                    </li>
+                }
             }
-        }
-        else
-        {
-            <li id="no-queries-msg">You have no queries.</li>
-        }
+            else
+            {
+                <li id="no-queries-msg">You have no queries.</li>
+            }
 
-    </ul>
-    <a asp-action="Create" asp-controller="Patient" class="btn btn-primary" >Click here to start a query</a>
-</div>
-
+        </ul>
+        <a asp-action="Create" asp-controller="Patient" class="btn btn-primary">Click here to start a query</a>
+    </div>
 
 
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="~/js/Patient/MyAccount.js"></script>
+
+
+

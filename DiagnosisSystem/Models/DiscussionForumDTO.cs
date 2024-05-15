@@ -2,6 +2,7 @@
 {
     public class DiscussionForumDTO
     {
+        public Guid Id { get; set; }
         [Required(ErrorMessage = "Group Title is required")]
         [StringLength(100, ErrorMessage = "Group Title must be between {2} and {1} characters long.", MinimumLength = 5)]
         public string GroupTitle { get; set; } = null!;
@@ -15,6 +16,7 @@
         [Required(ErrorMessage = "Discussion Topic is required")]
         public string DiscussionTopic { get; set; } 
         public  List<string> SelectedMembers { get; set; }
+        
        
     }
 }

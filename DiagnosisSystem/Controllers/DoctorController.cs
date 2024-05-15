@@ -59,7 +59,7 @@
         #endregion
 
         #region Forum
-        public IActionResult Forum()
+        public IActionResult Forums()
         {
             var doctors = _doctorRepo.GetAllDoctors();
             return View(doctors);
@@ -156,17 +156,28 @@
             return View(discussionForum);
         }
 
-        //[HttpPost]
-        //public IActionResult AddMember(string memberName)
-        //{
-        //    // Assuming you have a way to identify the discussion group currently being viewed
-        //    var discussionGroup = _context.DiscussionGroups
-        //        .Include(g => g.Members)
-        //        .FirstOrDefault(); // Change this query as needed based on how you identify the group
-        //    discussionGroup.AddMember(memberName);
-        //    _context.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
+        public IActionResult ViewForums()
+        {
+            var AllForums = _context.DiscussionForums.Select(a => new DiscussionForumDTO
+            {
+                Id = a.Id,
+                DiscussionTopic = a.DiscussionTopic,
+                GroupTitle = a.GroupTitle,
+            }).ToList();
+            return View(AllForums);
+        }
+
+        public IActionResult Forum(Guid ForumId)
+        {
+            var AllForums = _context.DiscussionForums.Where(d=>d.Id == ForumId).Select(a => new DiscussionForumDTO
+            {
+                GroupAdmin = a.GroupAdmin,
+                DiscussionTopic = a.DiscussionTopic,
+                GroupTitle = a.GroupTitle,
+                // SelectedMembers = a.SelectedMembers.Split('-').ToList(),
+            }).ToList();
+            return View(AllForums);
+        }
         #endregion
 
         [HttpGet]
