@@ -19,8 +19,11 @@
 
         </nav>
     </header>
-    <a asp-action="CreateForum" asp-controller="Doctor" class="create-group-btn">Create Discussion Group</a>
-    <a asp-action="ViewForums" asp-controller="Doctor" class="create-group-btn">View Discussion Groups</a>
+    <div>
+        <a asp-action="CreateForum" asp-controller="Doctor" class="create-group-btn">Create Discussion Group</a>
+        <a asp-action="ViewForums" asp-controller="Doctor" class="create-group-btn">View Discussion Groups</a>
+    </div>
+    
     <div class="doctors-container">
         @foreach (var doctor in Model)
         {

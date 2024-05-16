@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"] QURE</title>
     <link rel="stylesheet" href="/css/Home/Index.css">
+
 </head>
 <body>
     <!-- Header -->
     <header class="header">
         <div class="brand">QURE</div>
         <nav class="choices">
+           <!-- <a href="#">Home</a>-->
             <a href="https://naghammzs02.wordpress.com/">About</a>
+            <!--<a href="#">Contact</a>-->
         </nav>
     </header>
 
@@ -21,26 +24,11 @@
             <p class="lead">Crafting Health Solutions One Click at a Time.</p>
         </div>
     </div>
-    <div class="login-container-wrapper">
-        <div class="login-container">
-            <div class="login-text">Register as</div>
+   
 
-            <div>
-                <a type="button" class="user-box" asp-controller="Account" asp-action="Register"> Patient </a>
-            </div>
+    <div id="content">
+        @RenderBody()
 
-            <div>
-                <a type="button" class="user-box" asp-controller="Account" asp-action="doctorRegister"> Medical Practitioner </a>
-            </div>
-
-            <div class="separator-line"></div>
-
-            <div>
-                <p class=".login-container p">Already have an account?  <a asp-controller="Account" asp-action="Login"> Login</a></p>
-            </div>
-        </div>
     </div>
-
-  
 </body>
 </html>
