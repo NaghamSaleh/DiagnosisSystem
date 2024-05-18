@@ -1,4 +1,3 @@
-<script>
     $(document).ready(function () {
         $(".nav-option").click(function () {
             var sectionId = $(this).attr("id") + "-container";
@@ -30,4 +29,3 @@
     var initialPosition = $(".nav-option.selected").position().left;
     $(".selector").css("left", initialPosition + "px");
     });
-</script>
