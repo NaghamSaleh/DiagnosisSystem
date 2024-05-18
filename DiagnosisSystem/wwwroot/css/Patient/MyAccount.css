@@ -130,9 +130,70 @@
     z-index: -1;
 }
 
-.btn.btn-primary {
-    background-color: #FF4F47 ;
-    border-color: #FF9F47 ; /* Set the border color to match the background color */
-    color: white ; /* Set the text color for better contrast */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) ; /* Add shadow effect */
+.btn.btn-primaryy {
+    background-color: #FF9F47 !important;
+    color: white !important; /* Set the text color for better contrast */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important; /* Add shadow effect */
+
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.btn-logout {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#queries-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1em;
+    font-family: 'Arial', sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+    #queries-table thead tr {
+        background-color: #009879;
+        color: #ffffff;
+        text-align: left;
+        font-weight: bold;
+    }
+
+    #queries-table th,
+    #queries-table td {
+        padding: 12px 15px;
+        border: 1px solid #dddddd;
+    }
+
+    #queries-table tbody tr {
+        border-bottom: 1px solid #dddddd;
+    }
+
+        #queries-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        #queries-table tbody tr:last-of-type {
+            border-bottom: 2px solid #009879;
+        }
+
+#no-queries-msg {
+    text-align: center;
+    color: #555555;
+    font-style: italic;
 }
