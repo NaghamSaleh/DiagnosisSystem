@@ -4,6 +4,7 @@
     margin: 0;
 }
 
+
 .header {
     background-color: rgba(255, 255, 255, 0.5); /* Transparent white */
     color: #000; /* Black text */
@@ -28,8 +29,6 @@
 .account-link {
     display: flex;
     align-items: center;
-    text-decoration: none; /* Ensure account link is not underlined */
-    color: #000; /* Black color */
 }
 
 .account-icon {
@@ -66,24 +65,3 @@
             opacity: 0.3; /* Adjusted opacity for subtle effect */
             border-radius: 5px; /* Added border-radius for smoother edges */
         }
-.containerx {
-    max-width: 800px;
-    margin: 100px auto;
-    padding: 40px;
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-    color: #333;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-canvas {
-    margin: 100px auto 0; /* Center the canvas and add a top margin of 20px */
-    display: block; /* Make the canvas a block element */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow */
-}
