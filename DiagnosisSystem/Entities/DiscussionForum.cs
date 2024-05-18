@@ -9,5 +9,6 @@
         public string GroupTitle { get; set; }
         public string GroupAdmin { get; set; } 
         public string SelectedMembers { get; set; } 
+        public List<DiscussionAnswer> Answers { get; set; }
     }
 }

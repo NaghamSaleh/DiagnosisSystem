@@ -173,23 +173,72 @@ namespace DiagnosisSystem.Controllers
             return View(allForums);
         }
 
-        private string GetUserNameById(string userId)
-        {
-            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
-            return user != null ? user.FirstName : userId;
-        }
 
 
-        public IActionResult Forum(Guid ForumId)
+        [HttpGet]
+        public async Task<IActionResult> Forum(Guid ForumId)
         {
-            var AllForums = _context.DiscussionForums.Where(d => d.Id == ForumId).Select(a => new DiscussionForumDTO
+            var forum = await _context.DiscussionForums
+                .Include(A=> A.Answers)
+                .Where(d => d.Id == ForumId)
+                .FirstOrDefaultAsync();
+
+            if (forum == null)
             {
-                GroupAdmin = a.GroupAdmin,
-                DiscussionTopic = a.DiscussionTopic,
-                GroupTitle = a.GroupTitle,
-            }).ToList();
-            return View(AllForums);
+                return NotFound();
+            }
+            if(forum.Answers == null)
+            {
+                forum.Answers = new List<DiscussionAnswer>();
+            }
+
+            var forumDTO = new DiscussionForumDTO
+            {
+                Id = forum.Id,
+                GroupAdmin = GetUserNameById(forum.GroupAdmin),
+                DiscussionTopic = forum.DiscussionTopic,
+                GroupTitle = forum.GroupTitle,
+                Answers = forum.Answers.Select(ans => new DiscussionAnswerVM
+                {
+                    DoctorName = GetUserNameById(ans.DoctorName),
+                    AnsweredAt = ans.AnsweredAt,
+                    AnswerText = ans.AnswerText
+                } ?? new DiscussionAnswerVM()).ToList()
+            };
+
+            return View(forumDTO);
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Forum(Guid Id, string newAnswer)
+        {
+            var forum = await _context.DiscussionForums
+                .Include(f => f.Answers) // Include related answers
+                .FirstOrDefaultAsync(d => d.Id == Id);
+
+            if (forum == null)
+            {
+                return NotFound();
+            }
+
+            var answer = new DiscussionAnswer
+            {
+                ForumId = forum.Id,
+                DoctorName = User.FindFirst(ClaimTypes.Name)?.Value,
+                AnsweredAt = DateTime.UtcNow, 
+                AnswerText = newAnswer 
+            };
+
+            forum.Answers.Add(answer); 
+
+            _context.DiscussionAnswers.Add(answer); 
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Forums");
+        }
+
+
         #endregion
 
         [HttpGet]
@@ -207,6 +256,12 @@ namespace DiagnosisSystem.Controllers
                     Telephone = u.Telephone
                 }).FirstOrDefault();
             return View(user);
+        }
+
+        private string GetUserNameById(string userId)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+            return user != null ? user.FirstName : userId;
         }
     }
 }

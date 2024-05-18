@@ -22,7 +22,7 @@ namespace DiagnosisSystem.Data
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Query> Queries { get; set; }
         public DbSet<DiscussionForum> DiscussionForums { get; set; }
-
+        public DbSet<DiscussionAnswer> DiscussionAnswers { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
 

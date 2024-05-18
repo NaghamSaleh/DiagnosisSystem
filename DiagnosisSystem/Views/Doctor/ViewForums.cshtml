@@ -1,15 +1,14 @@
 ﻿@model List<DiscussionForumDTO>
 
-@foreach(var forurm in Model)
+@foreach (var forum in Model)
 {
-   
-    <p>Group Title: @forurm.GroupTitle</p>
-    <p>Discussion Topic: @forurm.DiscussionTopic</p>
-    <p>GroupAdmin: @forurm.GroupAdmin</p>
+    <p>Group Title: @forum.GroupTitle</p>
+    <p>Discussion Topic: @forum.DiscussionTopic</p>
+    <p>GroupAdmin: @forum.GroupAdmin</p>
     <p>Members:</p>
-    @foreach(var member in forurm.SelectedMembers)
+    @foreach (var member in forum.SelectedMembers)
     {
         <p>@member</p>
     }
-    <button>Enroll</button>
+    <a asp-controller="Doctor" asp-action="Forum" asp-route-ForumId="@forum.Id" class="btn btn-primary">Enroll</a>
 }

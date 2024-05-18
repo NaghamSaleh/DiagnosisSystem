@@ -1,0 +1,55 @@
+﻿@model DiscussionForumDTO
+
+<div class="forum-details">
+    <h2>@Model.GroupTitle</h2>
+    <p><strong>Group Admin:</strong> @Model.GroupAdmin</p>
+    <p><strong>Discussion Topic:</strong> @Model.DiscussionTopic</p>
+</div>
+
+<div class="answers">
+    <h3>Answers:</h3>
+    @if (Model.Answers != null && Model.Answers.Any())
+    {
+        <ul>
+            @foreach (var answer in Model.Answers)
+            {
+                <li>
+                    <p><strong>Doctor:</strong> @answer.DoctorName</p>
+                    <p><strong>Answered At:</strong> @answer.AnsweredAt.ToString("g")</p>
+                    <p><strong>Answer:</strong> @answer.AnswerText</p>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No answers yet.</p>
+    }
+</div>
+
+<div class="participate">
+    <h3>Participate in the Discussion</h3>
+    <form asp-action="Forum" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div class="form-group">
+            <label for="newAnswer">Your Answer:</label>
+            <textarea id="newAnswer" name="newAnswer" class="form-control" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<style>
+    .forum-details, .answers, .participate {
+        margin-bottom: 20px;
+    }
+
+        .answers ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .answers li {
+            margin-bottom: 10px;
+        }
+</style>

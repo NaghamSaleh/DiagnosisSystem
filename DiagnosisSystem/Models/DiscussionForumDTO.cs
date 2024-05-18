@@ -16,6 +16,7 @@
         [Required(ErrorMessage = "Discussion Topic is required")]
         public string DiscussionTopic { get; set; } 
         public  List<string> SelectedMembers { get; set; }
+        public List<DiscussionAnswerVM>? Answers { get; set; }
         
        
     }
