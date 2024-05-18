@@ -1,42 +1,69 @@
-﻿<script src="~/js/Patient/Analytics.js"></script>
-@{
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
     var yAxisList = ViewBag.YAxis as List<AnalyticsDTO>;
     var specialities = ViewBag.Specialties as List<Specialty>;
     var specName = specialities.Select(n => n.SpecialtyName).ToList();
     var count = yAxisList.Select(y => y.Count).ToList();
-
 }
+
+
 <canvas id="barChart" width="800" height="400"></canvas>
 
-<head>
-    <title>Doctors per Specialty</title>
-    <link rel="stylesheet" type="text/css" href="/css/Patient/Analyticss.css">
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-    <header class="header">
-        <div class="brand">
-            <a href="https://naghammzs02.wordpress.com/" style="text-decoration: none; color: inherit;">Qure</a>
-        </div>
-
-        <nav class="choices">
-            <a asp-action="Queries" asp-controller="Patient">User Queries</a>
-            <a asp-action="Consultants" asp-controller="Patient">Paid consultancy</a>
-            <a asp-action="Analytics" asp-controller="Patient">Analytics</a>
-            <a asp-action="MyAccount" asp-controller="Account" class="account-link">
-                <img src="https://i.imgur.com/mFIq1e0.png" alt="My Account" class="account-icon">
-            </a>
-
-        </nav>
+<title>Doctors per Specialty</title>
+<link rel="stylesheet" type="text/css" href="/css/Home/Index.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
-    </header>
+@if (User.IsInRole("Patient"))
+{
+    <body>
+        <header class="header">
+            <div class="brand">
+                <a href="https://naghammzs02.wordpress.com/" style="text-decoration: none; color: inherit;">Qure</a>
+            </div>
+
+            <nav class="choices">
+                <a asp-action="Queries" asp-controller="Patient">User Queries</a>
+                <a asp-action="Consultants" asp-controller="Patient">Paid consultancy</a>
+                <a asp-action="Analytics" asp-controller="Patient">Analytics</a>
+                <a asp-action="MyAccount" asp-controller="Account" class="account-link">
+                    <img src="https://i.imgur.com/mFIq1e0.png" alt="My Account" class="account-icon">
+                </a>
+
+            </nav>
 
 
-   
+        </header>
+    </body>
+}
 
-</body>
+
+else
+{
+
+    <body>
+        <header class="header">
+            <div class="brand">
+                <a href="https://naghammzs02.wordpress.com/" style="text-decoration: none; color: inherit;">Qure</a>
+            </div>
+
+            <nav class="choices">
+                <a asp-action="Queries" asp-controller="Doctor">User Queries</a>
+                <a asp-action="Forums" asp-controller="Doctor">Doctors Forum</a>
+                <a asp-action="Index" asp-controller="Analytics">Analytics</a>
+                <a asp-action="MyAccount" asp-controller="Account" class="account-link">
+                    <img src="https://i.imgur.com/69kGIrt.png" alt="My Account" class="account-icon">
+                </a>
+
+
+            </nav>
+
+
+        </header>
+    </body>
+}
+
 
 <script>
 

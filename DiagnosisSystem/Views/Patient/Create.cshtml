@@ -1,26 +1,13 @@
 ﻿@model DiagnosisSystem.Models.QueryVM
 <link rel="stylesheet" type="text/css" href="/css/Patient/create.css">
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Create New Query";
     var tags = ViewBag.tags as List<string>;
+    
 }
 
 <div>
-    <header class="header">
-        <div class="brand">
-            <a href="https://naghammzs02.wordpress.com/" style="text-decoration: none; color: inherit;">Qure</a>
-        </div>
-        <nav class="choices">
-            <a asp-action="Queries" asp-controller="Patient">User Queries</a>
-            <a asp-action="Consultants" asp-controller="Patient">Paid consultancy</a>
-            <a asp-action="Index" asp-controller="Analytics">Analytics</a>
-            <a asp-action="MyAccount" asp-controller="Account" class="account-link">
-                <img src="https://i.imgur.com/mFIq1e0.png" alt="My Account" class="account-icon">
-            </a>
-
-        </nav>
-        </nav>
-    </header>
     <div class="transparent-container">
         <h1>Create New Query</h1>
 

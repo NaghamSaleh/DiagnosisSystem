@@ -9,8 +9,41 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/DiagnosisSystem.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" type="text/css" href="/css/Patient/answers.css">
+
 </head>
+
 <body>
+    <header class="header">
+        <div class="brand">
+            <a href="https://naghammzs02.wordpress.com/" style="text-decoration: none; color: inherit;">Qure</a>
+        </div>
+        <nav class="choices">
+            @if (User.IsInRole("Patient"))
+            {
+                <a asp-action="Queries" asp-controller="Patient">User Queries</a>
+                <a asp-action="Consultants" asp-controller="Patient">Paid consultancy</a>
+                <a asp-action="Index" asp-controller="Analytics">Analytics</a>
+                <a asp-action="MyAccount" asp-controller="Account" class="account-link">
+                    <img src="https://i.imgur.com/mFIq1e0.png" alt="My Account" class="account-icon">
+                </a>
+            }else if (User.IsInRole("Doctor"))
+            {
+                <a asp-action="Queries" asp-controller="Doctor">User Queries</a>
+                <a asp-action="Forums" asp-controller="Doctor">Doctors Forum</a>
+                <a asp-action="Index" asp-controller="Analytics">Analytics</a>
+                <a asp-action="MyAccount" asp-controller="Account" class="account-link">
+                    <img src="https://i.imgur.com/69kGIrt.png" alt="My Account" class="account-icon">
+                </a>
+            }
+            else
+            {
+                <a href="https://naghammzs02.wordpress.com/">About</a>
+            }
+            
+        </nav>
+    </header>
+
     <div class="container mt-5">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -19,8 +52,8 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    
 
     @await RenderSectionAsync("Scripts", required: false)
-    
+
 </body>
+

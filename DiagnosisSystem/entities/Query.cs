@@ -8,7 +8,7 @@ namespace DiagnosisSystem.Entities
         public int Id { get; set; }
         public string QueryTitle { get; set; }
         public string Description { get; set; }
-        public string Tag { get; set; }
+        public string? Tag { get; set; }
         public string PatientId { get; set; } 
         public int Votes { get; set; }
         public List<Answer> Answers { get; set; }
