@@ -1,9 +1,12 @@
-﻿namespace DiagnosisSystem.Controllers
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace DiagnosisSystem.Controllers
 {
     public class AccountController : Controller
     {
         #region Variables
         private readonly IAuthenticationService _authService;
+        private readonly ApplicationDbContext _context;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IRegisterRepo _registerRepo;
         private readonly IQueryRepo _queryRepo;
@@ -12,12 +15,13 @@
 
         #region Constructors
         public AccountController(SignInManager<IdentityUser> signInManager, IRegisterRepo registerRepo, IQueryRepo queryRepo,
-            IAuthenticationService authenticationService)
+            IAuthenticationService authenticationService, ApplicationDbContext context)
         {
             _signInManager = signInManager;
             _registerRepo = registerRepo;
             _queryRepo = queryRepo;
             _authService = authenticationService;
+            _context= context;
         }
         #endregion
 
@@ -63,6 +67,7 @@
         {
             return View();
         }
+        [HttpPost]
         public async Task<IActionResult> CreateAdmin(RegisterVM registerVM)
         {
             if (ModelState.IsValid)
@@ -73,6 +78,84 @@
             return View();
         }
         #endregion
+
+        [HttpGet]
+        public async Task<IActionResult> MyAccount()
+        {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var questions = await _queryRepo.GetSelectedPatientQueries(userId);
+
+            var user = _context.Users
+                .Where(i => i.Id == userId)
+                .Select(u => new EditProfileVM()
+                {
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Email = u.Email,
+                    Gender = u.Gender,
+                    Telephone = u.Telephone,
+                    ImageData = u.ImageData,
+                    ImageType = u.ImageType
+
+                }).FirstOrDefault();
+            var PatientDTO = new PatientDTO();
+            PatientDTO.QueryVM = questions;
+            PatientDTO.EditProfileVM = user;
+            return View(PatientDTO);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit()
+        {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+
+            var user = await _context.Users
+                .Where(i => i.Id == userId)
+                .Select(u => new EditProfileVM()
+                {
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Email = u.Email,
+                    Gender = u.Gender,
+                    Telephone = u.Telephone
+                }).FirstOrDefaultAsync();
+
+            return View(user);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditProfileVM model)
+        {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Gender = model.Gender;
+            user.Telephone = model.Telephone;
+
+            if (model.ImageFile != null && model.ImageFile.Length > 0)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await model.ImageFile.CopyToAsync(memoryStream);
+                    user.ImageData = memoryStream.ToArray();
+                    user.ImageType = model.ImageFile.ContentType;
+                }
+            }
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("MyAccount");
+        }
 
         #region Login
         [HttpGet]
@@ -109,11 +192,9 @@
 
         }
 
-
         #endregion
 
         #region Logout
-
         public IActionResult Logout()
         {
             _signInManager.SignOutAsync();
