@@ -1,15 +1,16 @@
 ﻿@model LoginVM
-
+@*@{
+    Layout = "~/Views/Home/_Shared.cshtml";
+    
+}*@
 <link rel="stylesheet" type="text/css" href="/css/Account/Login.css">
+<link rel="stylesheet" type="text/css" href="/css/Home/Index.css">
 <script src="~/js/Account/login.js"></script>
-
 
 <form id="loginForm" asp-controller="Account" asp-action="Login" method="post">
 
     <h1 style="text-align: center;">Login</h1>
     <div class="login-container">
-
-        <div class="text-danger"></div>
 
         <div class="form-group">
             <label asp-for="Email"></label>

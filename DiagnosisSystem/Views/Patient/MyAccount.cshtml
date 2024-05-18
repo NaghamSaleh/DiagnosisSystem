@@ -1,8 +1,8 @@
 ﻿@model PatientDTO
-<link rel="stylesheet" type="text/css" href="/css/Patient/MyAccount.css">
-@{
-    Layout = "shared.cshtml";
-}
+
+    @{
+        Layout = "shared.cshtml";
+    }
 
 <style>
 
@@ -54,84 +54,59 @@
 <div class="myaccountcontainer" id="myAccount-container">
     <h1 class="section-title">My Account Information</h1>
 
-    <div class="info-item">
-        <span class="info-label">Full Name:</span>
-        <span class="info-value">@Model.EditProfileVM.FirstName @Model.EditProfileVM.LastName</span>
+        <div class="info-item">
+            <span class="info-label">Full Name:</span>
+            <span class="info-value">@Model.EditProfileVM.FirstName @Model.EditProfileVM.LastName</span>
+        </div>
+
+        <div class="info-item">
+            <span class="info-label">Email:</span>
+            <span class="info-value">@Model.EditProfileVM.Email</span>
+        </div>
+
+        <div class="info-item">
+            <span class="info-label">Gender:</span>
+            <span class="info-value">@Model.EditProfileVM.Gender</span>
+        </div>
+
+        <div class="info-item">
+            <span class="info-label">Telephone:</span>
+            <span class="info-value">@Model.EditProfileVM.Telephone</span>
+        </div>
+
+    <a asp-action="Edit" asp-controller="Patient" class="btn btn-primary">Edit Account</a>
+
     </div>
-
-    <div class="info-item">
-        <span class="info-label">Email:</span>
-        <span class="info-value">@Model.EditProfileVM.Email</span>
-    </div>
-
-    <div class="info-item">
-        <span class="info-label">Gender:</span>
-        <span class="info-value">@Model.EditProfileVM.Gender</span>
-    </div>
-
-    <div class="info-item">
-        <span class="info-label">Telephone:</span>
-        <span class="info-value">@Model.EditProfileVM.Telephone</span>
-    </div>
-
-    <a asp-action="Edit" asp-controller="Patient" class="btn btn-primaryy">Edit Account</a>
-
-</div>
 
 <div class="myqueriescontainer" id="myQueries-container">
     <!-- My Queries Information -->
-    <table id="queries-table">
+    <ul id="queries-list">
         @if (Model.QueryVM != null && Model.QueryVM.Any())
         {
-            <thead>
-                <tr>
-                    <th>Query Title</th>
-                    <th>Votes</th>
-                    <th>Number of Answers</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var query in Model.QueryVM)
-                {
-                    <tr>
-                        <td>@query.QueryTitle</td>
-                        <td>@query.Votes</td>
-                        <td>@query.AnswerCount</td>
-                    </tr>
-                }
-            </tbody>
+            foreach(var query in Model.QueryVM)
+        {
+            <li>
+                <div>
+                    <span>@query.QueryTitle</span>
+                </div>
+                
+                <div>
+                    <span>Votes: @query.Votes</span>
+                </div>
+                <div>
+                    <span>Number of Answers: @query.AnswerCount</span>
+                </div>
+                </li>
+            }
         }
         else
         {
-            <tbody>
-                <tr>
-                    <td colspan="3" id="no-queries-msg">You have no queries.</td>
-                </tr>
-            </tbody>
+            <li id="no-queries-msg">You have no queries.</li>
         }
-    </table>
-    <a asp-action="Create" asp-controller="Patient" class="btn btn-primaryy" >Click here to start a query</a>
-    <br>
-    <br>
-    <br>
 
-
-
-    <a asp-action="Logout" asp-controller="Account" class="logout" style="    background-color: red;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;">Logout</a>
-
-
+    </ul>
+    <a asp-action="Create" asp-controller="Patient" class="btn btn-primary" >Click here to start a query</a>
 </div>
-
-
 
 
 

@@ -43,6 +43,7 @@
         <thead>
             <tr>
                 <th>Votes</th>
+                <th>Consultancy Type</th>
                 <th>Answers</th>
                 <th>Question Title</th>
                 <th>Tags</th>
@@ -53,6 +54,7 @@
             {
                 <tr>
                     <td>@question.Votes</td>
+                    <td>@question.ConsuntacyType</td>
                     <td>@question.AnswerCount</td>
                     <td><a asp-action="Answer" asp-controller="Doctor" asp-route-id="@question.Id">@question.QueryTitle</a></td>
                     <td>@question.QuestionTag</td>

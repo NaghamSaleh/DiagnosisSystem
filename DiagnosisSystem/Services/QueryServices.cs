@@ -36,6 +36,10 @@
                     .OrderByDescending(q => q.AnswerCount >= 0 ? int.MaxValue : q.AnswerCount)
                     .ToList();
             }
+            queries= queries
+                .OrderByDescending(q => q.ConsuntacyType == "Paid")
+                .ThenBy(q => q.ConsuntacyType)
+                .ToList();
             var filteredqueries = new QueryTableVM()
             {
                 Queries = queries

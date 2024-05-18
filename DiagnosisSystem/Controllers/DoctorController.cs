@@ -1,4 +1,6 @@
-﻿namespace DiagnosisSystem.Controllers
+﻿using System.Linq;
+
+namespace DiagnosisSystem.Controllers
 {
     [Authorize(Roles = "Doctor")]
     public class DoctorController : Controller
@@ -38,7 +40,7 @@
         [HttpGet]
         public IActionResult Answer(int id)
         {
-            
+
             var queryDetails = _queryRepo.GetAllAnswers(id);
             return View(queryDetails);
         }
@@ -59,7 +61,7 @@
         #endregion
 
         #region Forum
-        public IActionResult Forum()
+        public IActionResult Forums()
         {
             var doctors = _doctorRepo.GetAllDoctors();
             return View(doctors);
@@ -133,7 +135,7 @@
                     GroupTitle = forumDTO.GroupTitle,
                     GroupAdmin = forumDTO.GroupAdmin,
                     SelectedMembers = string.Join(',', forumDTO.SelectedMembers),
-                    
+
 
                 };
                 _context.DiscussionForums.Add(forumEntity);
@@ -144,7 +146,7 @@
             return View(forumTable);
         }
 
-   
+
         public IActionResult Create(DiscussionForumDTO discussionForum)
         {
             if (ModelState.IsValid)
@@ -156,17 +158,38 @@
             return View(discussionForum);
         }
 
-        //[HttpPost]
-        //public IActionResult AddMember(string memberName)
-        //{
-        //    // Assuming you have a way to identify the discussion group currently being viewed
-        //    var discussionGroup = _context.DiscussionGroups
-        //        .Include(g => g.Members)
-        //        .FirstOrDefault(); // Change this query as needed based on how you identify the group
-        //    discussionGroup.AddMember(memberName);
-        //    _context.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
+        public IActionResult ViewForums()
+        {
+            var allForums = _context.DiscussionForums.ToList()
+                .Select(a => new DiscussionForumDTO
+                {
+                    Id = a.Id,
+                    DiscussionTopic = a.DiscussionTopic,
+                    GroupTitle = a.GroupTitle,
+                    GroupAdmin = GetUserNameById(a.GroupAdmin),
+                    SelectedMembers = a.SelectedMembers.Split(',').Select(GetUserNameById).ToList()
+                }).ToList();
+
+            return View(allForums);
+        }
+
+        private string GetUserNameById(string userId)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+            return user != null ? user.FirstName : userId;
+        }
+
+
+        public IActionResult Forum(Guid ForumId)
+        {
+            var AllForums = _context.DiscussionForums.Where(d => d.Id == ForumId).Select(a => new DiscussionForumDTO
+            {
+                GroupAdmin = a.GroupAdmin,
+                DiscussionTopic = a.DiscussionTopic,
+                GroupTitle = a.GroupTitle,
+            }).ToList();
+            return View(AllForums);
+        }
         #endregion
 
         [HttpGet]

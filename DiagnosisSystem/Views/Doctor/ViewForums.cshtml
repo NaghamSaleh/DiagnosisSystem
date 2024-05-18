@@ -1,0 +1,15 @@
+﻿@model List<DiscussionForumDTO>
+
+@foreach(var forurm in Model)
+{
+   
+    <p>Group Title: @forurm.GroupTitle</p>
+    <p>Discussion Topic: @forurm.DiscussionTopic</p>
+    <p>GroupAdmin: @forurm.GroupAdmin</p>
+    <p>Members:</p>
+    @foreach(var member in forurm.SelectedMembers)
+    {
+        <p>@member</p>
+    }
+    <button>Enroll</button>
+}
