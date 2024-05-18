@@ -1,5 +1,7 @@
-    var specName = @Html.Raw(Json.Serialize(specName));
-    var count = @Html.Raw(Json.Serialize(count));
+
+
+var specName = @Html.Raw(Json.Serialize(specName));
+var count = @Html.Raw(Json.Serialize(count));
 
     var ctx = document.getElementById('barChart').getContext('2d');
     var myChart = new Chart(ctx, {
@@ -25,3 +27,4 @@
                 }
             }
         });
+

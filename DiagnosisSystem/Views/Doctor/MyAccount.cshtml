@@ -1,69 +1,34 @@
-﻿@model EditProfileVM
-<link rel="stylesheet" type="text/css" href="/css/Patient/MyAccount.css">
+﻿<link rel="stylesheet" type="text/css" href="/css/Doctor/DoctorMyAccount.css">
+<script src="~/js/Doctor/MyAccount.js"></script>
 
-<div class="navbar">
-    <div class="nav-option" id="myAccount">My Account</div>
-    <div class="nav-option" id="myQueries">My Queries</div>
-    <div class="nav-option" id="contactUs">Contact Us</div>
-    <div class="selector"></div>
-</div>
-
-<div class="myaccountcontainer" id="myAccount-container">
-    <h1 class="section-title">My Account Information</h1>
-
-    <div class="info-item">
-        <span class="info-label">Full Name:</span>
-        <span class="info-value">@Model.FirstName @Model.LastName</span>
-    </div>
-
-<div class="contactuscontainer" id="contactUs-container">
-    <!-- Contact Us Information -->
-</div>
 
 <header class="header">
     <div class="brand">Qure</div>
 
+
     <nav class="choices">
-        <a asp-action="Queries" asp-controller="Patient">User Queries</a>
-        <a asp-action="" asp-controller="Patient">Paid consultancy</a>
-        <a asp-action="" asp-controller="Patient">Analytics</a>
+        <a asp-action="Queries" asp-controller="Doctor">User Queries</a>
+        <a asp-action="Forum" asp-controller="Doctor">Doctors Forum</a>
+        <a asp-action="Analytics" asp-controller="Doctor">Analytics</a>
         <a asp-action="MyAccount" asp-controller="Doctor" class="account-link">
             <img src="https://i.imgur.com/69kGIrt.png" alt="My Account" class="account-icon">
         </a>
+
+
     </nav>
 </header>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $(".nav-option").click(function () {
-            var sectionId = $(this).attr("id") + "-container";
-            var scrollToElement = $("#" + sectionId);
+<br>
+<br>
 
-            // Smooth scroll to the target element
-            $('html, body').animate({
-                scrollTop: scrollToElement.offset().top
-            }, 1000);
+<a asp-action="Logout" asp-controller="Account" class="logout" style="    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;">Logout</a>
 
-            // Update selected state and selector position
-            $(".nav-option").removeClass("selected");
-            $(this).addClass("selected");
-
-            var index = $(this).index();
-            var widthSum = 0;
-
-            // Calculate the total width of all options before the clicked one
-            for (var i = 0; i < index; i++) {
-                widthSum += $(".nav-option").eq(i).outerWidth(true);
-            }
-
-            // Calculate the left position for the selector
-            var leftPosition = widthSum + ($(this).outerWidth(true) - $(".selector").outerWidth()) / 2;
-            $(".selector").css("left", leftPosition + "px");
-        });
-
-        // Initial positioning of selector
-        var initialPosition = $(".nav-option.selected").position().left;
-        $(".selector").css("left", initialPosition + "px");
-    });
-</script>

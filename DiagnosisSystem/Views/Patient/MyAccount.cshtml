@@ -4,6 +4,53 @@
     Layout = "shared.cshtml";
 }
 
+<style>
+
+
+
+    #queries-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 1em;
+        font-family: 'Arial', sans-serif;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+
+        #queries-table thead tr {
+            background-color: #82C3C5;
+            color: #ffffff;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        #queries-table th,
+        #queries-table td {
+            padding: 12px 15px;
+            border: 1px solid #dddddd;
+        }
+
+        #queries-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+            #queries-table tbody tr:nth-of-type(even) {
+                background-color: #f3f3f3;
+            }
+
+            #queries-table tbody tr:last-of-type {
+                border-bottom: 2px solid #82C3C5;
+            }
+
+    #no-queries-msg {
+        text-align: center;
+        color: #555555;
+        font-style: italic;
+    }
+</style>
+
+
 <div class="myaccountcontainer" id="myAccount-container">
     <h1 class="section-title">My Account Information</h1>
 
@@ -27,39 +74,64 @@
         <span class="info-value">@Model.EditProfileVM.Telephone</span>
     </div>
 
-    <a asp-action="Edit" asp-controller="Patient" class="btn btn-primary">Edit Account</a>
+    <a asp-action="Edit" asp-controller="Patient" class="btn btn-primaryy">Edit Account</a>
 
 </div>
 
 <div class="myqueriescontainer" id="myQueries-container">
     <!-- My Queries Information -->
-    <ul id="queries-list">
+    <table id="queries-table">
         @if (Model.QueryVM != null && Model.QueryVM.Any())
         {
-            foreach(var query in Model.QueryVM)
-        {
-            <li>
-                <div>
-                    <span>@query.QueryTitle</span>
-                </div>
-                
-                <div>
-                    <span>Votes: @query.Votes</span>
-                </div>
-                <div>
-                    <span>Number of Answers: @query.AnswerCount</span>
-                </div>
-                </li>
-            }
+            <thead>
+                <tr>
+                    <th>Query Title</th>
+                    <th>Votes</th>
+                    <th>Number of Answers</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var query in Model.QueryVM)
+                {
+                    <tr>
+                        <td>@query.QueryTitle</td>
+                        <td>@query.Votes</td>
+                        <td>@query.AnswerCount</td>
+                    </tr>
+                }
+            </tbody>
         }
         else
         {
-            <li id="no-queries-msg">You have no queries.</li>
+            <tbody>
+                <tr>
+                    <td colspan="3" id="no-queries-msg">You have no queries.</td>
+                </tr>
+            </tbody>
         }
+    </table>
+    <a asp-action="Create" asp-controller="Patient" class="btn btn-primaryy" >Click here to start a query</a>
+    <br>
+    <br>
+    <br>
 
-    </ul>
-    <a asp-action="Create" asp-controller="Patient" class="btn btn-primary" >Click here to start a query</a>
+
+
+    <a asp-action="Logout" asp-controller="Account" class="logout" style="    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;">Logout</a>
+
+
 </div>
+
+
 
 
 
