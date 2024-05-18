@@ -18,7 +18,7 @@
             <nav class="choices">
                 <a asp-action="Queries" asp-controller="Patient">User Queries</a>
                 <a asp-action="Consultants" asp-controller="Patient">Paid consultancy</a>
-                <a asp-action="Analytics" asp-controller="Patient">Analytics</a>
+                <a asp-action="Index" asp-controller="Analytics">Analytics</a>
                 <a asp-action="MyAccount" asp-controller="Patient" class="account-link">
                     <div class="info-item">
                         @if (Model.EditProfileVM.ImageData != null && Model.EditProfileVM.ImageData.Length > 0)

@@ -192,23 +192,7 @@
         }
 
 
-        public async Task<IActionResult> Analytics()
-        {
-            var specialties = await _context.Specialities.Distinct().ToListAsync();
-            List<DoctorDTO> doctors = _doctorRepo.GetAllDoctors();
-            var doctorIds = doctors.Select(d => d.Id);
-
-            var yAxis = await _context.Users
-                .Where(e => doctorIds.Contains(e.Id))
-                .GroupBy(u => u.Specialty)
-                .Select(g => new AnalyticsDTO { SpecialityName = g.Key, Count = g.Count() })
-                .ToListAsync();
-
-            ViewBag.Specialties = specialties;
-            ViewBag.YAxis = yAxis.ToList();
-
-            return View(yAxis);
-        }
+        
 
 
         [HttpPost]
