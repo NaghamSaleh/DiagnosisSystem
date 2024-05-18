@@ -53,8 +53,17 @@
 
         public async Task<IActionResult> Queries()
         {
-            //string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            //var questions = await _queryRepo.GetSelectedPatientQueries(userId);
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var user = _context.Users
+                .Where(i => i.Id == userId)
+                .Select(u => new EditProfileVM()
+                {
+                    ImageData = u.ImageData,
+                    ImageType = u.ImageType
+
+                }).FirstOrDefault();
+            ViewData["EditProfileVM"] = user;
             var questions = await _queryRepo.GetAllQueries();
             return View(questions);
         }

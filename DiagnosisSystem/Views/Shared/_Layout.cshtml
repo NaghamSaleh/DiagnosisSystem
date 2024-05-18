@@ -1,5 +1,20 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
     bool isAuthenticated = ViewBag.IsAuthenticated != null && (bool)ViewBag.IsAuthenticated;
+    var user = HttpContextAccessor.HttpContext.User;
+    var imageSrc = "~/user.png"; 
+
+    if (user.Identity.IsAuthenticated)
+    {
+        var editProfileVM = ViewData["EditProfileVM"] as DiagnosisSystem.Models.EditProfileVM;
+        if (editProfileVM?.ImageData != null && editProfileVM.ImageData.Length > 0)
+        {
+            var imageBase64 = Convert.ToBase64String(editProfileVM.ImageData);
+            imageSrc = $"data:{editProfileVM.ImageType};base64,{imageBase64}";
+        }
+    }
 }
 
 <head>
@@ -10,7 +25,6 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/DiagnosisSystem.styles.css" asp-append-version="true" />
     <link rel="stylesheet" type="text/css" href="/css/Patient/answers.css">
-
 </head>
 
 <body>
@@ -19,28 +33,32 @@
             <a href="https://naghammzs02.wordpress.com/" style="text-decoration: none; color: inherit;">Qure</a>
         </div>
         <nav class="choices">
-            @if (User.IsInRole("Patient"))
+            @if (user.IsInRole("Patient"))
             {
                 <a asp-action="Queries" asp-controller="Patient">User Queries</a>
                 <a asp-action="Consultants" asp-controller="Patient">Paid consultancy</a>
                 <a asp-action="Index" asp-controller="Analytics">Analytics</a>
                 <a asp-action="MyAccount" asp-controller="Account" class="account-link">
-                    <img src="https://i.imgur.com/mFIq1e0.png" alt="My Account" class="account-icon">
+                    <div class="info-item">
+                        <img src="@imageSrc" alt="Profile Picture" class="account-icon" />
+                    </div>
                 </a>
-            }else if (User.IsInRole("Doctor"))
+            }
+            else if (user.IsInRole("Doctor"))
             {
                 <a asp-action="Queries" asp-controller="Doctor">User Queries</a>
                 <a asp-action="Forums" asp-controller="Doctor">Doctors Forum</a>
                 <a asp-action="Index" asp-controller="Analytics">Analytics</a>
                 <a asp-action="MyAccount" asp-controller="Account" class="account-link">
-                    <img src="https://i.imgur.com/69kGIrt.png" alt="My Account" class="account-icon">
+                    <div class="info-item">
+                        <img src="@imageSrc" alt="Profile Picture" class="account-icon" />
+                    </div>
                 </a>
             }
             else
             {
                 <a href="https://naghammzs02.wordpress.com/">About</a>
             }
-            
         </nav>
     </header>
 
@@ -54,6 +72,4 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
-
 </body>
-
