@@ -25,6 +25,13 @@ namespace DiagnosisSystem.Controllers
                 .GroupBy(u => u.Specialty)
                 .Select(g => new AnalyticsDTO { SpecialityName = g.Key, Count = g.Count() })
                 .ToListAsync();
+            /*
+             Select SpecialityName,  Count(Doctor)
+            from User
+            where id = id
+            Group by 
+             
+             */
 
             ViewBag.Specialties = specialties;
             ViewBag.YAxis = yAxis.ToList();
