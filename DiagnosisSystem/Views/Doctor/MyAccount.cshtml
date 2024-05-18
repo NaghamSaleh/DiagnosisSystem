@@ -16,64 +16,6 @@
         <span class="info-value">@Model.FirstName @Model.LastName</span>
     </div>
 
-    <div class="info-item">
-        <span class="info-label">Email:</span>
-        <span class="info-value">@Model.Email</span>
-    </div>
-
-    <div class="info-item">
-        <span class="info-label">Gender:</span>
-        <span class="info-value">@Model.Gender</span>
-    </div>
-
-    <div class="info-item">
-        <span class="info-label">Telephone:</span>
-        <span class="info-value">@Model.Telephone</span>
-    </div>
-</div>
-
-<div class="myqueriescontainer" id="myQueries-container">
-    <!-- My Queries Information -->
-    <ul id="queries-list">
-        <!-- Queries will be added here dynamically -->
-    </ul>
-    <p id="no-queries-msg" style="display: none;">You have no queries.</p>
-    <a asp-action="Create" asp-controller="Patient" class="btn btn-primary">Click here to start a query</a>
-</div>
-
-<script>
-    // Sample queries array
-    var queries = []; // Replace this with your actual queries array
-
-    // Function to render queries or show "no queries" message
-    function renderQueries() {
-        var queriesList = document.getElementById('queries-list');
-        var noQueriesMsg = document.getElementById('no-queries-msg');
-        var startQueryLink = document.getElementById('start-query-link');
-
-        queriesList.innerHTML = ''; // Clear previous queries
-
-        if (queries.length > 0) {
-            queries.forEach(function (query) {
-                var li = document.createElement('li');
-                li.textContent = query;
-                queriesList.appendChild(li);
-            });
-            noQueriesMsg.style.display = 'none';
-            startQueryLink.style.display = 'none';
-        } else {
-            noQueriesMsg.style.display = 'block';
-            startQueryLink.style.display = 'block';
-        }
-    }
-
-    // Call renderQueries function when the page loads
-    window.onload = function () {
-        renderQueries();
-    };
-</script>
-
-
 <div class="contactuscontainer" id="contactUs-container">
     <!-- Contact Us Information -->
 </div>
