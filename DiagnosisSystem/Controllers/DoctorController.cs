@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using DiagnosisSystem.Entities;
+using System.Linq;
 
 namespace DiagnosisSystem.Controllers
 {
@@ -6,17 +7,19 @@ namespace DiagnosisSystem.Controllers
     public class DoctorController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IUserRepo _userRepo;
         private readonly IDoctorRepo _doctorRepo;
         private readonly IQueryRepo _queryRepo;
         private readonly IQueryServices _queryServices;
 
         public DoctorController(ApplicationDbContext context, IDoctorRepo doctorRepo,
-            IQueryRepo queryRepo, IQueryServices queryServices)
+            IQueryRepo queryRepo, IQueryServices queryServices, IUserRepo userRepo)
         {
             _context = context;
             _doctorRepo = doctorRepo;
             _queryRepo = queryRepo;
             _queryServices = queryServices;
+            _userRepo = userRepo;
         }
 
         public IActionResult Index()
@@ -29,6 +32,10 @@ namespace DiagnosisSystem.Controllers
         public async Task<IActionResult> Queries(QuerySearchFilter filters)
         {
             var doctor = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            #region Get Profile Picture
+            var user = _userRepo.GetProfilePicture(doctor);
+            ViewData["EditProfileVM"] = user;
+            #endregion
             var queries = await _queryRepo.FilterQueriesbyDoctors(doctor);
             var filteredqueries = _queryServices.FilterQueries(filters, queries);
             return View(filteredqueries);
@@ -40,7 +47,11 @@ namespace DiagnosisSystem.Controllers
         [HttpGet]
         public IActionResult Answer(int id)
         {
-
+            #region Get Profile Picture
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = _userRepo.GetProfilePicture(userId);
+            ViewData["EditProfileVM"] = user;
+            #endregion
             var queryDetails = _queryRepo.GetAllAnswers(id);
             return View(queryDetails);
         }
@@ -48,6 +59,11 @@ namespace DiagnosisSystem.Controllers
         [HttpPost]
         public IActionResult Answer(AnswerDTO answer)
         {
+            #region Get Profile Picture
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = _userRepo.GetProfilePicture(userId);
+            ViewData["EditProfileVM"] = user;
+            #endregion
             var ans = new Answer()
             {
                 AnswerBody = answer.AnswerBody,
@@ -63,12 +79,24 @@ namespace DiagnosisSystem.Controllers
         #region Forum
         public IActionResult Forums()
         {
+            #region Get Profile Picture
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = _userRepo.GetProfilePicture(userId);
+            ViewData["EditProfileVM"] = user;
+            #endregion
+
             var doctors = _doctorRepo.GetAllDoctors();
             return View(doctors);
         }
 
         public async Task<IActionResult> CreateForum(FilterVM DoctorFilters, DiscussionForumDTO forumDTO)
         {
+            #region Get Profile Picture
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = _userRepo.GetProfilePicture(userId);
+            ViewData["EditProfileVM"] = user;
+            #endregion
+
             var speciality = await _context.Specialities.Select(s => new SpecialtyVM()
             {
                 Name = s.SpecialtyName,
@@ -149,6 +177,11 @@ namespace DiagnosisSystem.Controllers
 
         public IActionResult Create(DiscussionForumDTO discussionForum)
         {
+            #region Get Profile Picture
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = _userRepo.GetProfilePicture(userId);
+            ViewData["EditProfileVM"] = user;
+            #endregion
             if (ModelState.IsValid)
             {
                 _context.Add(discussionForum);
@@ -160,6 +193,12 @@ namespace DiagnosisSystem.Controllers
 
         public IActionResult ViewForums()
         {
+            #region Get Profile Picture
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = _userRepo.GetProfilePicture(userId);
+            ViewData["EditProfileVM"] = user;
+            #endregion
+
             var allForums = _context.DiscussionForums.ToList()
                 .Select(a => new DiscussionForumDTO
                 {
@@ -178,6 +217,12 @@ namespace DiagnosisSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Forum(Guid ForumId)
         {
+            #region Get Profile Picture
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = _userRepo.GetProfilePicture(userId);
+            ViewData["EditProfileVM"] = user;
+            #endregion
+
             var forum = await _context.DiscussionForums
                 .Include(A=> A.Answers)
                 .Where(d => d.Id == ForumId)
@@ -213,6 +258,12 @@ namespace DiagnosisSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> Forum(Guid Id, string newAnswer)
         {
+            #region Get Profile Picture
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = _userRepo.GetProfilePicture(userId);
+            ViewData["EditProfileVM"] = user;
+            #endregion
+
             var forum = await _context.DiscussionForums
                 .Include(f => f.Answers) // Include related answers
                 .FirstOrDefaultAsync(d => d.Id == Id);
@@ -241,22 +292,7 @@ namespace DiagnosisSystem.Controllers
 
         #endregion
 
-        [HttpGet]
-        public IActionResult MyAccount()
-        {
-            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var user = _context.Users
-                .Where(i => i.Id == userId)
-                .Select(u => new EditProfileVM()
-                {
-                    FirstName = u.FirstName,
-                    LastName = u.LastName,
-                    Email = u.Email,
-                    Gender = u.Gender,
-                    Telephone = u.Telephone
-                }).FirstOrDefault();
-            return View(user);
-        }
+   
 
         private string GetUserNameById(string userId)
         {

@@ -123,6 +123,7 @@ namespace DiagnosisSystem.Controllers
                     Gender = u.Gender,
                     Telephone = u.Telephone
                 }).FirstOrDefaultAsync();
+            ViewData["EditProfileVM"] = user;
 
             return View(user);
 
@@ -156,6 +157,7 @@ namespace DiagnosisSystem.Controllers
             }
 
             await _context.SaveChangesAsync();
+            ViewData["EditProfileVM"] = user;
 
             return RedirectToAction("MyAccount");
         }
