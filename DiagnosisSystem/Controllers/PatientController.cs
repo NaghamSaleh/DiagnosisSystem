@@ -4,16 +4,18 @@
     public class PatientController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IUserRepo _userRepo;
         private readonly IDoctorRepo _doctorRepo;
         private readonly IQueryRepo _queryRepo;
 
 
         public PatientController(ApplicationDbContext context,
-            IDoctorRepo doctorRepo, IQueryRepo queryRepo)
+            IDoctorRepo doctorRepo, IQueryRepo queryRepo, IUserRepo userRepo)
         {
             _context = context;
             _doctorRepo = doctorRepo;
             _queryRepo = queryRepo;
+            _userRepo = userRepo;
         }
         
         public IActionResult Index()
@@ -25,6 +27,12 @@
         [HttpGet]
         public IActionResult Create()
         {
+            #region Get Profile Picture
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = _userRepo.GetProfilePicture(userId);
+            ViewData["EditProfileVM"] = user;
+            #endregion
+
             var allTags = _queryRepo.GetAllTags();
             ViewBag.tags = allTags.Result.Select(s => s.Name).Distinct().ToList();
             return View();
@@ -33,7 +41,11 @@
         [HttpPost]
         public async Task<IActionResult> Create(QueryVM patientQuestionVM)
         {
+            #region Get Profile Picture
             string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = _userRepo.GetProfilePicture(userId);
+            ViewData["EditProfileVM"] = user;
+            #endregion
 
             var pQuestion = new Query()
             {
@@ -53,30 +65,38 @@
 
         public async Task<IActionResult> Queries()
         {
+            #region Get Profile Picture
             string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            var user = _context.Users
-                .Where(i => i.Id == userId)
-                .Select(u => new EditProfileVM()
-                {
-                    ImageData = u.ImageData,
-                    ImageType = u.ImageType
-
-                }).FirstOrDefault();
+            var user = _userRepo.GetProfilePicture(userId);
             ViewData["EditProfileVM"] = user;
+            #endregion
+
             var questions = await _queryRepo.GetAllQueries();
+
             return View(questions);
         }
 
 
         public IActionResult Consultants()
         {
+            #region Get Profile Picture
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = _userRepo.GetProfilePicture(userId);
+            ViewData["EditProfileVM"] = user;
+            #endregion
+
             var doctors = _doctorRepo.GetAllDoctors();
             return View(doctors);
         }
 
         public IActionResult Answers(int id)
         {
+            #region Get Profile Picture
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = _userRepo.GetProfilePicture(userId);
+            ViewData["EditProfileVM"] = user;
+            #endregion
+
             var queryDetails = _queryRepo.GetAllAnswers(id);
             return View(queryDetails);
         }
@@ -84,13 +104,23 @@
         [HttpGet]
         public IActionResult AskDoctor(string doctorId)
         {
+            #region Get Profile Picture
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = _userRepo.GetProfilePicture(userId);
+            ViewData["EditProfileVM"] = user;
+            #endregion
+
             return View(doctorId);
         }
 
         [HttpPost]
         public async Task<IActionResult> AskDoctor(PaidConsultancy detailsViewModel)
         {
+            #region Get Profile Picture
             string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = _userRepo.GetProfilePicture(userId);
+            ViewData["EditProfileVM"] = user;
+            #endregion
 
             Query query = new()
             {
@@ -109,6 +139,12 @@
 
         public IActionResult Details(string id)
         {
+            #region Get Profile Picture
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = _userRepo.GetProfilePicture(userId);
+            ViewData["EditProfileVM"] = user;
+            #endregion
+
             var doctors = _doctorRepo.GetAllDoctors();
             var getChosenDoctor = doctors.Where(i => i.Id == id).FirstOrDefault();
             var paidVM = new PaidConsultancy()

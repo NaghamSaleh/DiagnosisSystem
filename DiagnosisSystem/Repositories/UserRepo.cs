@@ -116,5 +116,17 @@
                 await _context.SaveChangesAsync();
             }
         }
+        public EditProfileVM GetProfilePicture(string userId)
+        {
+            var user = _context.Users
+                .Where(i => i.Id == userId)
+                .Select(u => new EditProfileVM()
+                {
+                    ImageData = u.ImageData,
+                    ImageType = u.ImageType
+
+                }).FirstOrDefault();
+            return user;
+        }
     }
 }

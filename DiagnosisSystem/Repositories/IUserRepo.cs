@@ -10,6 +10,7 @@
         Task CreateUser(User user, string password, string roleName);
         Task UpdateUserRole(string userId);
         Task DeleteUser(string userId);
+        EditProfileVM GetProfilePicture(string userId);
     }
 
 }

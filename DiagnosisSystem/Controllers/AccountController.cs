@@ -99,6 +99,9 @@ namespace DiagnosisSystem.Controllers
 
                 }).FirstOrDefault();
             var PatientDTO = new PatientDTO();
+            ViewData["EditProfileVM"] = user;
+
+
             PatientDTO.QueryVM = questions;
             PatientDTO.EditProfileVM = user;
             return View(PatientDTO);
