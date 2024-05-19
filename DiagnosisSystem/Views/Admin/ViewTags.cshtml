@@ -1,11 +1,13 @@
 ﻿@model List<TagVM>
 
-<link rel="stylesheet" type="text/css" href="/css/Admin/ViewTags.css">
+<link rel="stylesheet" type="text/css" href="/css/Admin/ViewSpecialities.css">
 @Html.Partial("shared.cshtml")
 
-<h1>Tag List</h1>
+<br><br>
 
 <table>
+
+    <h1>List of All Tags</h1>
     <thead>
         <tr>
             <th>Tag</th>
@@ -24,4 +26,4 @@
         }
     </tbody>
 </table>
-<a asp-action="Tag" asp-controller="Admin" style="margin-left: 290px; margin-top:15px;" class="btn btn-outline-dark btn-sm me-1">Add Tag</a>
+<a asp-action="Tag" asp-controller="Admin" class="btn btn-outline-dark btn-sm me-1">Add Tag</a>

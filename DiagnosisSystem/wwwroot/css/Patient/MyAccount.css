@@ -1,8 +1,4 @@
-﻿body {
-    background: linear-gradient(to bottom right, #82C3C5, white);
-    font-family: 'DejaVu Sans Mono', monospace;
-    margin: 0;
-}
+﻿
 
 .header {
     background-color: rgba(255, 255, 255, 0.5);
@@ -70,10 +66,16 @@
         }
 
 .myaccountcontainer,
-.myqueriescontainer,
 .contactuscontainer {
     padding: 20px;
     margin-top: 100px;
+    background-color: rgba(255, 255, 255, 0.3); /* Container background color */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+.myqueriescontainer{
+    padding: 20px;
+    margin-top: 50px;
     background-color: rgba(255, 255, 255, 0.3); /* Container background color */
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);

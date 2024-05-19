@@ -1,6 +1,6 @@
 ﻿body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'DejaVu Sans Mono', monospace;
     background: linear-gradient(to bottom right, #5BA9A9, #84A5E3); /* Gradient background */
     color: #004345; /* Text color */
 }
