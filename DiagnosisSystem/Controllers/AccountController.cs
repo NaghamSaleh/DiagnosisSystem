@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DiagnosisSystem.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace DiagnosisSystem.Controllers
 {
@@ -10,22 +11,26 @@ namespace DiagnosisSystem.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IRegisterRepo _registerRepo;
         private readonly IQueryRepo _queryRepo;
-        
+        private readonly IUserRepo _userRepo;
+
+
         #endregion
 
         #region Constructors
         public AccountController(SignInManager<IdentityUser> signInManager, IRegisterRepo registerRepo, IQueryRepo queryRepo,
-            IAuthenticationService authenticationService, ApplicationDbContext context)
+            IAuthenticationService authenticationService, IUserRepo userRepo, ApplicationDbContext context)
         {
             _signInManager = signInManager;
             _registerRepo = registerRepo;
             _queryRepo = queryRepo;
             _authService = authenticationService;
             _context= context;
+            _userRepo = userRepo;
+
         }
         #endregion
 
-    
+
         [HttpGet]
         public IActionResult Register()
         {
@@ -121,9 +126,19 @@ namespace DiagnosisSystem.Controllers
                     LastName = u.LastName,
                     Email = u.Email,
                     Gender = u.Gender,
-                    Telephone = u.Telephone
+                    Telephone = u.Telephone,
+                    ImageData = u.ImageData,
+                    ImageType = u.ImageType
                 }).FirstOrDefaultAsync();
+
+
             ViewData["EditProfileVM"] = user;
+
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = _userRepo.GetProfilePicture(userId);
+            ViewData["EditProfileVM"] = user;
+
+
 
             return View(user);
 
@@ -158,6 +173,7 @@ namespace DiagnosisSystem.Controllers
 
             await _context.SaveChangesAsync();
             ViewData["EditProfileVM"] = user;
+
 
             return RedirectToAction("MyAccount");
         }

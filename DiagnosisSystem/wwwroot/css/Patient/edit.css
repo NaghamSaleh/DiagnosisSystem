@@ -1,5 +1,5 @@
 ﻿body {
-    background: linear-gradient(to bottom right, #82C3C5, white);
+    background: linear-gradient(to bottom right, #5BA9A9, #84A5E3);
     font-family: 'DejaVu Sans Mono', monospace;
     margin: 0;
 }
@@ -100,12 +100,6 @@ button {
     box-sizing: border-box;
 }
 
-button {
-    background-color: #FF9F47;
-    border-color: #FF9F47; /* Set the border color to match the background color */
-    color: white; /* Set the text color for better contrast */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Add shadow effect */
-}
 
     button:hover {
         background-color: #FF9F47;

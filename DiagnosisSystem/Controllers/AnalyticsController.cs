@@ -7,15 +7,19 @@ namespace DiagnosisSystem.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IDoctorRepo _doctorRepo;
+        private readonly IUserRepo _userRepo;
 
-        public AnalyticsController(ApplicationDbContext context, IDoctorRepo doctorRepo)
+        public AnalyticsController(ApplicationDbContext context, IDoctorRepo doctorRepo, IUserRepo userRepo)
         {
             _context = context;
             _doctorRepo = doctorRepo;
+            _userRepo = userRepo;
+            _userRepo = userRepo;
         }
 
         public async Task<IActionResult> Index()
         {
+
             var specialties = await _context.Specialities.Distinct().ToListAsync();
             List<DoctorDTO> doctors = _doctorRepo.GetAllDoctors();
             var doctorIds = doctors.Select(d => d.Id);
@@ -35,6 +39,10 @@ namespace DiagnosisSystem.Controllers
 
             ViewBag.Specialties = specialties;
             ViewBag.YAxis = yAxis.ToList();
+
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = _userRepo.GetProfilePicture(userId);
+            ViewData["EditProfileVM"] = user;
 
             return View(yAxis);
         }
