@@ -81,12 +81,12 @@ namespace DiagnosisSystem.Controllers
         public IActionResult Approve(string userId)
         {
             _userRepo.UpdateUserRole(userId);
-            return RedirectToAction("Requests");
+            return RedirectToAction("Index");
         }
         public IActionResult Reject(string userId)
         {
             _userRepo.DeleteUser(userId);
-            return PartialView("Requests", new List<RegisterVM>());
+            return RedirectToAction("Index");
         }
 
         [HttpGet]

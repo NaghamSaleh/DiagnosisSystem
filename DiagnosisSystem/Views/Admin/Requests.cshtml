@@ -2,8 +2,10 @@
 
 <link rel="stylesheet" type="text/css" href="/css/Admin/doctors.css">
 <script src="~/js/Admin/doctors.js"></script>
-@Html.Partial("shared")
-@Html.Partial("_RequestModal")
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@Html.Partial("~/Views/Shared/_RequestModal.cshtml");
 
 
 <br><br>

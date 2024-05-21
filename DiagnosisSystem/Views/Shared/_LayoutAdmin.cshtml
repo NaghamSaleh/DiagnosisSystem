@@ -25,44 +25,13 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/DiagnosisSystem.styles.css" asp-append-version="true" />
     <link rel="stylesheet" type="text/css" href="/css/Patient/answers.css">
+    <link rel="stylesheet" type="text/css" href="/css/Admin/sidebar.css">
+    <script src="~/js/Admin/doctors.js"></script>
 </head>
 
 <body>
-    <header class="header">
-        <div class="brand">
-            <a href="https://naghammzs02.wordpress.com/" style="text-decoration: none; color: inherit;">Qure</a>
-        </div>
-
-        @if (user.IsInRole("Patient"))
-        {
-            <nav class="choices">
-                <a asp-action="Queries" asp-controller="Patient">User Queries</a>
-                <a asp-action="Consultants" asp-controller="Patient">Paid consultancy</a>
-                <a asp-action="Index" asp-controller="Analytics">Analytics</a>
-                <a asp-action="MyAccount" asp-controller="Account" class="account-link">
-                    <div class="info-item">
-                        <img src="@imageSrc" alt="Profile Picture" class="account-icon" />
-                    </div>
-                </a>
-            </nav>
-
-        }
-        else if (user.IsInRole("Doctor"))
-        {
-            <nav class="choices">
-                <a asp-action="Queries" asp-controller="Doctor">User Queries</a>
-                <a asp-action="Forums" asp-controller="Doctor">Doctors Forum</a>
-                <a asp-action="Index" asp-controller="Analytics">Analytics</a>
-                <a asp-action="MyAccount" asp-controller="Account" class="account-link">
-                    <div class="info-item">
-                        <img src="@imageSrc" alt="Profile Picture" class="account-icon" />
-                    </div>
-                </a>
-            </nav>
-        }
-        else if (user.IsInRole("Admin"))
-        {
-            <div class="sidebar">
+    <header class="container">
+        <div class="sidebar">
 
                 <br><br>
 
@@ -121,14 +90,7 @@
     cursor: pointer;
     border-radius: 5px;">Logout</a>
             </div>
-        }
-        else
-        {
-            <nav class="choices">
-                <a href="https://naghammzs02.wordpress.com/">About</a>
-            </nav>
-        }
-
+       
     </header>
 
     <div class="container mt-5">

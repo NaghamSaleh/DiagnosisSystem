@@ -1,33 +1,34 @@
 ﻿@model List<SpecialtyVM>
 <link rel="stylesheet" type="text/css" href="/css/Admin/ViewSpecialities.css">
-@Html.Partial("shared.cshtml")
-
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
 <br>
 <br>
 
 
 
-    <table>
-        <h1>List of All Specialities</h1>
+<table>
+    <h1>List of All Specialities</h1>
 
-        <thead>
+    <thead>
+        <tr>
+            <th>Speciality</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tag in Model)
+        {
             <tr>
-                <th>Speciality</th>
-                <th>Description</th>
+                <td>@tag.Name</td>
+                <td>@tag.Description</td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var tag in Model)
-            {
-                <tr>
-                    <td>@tag.Name</td>
-                    <td>@tag.Description</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
 
-    <a asp-action="Speciality" asp-controller="Admin" class="btn btn-outline-dark btn-sm me-1">Add Speciality</a>
+<a asp-action="Speciality" asp-controller="Admin" class="btn btn-outline-dark btn-sm me-1">Add Speciality</a>
 
 
 
