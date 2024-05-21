@@ -16,24 +16,27 @@ namespace DiagnosisSystem.Controllers
         private readonly IAccountServices _accountServices;
         private readonly IQueryRepo _queryRepo;
         private readonly IQueryServices _queryServices;
+        private readonly IAccountRepo _accountRepo;
         private readonly UserManager<IdentityUser> _userManager;
         #endregion
 
         #region Constructor
         public AdminController(ApplicationDbContext context, IDoctorRepo doctorRepo,
-            IPatientRepo patientRepo, IAdminRepo accountRepo,
+            IPatientRepo patientRepo, IAdminRepo adminRepo,
             UserManager<IdentityUser> userManager, IUserRepo userRepo,
-            IQueryRepo queryRepo, IQueryServices queryServices, IAccountServices accountServices)
+            IQueryRepo queryRepo, IQueryServices queryServices, IAccountServices accountServices,
+            IAccountRepo accountRepo)
         {
             _context = context;
             _doctorRepo = doctorRepo;
             _patientRepo = patientRepo;
-            _adminRepo = accountRepo;
+            _adminRepo = adminRepo;
             _userManager = userManager;
             _userRepo = userRepo;
             _queryRepo = queryRepo;
             _queryServices = queryServices;
             _accountServices = accountServices;
+            _accountRepo = accountRepo;
         }
         #endregion
 
@@ -56,7 +59,7 @@ namespace DiagnosisSystem.Controllers
         public async Task<IActionResult> Admins()
         {
             var AllAdmins = await _userRepo.GetAllUsers("Admin");
-            var AdminDetails = _userRepo.GetAccountDetails(AllAdmins);
+            var AdminDetails = _accountRepo.GetAccountDetails(AllAdmins);
             return View(AdminDetails);
         }
 
@@ -64,7 +67,7 @@ namespace DiagnosisSystem.Controllers
         public async Task<IActionResult> Doctors()
         {
             var AllDoctors = await _userRepo.GetAllUsers("Doctor");
-            var DoctorDetails = _userRepo.GetAccountDetails(AllDoctors);
+            var DoctorDetails = _accountRepo.GetAccountDetails(AllDoctors);
             return View(DoctorDetails);
         }
 
@@ -90,7 +93,7 @@ namespace DiagnosisSystem.Controllers
         public async Task<IActionResult> Patients()
         {
             var AllPatients = await _userRepo.GetAllUsers("Patient");
-            var PatientDetails = _userRepo.GetAccountDetails(AllPatients);
+            var PatientDetails = _accountRepo.GetAccountDetails(AllPatients);
 
             return View(PatientDetails);
         }

@@ -54,6 +54,9 @@ builder.Services.AddScoped<IQueryServices,  QueryServices>();
 builder.Services.AddScoped<IAccountServices, AccountServices>();
 builder.Services.AddScoped<IUserServices, UserServices>();
 builder.Services.AddScoped<IRegisterRepo, RegiserRepo>();
+builder.Services.AddScoped<IAccountRepo, AccountRepo>();
+builder.Services.AddScoped<IPatientServices, PatientServices>();
+//builder.Services.AddScoped<IDiscussionForumRepo, DiscussionForumRepo>();
 builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 

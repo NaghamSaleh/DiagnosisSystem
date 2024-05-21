@@ -45,5 +45,24 @@ namespace DiagnosisSystem.Services
         
         }
        
+        public async Task<User> MapUser(EditProfileVM model, User user)
+        {
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Gender = model.Gender;
+            user.Telephone = model.Telephone;
+
+            if (model.ImageFile != null && model.ImageFile.Length > 0)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await model.ImageFile.CopyToAsync(memoryStream);
+                    user.ImageData = memoryStream.ToArray();
+                    user.ImageType = model.ImageFile.ContentType;
+                }
+            }
+
+            return user;
+        }
     }
 }

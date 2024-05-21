@@ -1,4 +1,5 @@
 ﻿using DiagnosisSystem.Repositories.Interfaces;
+using DiagnosisSystem.Services.Interfaces;
 
 namespace DiagnosisSystem.Repositories
 {
@@ -6,11 +7,16 @@ namespace DiagnosisSystem.Repositories
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IUserServices _userServices;
+ 
 
-        public UserRepo(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public UserRepo(ApplicationDbContext context, UserManager<IdentityUser> userManager,
+            IUserServices userServices)
         {
             _context = context;
             _userManager = userManager;
+            _userServices= userServices;
+
         }
 
         public int GetRoleCount(string RoleName)
@@ -25,26 +31,7 @@ namespace DiagnosisSystem.Repositories
             var usersList = await _context.UserRoles.Where(i => i.RoleId.Equals(role)).Select(i => i.UserId).ToListAsync();
             return usersList;
         }
-        public List<AccountDetails> GetAccountDetails(List<string> SelectedUsers)
-        {
-            List<AccountDetails> UserDetails = new();
-            foreach (var user in SelectedUsers)
-            {
-                var Users = _context.Users
-                    .Where(u => u.Id == user).Select(d => new AccountDetails
-                    {
-                        UserID = d.Id,
-                        FirstName = d.FirstName ?? d.Email,
-                        LastName = d.LastName ?? "No Name saved",
-                        Email = d.Email,
-                        Gender = d.Gender,
-                        Speciality = d.Specialty,
-                        CurrentHospital = d.CurrentHospital,
-                    });
-                UserDetails.AddRange(Users);
-            }
-            return UserDetails;
-        }
+        
 
         public List<RegisterVM> GetRequestDetails(List<string> SelectedUsers)
         {
@@ -67,11 +54,7 @@ namespace DiagnosisSystem.Repositories
             return UserDetails;
         }
 
-        //might move to accountrepo
-        public bool IsEmailFound(string Email)
-        {
-            return  _context.Users.AsNoTracking().Any(e => e.Email == Email);
-        }
+       
         public async Task CreateUser(User user, string password, string roleName)
         {
             try
@@ -120,7 +103,6 @@ namespace DiagnosisSystem.Repositories
         }
         public EditProfileVM GetProfilePicture(string userId)
         {
-
             var user = _context.Users
                 .Where(i => i.Id == userId)
                 .Select(u => new EditProfileVM()
@@ -130,6 +112,24 @@ namespace DiagnosisSystem.Repositories
 
                 }).FirstOrDefault();
             return user;
+        }
+        public async Task<User> GetUserbyId(string Id)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == Id);
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+            return user;
+        }
+
+        public async Task<User> UpdateUserInfo(EditProfileVM model)
+        {
+            var UserId = _userServices.GetCurrentUserId();
+            var user = await GetUserbyId(UserId);
+            var newUserInfo = await _userServices.MapUser(model, user);
+            await _context.SaveChangesAsync();
+            return newUserInfo;
         }
     }
 }

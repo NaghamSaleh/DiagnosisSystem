@@ -1,6 +1,6 @@
 ﻿namespace DiagnosisSystem.Repositories
 {
-    public class DiscussionForum
+    public class DiscussionForumRepo
     {
     }
 }

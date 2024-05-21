@@ -8,16 +8,19 @@ namespace DiagnosisSystem.Repositories
     {
         private readonly ApplicationDbContext _context;
         private readonly IQueryServices _queryServices;
+        private readonly IUserServices _userServices;
       
 
-        public QueryRepo(ApplicationDbContext context, IQueryServices queryServices)
+        public QueryRepo(ApplicationDbContext context, IQueryServices queryServices, IUserServices userServices)
         {
             _context = context;
             _queryServices = queryServices;
+            _userServices = userServices;
         }
 
-        public async Task <List<QueryVM>> GetSelectedPatientQueries( string userId)
+        public async Task <List<QueryVM>> GetSelectedPatientQueries()
         {
+            var userId = _userServices.GetCurrentUserId();
             var questions = await _context.Queries
                 .Where(i => i.PatientId == userId)
                 .Select(q => new QueryVM

@@ -39,10 +39,8 @@ namespace DiagnosisSystem.Controllers
             var queries = await _queryRepo.FilterQueriesbyDoctors(doctor);
             var filteredqueries = _queryServices.FilterQueries(filters, queries);
 
-            #region Get Profile Picture
-            var user = _userRepo.GetProfilePicture(doctor);
-            ViewData["EditProfileVM"] = _userServi();
-            #endregion
+             
+            ViewData["EditProfileVM"] = _userRepo.GetProfilePicture(doctor);
 
             return View(filteredqueries);
         }

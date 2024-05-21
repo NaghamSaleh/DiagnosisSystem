@@ -6,11 +6,14 @@ namespace DiagnosisSystem.Services
     public class AccountServices : IAccountServices
     {
         private readonly IUserRepo _userRepo;
+        private readonly IAccountRepo _accountRepo;
         private readonly IUserServices _userService;
-        public AccountServices(IUserRepo userRepo, IUserServices userServices)
+        public AccountServices(IUserRepo userRepo, IUserServices userServices,
+            IAccountRepo accountRepo)
         {
             _userRepo = userRepo;
             _userService = userServices;
+            _accountRepo= accountRepo;
         }
         public Stats GetAccountsStats()
         {
@@ -41,7 +44,7 @@ namespace DiagnosisSystem.Services
         }
         public bool IsRegisterValid(RegisterVM userVM)
         {
-            if(_userRepo.IsEmailFound(userVM.Email) is false)
+            if(_accountRepo.IsEmailFound(userVM.Email) is false)
             {
                 return false;
             }

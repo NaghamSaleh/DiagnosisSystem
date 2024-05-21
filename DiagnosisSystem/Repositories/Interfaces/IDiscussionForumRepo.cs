@@ -1,6 +1,6 @@
 ﻿namespace DiagnosisSystem.Repositories.Interfaces
 {
-    public interface IDiscussionForum
+    public interface IDiscussionForumRepo
     {
         
     }

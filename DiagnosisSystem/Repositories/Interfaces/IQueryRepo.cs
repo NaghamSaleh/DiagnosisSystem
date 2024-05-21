@@ -3,7 +3,7 @@
     public interface IQueryRepo
     {
         QueryVM GetAllAnswers(int id);
-        Task<List<QueryVM>> GetSelectedPatientQueries(string userId);
+        Task<List<QueryVM>> GetSelectedPatientQueries();
 
         Task AddSpecialityToDB(Specialty specialty);
         Task AddSpecialityToDB(RegisterVM doctorVM);
