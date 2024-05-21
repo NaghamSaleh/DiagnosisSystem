@@ -77,28 +77,30 @@ namespace DiagnosisSystem.Repositories
 
         public async Task UpdateUserRole(string userId)
         {
-            var entityToUpdate = _context.UserRoles.FirstOrDefault(item => item.UserId == userId);
-            var roleId = await _context.Roles.Where(r => r.Name == "Doctor").Select(i => i.Id).FirstOrDefaultAsync();
-            if (entityToUpdate != null)
-            {
-                _context.UserRoles.Remove(entityToUpdate);
-
-                entityToUpdate.RoleId = roleId;
-                entityToUpdate.UserId = userId;
-
-                _context.UserRoles.Add(entityToUpdate);
-                await _context.SaveChangesAsync();
-
-            }
-            
-        }
-        public async Task DeleteUser(string userId)
-        {
             var entityToDelete = _context.UserRoles.FirstOrDefault(item => item.UserId == userId);
             if (entityToDelete != null)
             {
                 _context.UserRoles.Remove(entityToDelete);
                 await _context.SaveChangesAsync();
+            }
+
+            var roleId = await _context.Roles.Where(r => r.Name == "Doctor").Select(i => i.Id).FirstOrDefaultAsync();
+            var newEntity = new IdentityUserRole<string>
+            {
+                UserId = userId,
+                RoleId = roleId
+            };
+
+            _context.UserRoles.Add(newEntity);
+            await _context.SaveChangesAsync();
+        }
+        public void DeleteUser(string userId)
+        {
+            var entityToDelete = _context.UserRoles.FirstOrDefault(item => item.UserId == userId);
+            if (entityToDelete != null)
+            {
+                _context.UserRoles.Remove(entityToDelete);
+                _context.SaveChanges();
             }
         }
         public EditProfileVM GetProfilePicture(string userId)

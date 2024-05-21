@@ -8,7 +8,7 @@
         Task CreateUser(User user, string password, string roleName);
         Task UpdateUserRole(string userId);
         Task<User> UpdateUserInfo(EditProfileVM model);
-        Task DeleteUser(string userId);
+        void DeleteUser(string userId);
         EditProfileVM GetProfilePicture(string userId);
         Task<User> GetUserbyId(string Id);
         int GetRoleCount(string RoleName);

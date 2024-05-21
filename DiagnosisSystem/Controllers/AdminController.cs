@@ -78,15 +78,18 @@ namespace DiagnosisSystem.Controllers
             return View(DoctorDetails);
         }
 
-        public IActionResult Approve(string userId)
+        [HttpPost]
+        public async Task<IActionResult> Approve(string userId)
         {
-            _userRepo.UpdateUserRole(userId);
-            return RedirectToAction("Index");
+            await _userRepo.UpdateUserRole(userId);
+            return Json(new { success = true });
         }
+
+        [HttpPost]
         public IActionResult Reject(string userId)
         {
             _userRepo.DeleteUser(userId);
-            return RedirectToAction("Index");
+            return Json(new { success = true });
         }
 
         [HttpGet]
