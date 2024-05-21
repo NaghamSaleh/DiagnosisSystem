@@ -1,4 +1,6 @@
 ﻿using DiagnosisSystem.Models;
+using DiagnosisSystem.Repositories.Interfaces;
+using DiagnosisSystem.Services.Interfaces;
 
 namespace DiagnosisSystem.Repositories
 {

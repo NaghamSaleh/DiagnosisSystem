@@ -1,7 +1,15 @@
-﻿namespace DiagnosisSystem.Services
+﻿using DiagnosisSystem.Services.Interfaces;
+
+namespace DiagnosisSystem.Services
 {
     public class UserServices : IUserServices
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public UserServices(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
+
         public User CreateUserEntity(RegisterVM userVM)
         {
             var user = new User
@@ -22,6 +30,19 @@
             };
 
             return user;
+        }
+
+        public string GetCurrentUserName()
+        {
+            var User = _httpContextAccessor.HttpContext.User;
+            return User?.FindFirst(ClaimTypes.Name)?.Value;
+            
+        }
+        public string GetCurrentUserId()
+        {
+            var User = _httpContextAccessor.HttpContext.User;
+            return User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        
         }
        
     }

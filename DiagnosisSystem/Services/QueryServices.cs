@@ -1,4 +1,6 @@
-﻿namespace DiagnosisSystem.Services
+﻿using DiagnosisSystem.Services.Interfaces;
+
+namespace DiagnosisSystem.Services
 {
     public class QueryServices : IQueryServices
     {

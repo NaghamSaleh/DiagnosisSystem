@@ -1,4 +1,6 @@
-﻿namespace DiagnosisSystem.Repositories
+﻿using DiagnosisSystem.Repositories.Interfaces;
+
+namespace DiagnosisSystem.Repositories
 {
     public class UserRepo : IUserRepo
     {
@@ -118,6 +120,7 @@
         }
         public EditProfileVM GetProfilePicture(string userId)
         {
+
             var user = _context.Users
                 .Where(i => i.Id == userId)
                 .Select(u => new EditProfileVM()

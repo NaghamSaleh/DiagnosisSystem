@@ -1,4 +1,5 @@
-﻿using DiagnosisSystem.Repositories;
+﻿using DiagnosisSystem.Repositories.Interfaces;
+using DiagnosisSystem.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace DiagnosisSystem.Controllers
@@ -134,9 +135,6 @@ namespace DiagnosisSystem.Controllers
 
             ViewData["EditProfileVM"] = user;
 
-            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var user = _userRepo.GetProfilePicture(userId);
-            ViewData["EditProfileVM"] = user;
 
 
 

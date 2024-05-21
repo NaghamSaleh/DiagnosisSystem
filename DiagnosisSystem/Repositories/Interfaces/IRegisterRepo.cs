@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DiagnosisSystem.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
-namespace DiagnosisSystem.Repositories
+namespace DiagnosisSystem.Repositories.Interfaces
 {
     public interface IRegisterRepo
     {
         Task CreateAsync(RegisterVM MedicalPractitionerVM, string RoleName);
-        
+
     }
     public class RegiserRepo : IRegisterRepo
     {
@@ -32,7 +33,7 @@ namespace DiagnosisSystem.Repositories
             if (!isRegistered)
             {
                 var doctor = _userServices.CreateUserEntity(MedicalPractitionerVM);
-                
+
                 await _userRepo.CreateUser(doctor, MedicalPractitionerVM.Password, RoleName);
             }
 

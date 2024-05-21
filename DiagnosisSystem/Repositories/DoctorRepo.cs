@@ -1,5 +1,6 @@
 ﻿using DiagnosisSystem.Data;
 using DiagnosisSystem.Models;
+using DiagnosisSystem.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace DiagnosisSystem.Repositories

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DiagnosisSystem.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace DiagnosisSystem.Controllers
 {

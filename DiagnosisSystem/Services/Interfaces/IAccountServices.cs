@@ -1,4 +1,4 @@
-﻿namespace DiagnosisSystem.Services
+﻿namespace DiagnosisSystem.Services.Interfaces
 {
     public interface IAccountServices
     {
@@ -6,5 +6,9 @@
         Stats GetAccountsStats();
         //string GetRoleByUserEmail(string email);
         bool IsRegisterValid(RegisterVM userVM);
+        EditProfileVM GetPicture();
+
+
+
     }
 }

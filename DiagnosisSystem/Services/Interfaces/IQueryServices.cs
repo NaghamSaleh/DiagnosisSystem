@@ -1,4 +1,4 @@
-﻿namespace DiagnosisSystem.Services
+﻿namespace DiagnosisSystem.Services.Interfaces
 {
     public interface IQueryServices
     {

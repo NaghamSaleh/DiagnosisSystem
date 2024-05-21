@@ -1,4 +1,6 @@
-﻿namespace DiagnosisSystem.Controllers
+﻿using DiagnosisSystem.Repositories.Interfaces;
+
+namespace DiagnosisSystem.Controllers
 {
     [Authorize(Roles = "Patient")]
     public class PatientController : Controller

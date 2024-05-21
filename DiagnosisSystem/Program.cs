@@ -12,7 +12,8 @@ global using System.Security.Claims;
 global using System.Diagnostics;
 global using System.ComponentModel.DataAnnotations;
 global using System.Runtime.Serialization;
-
+using DiagnosisSystem.Repositories.Interfaces;
+using DiagnosisSystem.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 var ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -53,7 +54,7 @@ builder.Services.AddScoped<IQueryServices,  QueryServices>();
 builder.Services.AddScoped<IAccountServices, AccountServices>();
 builder.Services.AddScoped<IUserServices, UserServices>();
 builder.Services.AddScoped<IRegisterRepo, RegiserRepo>();
-
+builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

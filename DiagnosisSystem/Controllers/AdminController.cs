@@ -1,4 +1,7 @@
-﻿namespace DiagnosisSystem.Controllers
+﻿using DiagnosisSystem.Repositories.Interfaces;
+using DiagnosisSystem.Services.Interfaces;
+
+namespace DiagnosisSystem.Controllers
 {
     [Authorize(Roles ="Admin")]
     public class AdminController : Controller

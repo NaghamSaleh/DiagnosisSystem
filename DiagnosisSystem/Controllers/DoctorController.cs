@@ -1,4 +1,6 @@
 ﻿using DiagnosisSystem.Entities;
+using DiagnosisSystem.Repositories.Interfaces;
+using DiagnosisSystem.Services.Interfaces;
 using System.Linq;
 
 namespace DiagnosisSystem.Controllers
@@ -11,15 +13,17 @@ namespace DiagnosisSystem.Controllers
         private readonly IDoctorRepo _doctorRepo;
         private readonly IQueryRepo _queryRepo;
         private readonly IQueryServices _queryServices;
+        private readonly IAccountServices _accountServices;
 
         public DoctorController(ApplicationDbContext context, IDoctorRepo doctorRepo,
-            IQueryRepo queryRepo, IQueryServices queryServices, IUserRepo userRepo)
+            IQueryRepo queryRepo, IQueryServices queryServices, IUserRepo userRepo, IAccountServices accountServices)
         {
             _context = context;
             _doctorRepo = doctorRepo;
             _queryRepo = queryRepo;
             _queryServices = queryServices;
             _userRepo = userRepo;
+            _accountServices = accountServices;
         }
 
         public IActionResult Index()
@@ -32,12 +36,14 @@ namespace DiagnosisSystem.Controllers
         public async Task<IActionResult> Queries(QuerySearchFilter filters)
         {
             var doctor = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            #region Get Profile Picture
-            var user = _userRepo.GetProfilePicture(doctor);
-            ViewData["EditProfileVM"] = user;
-            #endregion
             var queries = await _queryRepo.FilterQueriesbyDoctors(doctor);
             var filteredqueries = _queryServices.FilterQueries(filters, queries);
+
+            #region Get Profile Picture
+            var user = _userRepo.GetProfilePicture(doctor);
+            ViewData["EditProfileVM"] = _userServi();
+            #endregion
+
             return View(filteredqueries);
         }
 

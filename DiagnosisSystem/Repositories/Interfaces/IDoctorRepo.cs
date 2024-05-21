@@ -1,6 +1,6 @@
 ﻿using DiagnosisSystem.Models;
 
-namespace DiagnosisSystem.Repositories
+namespace DiagnosisSystem.Repositories.Interfaces
 {
     public interface IDoctorRepo
     {

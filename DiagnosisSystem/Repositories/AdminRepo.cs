@@ -1,4 +1,6 @@
-﻿namespace DiagnosisSystem.Repositories
+﻿using DiagnosisSystem.Repositories.Interfaces;
+
+namespace DiagnosisSystem.Repositories
 {
     public class AdminRepo : IAdminRepo
     {

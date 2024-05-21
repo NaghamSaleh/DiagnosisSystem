@@ -1,11 +1,16 @@
-﻿namespace DiagnosisSystem.Services
+﻿using DiagnosisSystem.Repositories.Interfaces;
+using DiagnosisSystem.Services.Interfaces;
+
+namespace DiagnosisSystem.Services
 {
     public class AccountServices : IAccountServices
     {
         private readonly IUserRepo _userRepo;
-        public AccountServices(IUserRepo userRepo)
+        private readonly IUserServices _userService;
+        public AccountServices(IUserRepo userRepo, IUserServices userServices)
         {
             _userRepo = userRepo;
+            _userService = userServices;
         }
         public Stats GetAccountsStats()
         {
@@ -49,6 +54,12 @@
                 return false;
             }
             return true;
+        }
+        public EditProfileVM GetPicture()
+        {
+            var UserId = _userService.GetCurrentUserId();
+            return _userRepo.GetProfilePicture(UserId);
+            
         }
     }
 }
