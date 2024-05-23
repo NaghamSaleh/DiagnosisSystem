@@ -24,7 +24,7 @@ function handleNextButtonClick() {
                 break;
             case 'Medical Practitioner':
                 // Redirect to the patient registration route
-                window.location.href = "/Account/doctorRegister";
+                window.location.href = "/Account/DoctorRegister";
                 break;
 
         }

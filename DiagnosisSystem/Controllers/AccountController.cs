@@ -66,7 +66,7 @@ namespace DiagnosisSystem.Controllers
             await _registerRepo.CreateAsync(MedicalPractitionerVM, "InitialDoctor");
             await _queryRepo.AddSpecialityToDB(MedicalPractitionerVM);
 
-            return PartialView("doctorRegister", new RegisterVM());
+            return RedirectToAction("Index","Home");
         }
         #endregion
 
